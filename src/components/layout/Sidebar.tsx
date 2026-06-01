@@ -2,7 +2,7 @@
 import { NavLink } from 'react-router-dom';
 import {
   BookOpen, LayoutDashboard, Calendar, BarChart2, Heart, Map as MapIcon,
-  TrendingUp, BarChart3, Sword, Sparkles, Award, Lock, Plus, Trash2, ArrowUp, ArrowDown,
+  TrendingUp, BarChart3, Sword, Sparkles, Award, Lock, Plus, Trash2, ArrowUp, ArrowDown, ChevronRight,
   type LucideIcon,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -75,22 +75,67 @@ export function Sidebar() {
 
   const startItem = items.find((i) => i.to === '/start');
   const sectionItems = (routes: string[]) => items.filter((i) => routes.includes(i.to));
+  const allSectionRoutes = SECTIONS.flatMap((s) => s.routes);
+
+  const NavItem = ({ item }: { item: typeof items[0] }) => {
+    const idx = items.indexOf(item);
+    const Icon = ICON_MAP[item.icon] ?? Sparkles;
+    return (
+      <div className="group/nav relative">
+        <NavLink
+          to={item.to}
+          end={item.end}
+          className={({ isActive }) =>
+            cn(
+              'flex items-center gap-3 px-3 py-2.5 rounded-xl text-[13px] font-medium transition-all duration-150',
+              isActive
+                ? 'bg-[#2a0040] text-white font-semibold'
+                : 'text-[#c0a8d8] hover:text-white hover:bg-white/5'
+            )
+          }
+        >
+          <button
+            type="button"
+            onClick={isEditing ? (e) => { e.preventDefault(); e.stopPropagation(); cycleIcon(idx); } : undefined}
+            disabled={!isEditing}
+            className={cn('shrink-0', isEditing && 'cursor-pointer hover:scale-110')}
+          >
+            <Icon className="h-5 w-5" />
+          </button>
+          {isEditing ? (
+            <EditableText storeKey={`${STORE_KEY}.${idx}.label`} defaultValue={item.label} className="text-[13px] font-medium flex-1" />
+          ) : (
+            <span className="flex-1">{item.label}</span>
+          )}
+        </NavLink>
+        {isEditing && (
+          <div className="absolute right-1 top-1/2 -translate-y-1/2 flex items-center gap-0.5 opacity-0 group-hover/nav:opacity-100 transition-opacity">
+            <button onClick={() => move(idx, -1)} disabled={idx === 0} className="h-5 w-5 rounded bg-cw-bg border border-cw-border flex items-center justify-center disabled:opacity-30 hover:bg-cw-purple/20"><ArrowUp className="h-3 w-3" /></button>
+            <button onClick={() => move(idx, 1)} disabled={idx === items.length - 1} className="h-5 w-5 rounded bg-cw-bg border border-cw-border flex items-center justify-center disabled:opacity-30 hover:bg-cw-purple/20"><ArrowDown className="h-3 w-3" /></button>
+            <button onClick={() => remove(idx)} className="h-5 w-5 rounded bg-cw-red/20 border border-cw-red/40 text-cw-red flex items-center justify-center hover:bg-cw-red/30"><Trash2 className="h-3 w-3" /></button>
+          </div>
+        )}
+      </div>
+    );
+  };
 
   return (
-    <aside className="w-[220px] shrink-0 flex flex-col h-screen sticky top-0 bg-[#0d0012] border-r border-cw-border/60">
-      {/* Header */}
-      <div className="px-5 pt-5 pb-4 border-b border-cw-border/40">
-        <img
-          src="https://cardapioweb.com/wp-content/uploads/2024/01/Logo-Cardapio-Web.png"
-          alt="Cardápio Web"
-          className="h-7 w-auto object-contain mb-2.5"
-        />
-        <p className="text-[10px] text-cw-muted/70 uppercase tracking-[0.12em] font-semibold">
-          <EditableText storeKey="sidebar.subtitle" defaultValue="Time Comercial" className="text-[10px] uppercase tracking-[0.12em]" />
+    <aside className="w-[250px] shrink-0 flex flex-col h-screen sticky top-0 bg-[#120018] border-r border-[#2a0a3a]">
+      {/* Logo */}
+      <div className="px-4 pt-4 pb-3">
+        <div className="bg-white rounded-2xl px-4 py-3 flex items-center justify-center mb-3">
+          <img
+            src="https://cardapioweb.com/wp-content/uploads/2024/01/Logo-Cardapio-Web.png"
+            alt="Cardápio Web"
+            className="h-8 w-auto object-contain"
+          />
+        </div>
+        <p className="text-center text-[11px] text-[#9b6fc4] uppercase tracking-[0.18em] font-bold">
+          <EditableText storeKey="sidebar.subtitle" defaultValue="Time Comercial" className="text-[11px] uppercase tracking-[0.18em]" />
         </p>
       </div>
 
-      <nav className="flex-1 px-3 py-3 overflow-y-auto scrollbar-cw space-y-4">
+      <nav className="flex-1 px-3 py-2 overflow-y-auto scrollbar-cw space-y-4">
         {/* Comece Aqui */}
         {startItem && (() => {
           const idx = items.indexOf(startItem);
@@ -100,14 +145,7 @@ export function Sidebar() {
               <NavLink
                 to={startItem.to}
                 end={startItem.end}
-                className={({ isActive }) =>
-                  cn(
-                    'flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-sm font-bold transition-all duration-150',
-                    isActive
-                      ? 'bg-cw-yellow text-[#0d0012] shadow-lg shadow-cw-yellow/30'
-                      : 'bg-cw-yellow/90 text-[#0d0012] hover:bg-cw-yellow shadow-md shadow-cw-yellow/20'
-                  )
-                }
+                className="flex items-center gap-3 px-4 py-3 rounded-2xl bg-[#f5a623] text-[#1a0020] font-bold text-[14px] transition-all duration-150 hover:bg-[#f7b440] shadow-lg shadow-[#f5a623]/20"
               >
                 <button
                   type="button"
@@ -115,13 +153,14 @@ export function Sidebar() {
                   disabled={!isEditing}
                   className={cn('shrink-0', isEditing && 'cursor-pointer hover:scale-110')}
                 >
-                  <Icon className="h-4 w-4" />
+                  <Icon className="h-5 w-5" />
                 </button>
                 {isEditing ? (
-                  <EditableText storeKey={`${STORE_KEY}.${idx}.label`} defaultValue={startItem.label} className="text-sm font-bold flex-1" />
+                  <EditableText storeKey={`${STORE_KEY}.${idx}.label`} defaultValue={startItem.label} className="text-[14px] font-bold flex-1" />
                 ) : (
                   <span className="flex-1">{startItem.label}</span>
                 )}
+                <ChevronRight className="h-4 w-4 opacity-70" />
               </NavLink>
               {isEditing && (
                 <div className="absolute right-1 top-1/2 -translate-y-1/2 flex items-center gap-0.5 opacity-0 group-hover/nav:opacity-100 transition-opacity">
@@ -140,122 +179,60 @@ export function Sidebar() {
           if (sItems.length === 0) return null;
           return (
             <div key={section.label}>
-              <p className="px-2 mb-1.5 text-[10px] font-bold uppercase tracking-[0.14em] text-cw-purple-light/60">
-                {section.label}
-              </p>
+              <div className="flex items-center gap-2 mb-1 px-1">
+                <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#9b4fc8] whitespace-nowrap">
+                  {section.label}
+                </span>
+                <div className="flex-1 h-px bg-[#3a1050]" />
+              </div>
               <div className="space-y-0.5">
-                {sItems.map((item) => {
-                  const idx = items.indexOf(item);
-                  const Icon = ICON_MAP[item.icon] ?? Sparkles;
-                  return (
-                    <div key={item.to} className="group/nav relative">
-                      <NavLink
-                        to={item.to}
-                        end={item.end}
-                        className={({ isActive }) =>
-                          cn(
-                            'flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-150',
-                            isActive
-                              ? 'bg-cw-purple/20 text-cw-text border border-cw-purple/40'
-                              : 'text-cw-muted hover:text-cw-text hover:bg-white/5 border border-transparent'
-                          )
-                        }
-                      >
-                        <button
-                          type="button"
-                          onClick={isEditing ? (e) => { e.preventDefault(); e.stopPropagation(); cycleIcon(idx); } : undefined}
-                          disabled={!isEditing}
-                          className={cn('shrink-0', isEditing && 'cursor-pointer hover:scale-110')}
-                        >
-                          <Icon className="h-[15px] w-[15px]" />
-                        </button>
-                        {isEditing ? (
-                          <EditableText storeKey={`${STORE_KEY}.${idx}.label`} defaultValue={item.label} className="text-sm font-medium flex-1" />
-                        ) : (
-                          <span className="flex-1">{item.label}</span>
-                        )}
-                      </NavLink>
-                      {isEditing && (
-                        <div className="absolute right-1 top-1/2 -translate-y-1/2 flex items-center gap-0.5 opacity-0 group-hover/nav:opacity-100 transition-opacity">
-                          <button onClick={() => move(idx, -1)} disabled={idx === 0} className="h-5 w-5 rounded bg-cw-bg border border-cw-border flex items-center justify-center disabled:opacity-30 hover:bg-cw-purple/20"><ArrowUp className="h-3 w-3" /></button>
-                          <button onClick={() => move(idx, 1)} disabled={idx === items.length - 1} className="h-5 w-5 rounded bg-cw-bg border border-cw-border flex items-center justify-center disabled:opacity-30 hover:bg-cw-purple/20"><ArrowDown className="h-3 w-3" /></button>
-                          <button onClick={() => remove(idx)} className="h-5 w-5 rounded bg-cw-red/20 border border-cw-red/40 text-cw-red flex items-center justify-center hover:bg-cw-red/30"><Trash2 className="h-3 w-3" /></button>
-                        </div>
-                      )}
-                    </div>
-                  );
-                })}
+                {sItems.map((item) => <NavItem key={item.to} item={item} />)}
               </div>
             </div>
           );
         })}
 
-        {/* Itens fora das seções (exceto /start) */}
-        {items.filter((i) => i.to !== '/start' && !SECTIONS.flatMap((s) => s.routes).includes(i.to)).map((item) => {
-          const idx = items.indexOf(item);
-          const Icon = ICON_MAP[item.icon] ?? Sparkles;
-          return (
-            <div key={item.to} className="group/nav relative">
-              <NavLink
-                to={item.to}
-                end={item.end}
-                className={({ isActive }) =>
-                  cn(
-                    'flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-150',
-                    isActive
-                      ? 'bg-cw-purple/20 text-cw-text border border-cw-purple/40'
-                      : 'text-cw-muted hover:text-cw-text hover:bg-white/5 border border-transparent'
-                  )
-                }
-              >
-                <button type="button" onClick={isEditing ? (e) => { e.preventDefault(); e.stopPropagation(); cycleIcon(idx); } : undefined} disabled={!isEditing} className={cn('shrink-0', isEditing && 'cursor-pointer hover:scale-110')}>
-                  <Icon className="h-[15px] w-[15px]" />
-                </button>
-                {isEditing ? (
-                  <EditableText storeKey={`${STORE_KEY}.${idx}.label`} defaultValue={item.label} className="text-sm font-medium flex-1" />
-                ) : (
-                  <span className="flex-1">{item.label}</span>
-                )}
-              </NavLink>
-            </div>
-          );
-        })}
+        {/* Itens fora das seções */}
+        {items.filter((i) => i.to !== '/start' && !allSectionRoutes.includes(i.to)).map((item) => (
+          <NavItem key={item.to} item={item} />
+        ))}
 
         {isEditing && (
-          <button onClick={add} className="w-full mt-1 flex items-center justify-center gap-2 px-3 py-2 rounded-lg text-xs font-semibold text-cw-purple-light border border-dashed border-cw-purple-light/30 hover:bg-cw-purple-light/10 transition-colors">
+          <button onClick={add} className="w-full mt-1 flex items-center justify-center gap-2 px-3 py-2 rounded-xl text-xs font-semibold text-cw-purple-light border border-dashed border-cw-purple-light/30 hover:bg-cw-purple-light/10 transition-colors">
             <Plus className="h-3.5 w-3.5" /> Nova aba
           </button>
         )}
       </nav>
 
       {/* Footer */}
-      <div className="border-t border-cw-border/40 px-3 py-3 space-y-2.5">
+      <div className="px-3 py-3 space-y-2">
         <button
           onClick={() => (isEditing ? lock() : openPasswordModal())}
           className={cn(
-            'w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-semibold transition-all duration-150',
+            'w-full flex items-center gap-3 px-4 py-3 rounded-2xl text-[13px] font-semibold transition-all duration-150',
             isEditing
-              ? 'bg-cw-yellow/10 text-cw-yellow border border-cw-yellow/30 hover:bg-cw-yellow/20'
-              : 'text-cw-muted/70 hover:text-cw-muted hover:bg-white/5 border border-transparent'
+              ? 'bg-cw-yellow/10 text-cw-yellow border border-cw-yellow/20 hover:bg-cw-yellow/20'
+              : 'bg-[#1e0030] text-[#c0a8d8] hover:bg-[#2a0040] hover:text-white'
           )}
           title="Ctrl+Shift+E"
         >
-          <Lock className="h-3.5 w-3.5" />
-          {isEditing ? 'Sair do Modo Gestor' : 'Modo Gestor'}
+          <Lock className="h-5 w-5 shrink-0" />
+          <span className="flex-1 text-left">{isEditing ? 'Sair do Modo Gestor' : 'Modo Gestor'}</span>
+          <ChevronRight className="h-4 w-4 opacity-50" />
         </button>
 
         <div>
-          <p className="px-1 mb-1.5 text-[10px] font-bold uppercase tracking-[0.12em] text-cw-muted/50">Visão</p>
-          <div className="flex gap-1 bg-black/30 p-1 rounded-lg border border-cw-border/40">
+          <p className="px-1 mb-1.5 text-[10px] font-bold uppercase tracking-[0.16em] text-[#6a4a80]">Visão</p>
+          <div className="flex gap-1 bg-[#0d0018] p-1 rounded-2xl border border-[#2a0a3a]">
             {(['SDR', 'Closer'] as Papel[]).map((p) => (
               <button
                 key={p}
                 onClick={() => setPapel(p)}
                 className={cn(
-                  'flex-1 px-3 py-1.5 rounded-md text-xs font-semibold transition-all duration-150',
+                  'flex-1 px-3 py-2 rounded-xl text-xs font-bold transition-all duration-150',
                   papel === p
-                    ? 'bg-cw-purple text-white shadow-md shadow-cw-purple/40'
-                    : 'text-cw-muted/60 hover:text-cw-muted'
+                    ? 'bg-[#6b21a8] text-white shadow-md shadow-purple-900/50'
+                    : 'text-[#6a4a80] hover:text-[#c0a8d8]'
                 )}
               >
                 {p}
