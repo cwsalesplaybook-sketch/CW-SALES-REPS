@@ -9,10 +9,6 @@ import { MuralAvisos } from './MuralAvisos';
 export default function Dashboard() {
   return (
     <>
-      <Header
-        titulo="Dashboard"
-        subtitulo={new Date().toLocaleDateString('pt-BR', { weekday: 'long', day: '2-digit', month: 'long' })}
-      />
       <div className="p-8 space-y-6">
         <GreetingBanner />
 

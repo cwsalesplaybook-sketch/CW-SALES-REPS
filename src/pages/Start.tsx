@@ -10,7 +10,6 @@ import { FaqNovato } from '@/components/start/FaqNovato';
 export default function Start() {
   return (
     <>
-      <Header titulo="Comece por aqui" subtitulo="Seu mapa para os primeiros 30 dias" />
       <div className="p-8 space-y-6">
         <WelcomeHero />
 

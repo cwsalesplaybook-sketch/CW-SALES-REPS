@@ -9,10 +9,6 @@ import DesafiosEquipe from './DesafiosEquipe';
 export default function Gestao() {
   return (
     <>
-      <Header
-        titulo="Gestão"
-        subtitulo="Framework de boa gestão e referências de liderança."
-      />
 
       <div className="p-8">
         <Tabs defaultValue="framework" className="w-full">

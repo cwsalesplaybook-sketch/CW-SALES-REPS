@@ -11,7 +11,6 @@ export default function BadgesPage() {
 
   return (
     <>
-      <Header titulo="Badges" subtitulo={`${unlockedCount} de ${badges.length} desbloqueados`} />
       <div className="p-8">
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {badges.map((b) => (

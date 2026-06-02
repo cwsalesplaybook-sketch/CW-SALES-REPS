@@ -94,16 +94,6 @@ export default function Playbook() {
 
   return (
     <>
-      <Header
-        titulo="Playbook de Vendas"
-        subtitulo="Consulte os materiais de referência do time comercial."
-        storeKey="playbook.header"
-        acoes={
-          <Button onClick={() => openSheet(url)} className="gradient-primary text-white hover:brightness-110 gap-2">
-            <ExternalLink className="h-4 w-4" /> Abrir planilha completa
-          </Button>
-        }
-      />
 
       <div className="p-8">
         <Tabs defaultValue="cultura" className="w-full">

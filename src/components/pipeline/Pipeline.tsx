@@ -14,27 +14,6 @@ export default function Pipeline() {
 
   return (
     <>
-      <Header
-        titulo="Pipeline em Tempo Real"
-        subtitulo="Acompanhe agendamentos e vendas atualizados diretamente do Pipedrive."
-        acoes={
-          <div className="flex items-center gap-3">
-            <Badge className="gap-1.5 border border-cw-red/50 bg-cw-red/15 text-red-300 animate-pulse">
-              <span className="inline-block h-2 w-2 rounded-full bg-cw-red" />
-              AO VIVO
-            </Badge>
-            <Button
-              size="sm"
-              onClick={() => window.open(PIPEDRIVE_URL, '_blank', 'noopener,noreferrer')}
-              className="gradient-primary text-white hover:brightness-110 gap-2"
-            >
-              <ExternalLink className="h-4 w-4" />
-              Abrir no Pipedrive
-            </Button>
-          </div>
-        }
-      />
-
       <div className="p-6">
         <div
           className="cw-card overflow-hidden relative"

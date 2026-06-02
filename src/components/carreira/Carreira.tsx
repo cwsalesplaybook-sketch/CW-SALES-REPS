@@ -8,11 +8,6 @@ import { EditableText } from '@/admin/EditableText';
 export default function Carreira() {
   return (
     <>
-      <Header
-        titulo="Carreira"
-        subtitulo="Seu crescimento é previsível. Aqui você sabe exatamente onde está e para onde vai."
-        storeKey="carreira.header"
-      />
       <div className="p-8 space-y-8">
         <section>
           <h3 className="text-sm font-semibold uppercase tracking-wider text-cw-muted mb-3">

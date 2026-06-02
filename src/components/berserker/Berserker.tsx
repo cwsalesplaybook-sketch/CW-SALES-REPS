@@ -26,19 +26,6 @@ export default function Berserker() {
       />
 
       <div className="relative">
-        <Header
-          titulo="⚔️ Berserker"
-          subtitulo="Inspirado nos guerreiros vikings — os últimos dias do mês definem campeões."
-          acoes={
-            isActive ? (
-              <Badge className="border border-cw-red/60 bg-cw-red/20 text-red-200 animate-pulse gap-1.5">
-                <Flame className="h-3 w-3" /> EM BATALHA
-              </Badge>
-            ) : (
-              <Badge variant="outline" className="border-cw-border text-cw-muted">EM PREPARAÇÃO</Badge>
-            )
-          }
-        />
 
         <div className="p-8 space-y-6">
           <BerserkerCountdown />

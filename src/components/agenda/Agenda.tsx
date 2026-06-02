@@ -30,7 +30,6 @@ export default function Agenda() {
 
   return (
     <>
-      <Header titulo="Agenda" subtitulo={`Visão de ${papel} · rituais e rotinas do time`} />
       <div className="p-8">
         {closerVazio ? (
           <div className="cw-card p-12 text-center">

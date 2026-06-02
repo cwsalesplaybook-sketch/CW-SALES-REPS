@@ -148,7 +148,6 @@ export default function Cultura() {
 
   return (
     <>
-      <Header titulo="Cultura" subtitulo="A cultura da CW vivida todos os dias" />
       <div className="p-8 space-y-6">
         <div className="cw-card p-8 gradient-surface">
           <p className="text-2xl md:text-3xl font-bold tracking-tight max-w-3xl">
