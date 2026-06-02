@@ -11,7 +11,7 @@ export default function Start() {
   return (
     <>
       <Header titulo="Comece por aqui" subtitulo="Seu mapa para os primeiros 30 dias" />
-      <div className="p-8 space-y-6 max-w-6xl">
+      <div className="p-8 space-y-6">
         <WelcomeHero />
 
         <div className="grid lg:grid-cols-3 gap-6">

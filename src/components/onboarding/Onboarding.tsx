@@ -19,7 +19,7 @@ export default function Onboarding() {
   return (
     <>
       <Header titulo="Onboarding" subtitulo="Bem-vindo(a) ao time. Você está no lugar certo." />
-      <div className="p-8 space-y-6 max-w-5xl">
+      <div className="p-8 space-y-6">
         <div className="cw-card p-6 bg-gradient-to-br from-cw-surface to-cw-elevated">
           <p className="text-cw-muted leading-relaxed">
             Esse guia foi feito para te ajudar a se sentir{' '}
