@@ -245,7 +245,7 @@ export function Sidebar() {
           />
         </div>
         <p className="text-center text-[10px] text-[#7c5aa8] uppercase tracking-[0.2em] font-bold">
-          Time e Comercial
+          {isRep ? 'Representantes' : 'Time e Comercial'}
         </p>
       </div>
 
