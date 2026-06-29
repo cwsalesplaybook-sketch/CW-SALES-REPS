@@ -7,6 +7,7 @@ import {
   ArrowUp, ArrowDown, ChevronRight, Trophy, Target,
   HelpCircle, Zap, ShieldCheck, Calculator, LogOut, Trash2,
   Loader2, Users, Library, GraduationCap, FileText, Percent, Star,
+  PartyPopper,
   type LucideIcon,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -83,7 +84,7 @@ const PLAYBOOK_OPTIONS: { label: string; papel: Papel; icon: LucideIcon; short: 
 const STORE_KEY = 'sidebar.nav';
 
 export function Sidebar() {
-  const { papel, setPapel, lockedPapel, squad, apelido, onboardingActive } = useSidebarContext();
+  const { papel, setPapel, lockedPapel, squad, squadsLideradas, apelido, onboardingActive } = useSidebarContext();
   const { isEditing, openPasswordModal, lock, isMaster, isGestor } = useEditor();
   const userProfile = useUserProfile();
   const { isFav, toggle: toggleFav } = useNavFavorites(userProfile.email ?? '');
@@ -137,8 +138,7 @@ export function Sidebar() {
   const NavItemEl = ({ item }: { item: NavItem }) => {
     const idx = items.indexOf(item);
     const Icon = ICON_MAP[item.icon] ?? Sparkles;
-    // Gestores em modo edição não ficam bloqueados pelo onboarding
-    const locked = onboardingActive && item.to !== '/start' && !isEditing;
+    const locked = false;
 
     return (
       <div className="group/nav relative">
@@ -319,6 +319,22 @@ export function Sidebar() {
 
       {/* ── Footer ── */}
       <div className="px-3 pb-4 space-y-1.5">
+
+        {/* Promoções — visível só para quem lidera squad */}
+        {squadsLideradas.length > 0 && (
+          <NavLink
+            to="/promocoes"
+            className={({ isActive }) => cn(
+              'w-full flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[11px] font-medium transition-all',
+              isActive
+                ? 'text-cw-purple-light bg-cw-purple/15'
+                : 'text-cw-purple-light/70 hover:text-cw-purple-light hover:bg-cw-purple/10'
+            )}
+          >
+            <PartyPopper className="h-3 w-3 shrink-0" />
+            <span>Promoções</span>
+          </NavLink>
+        )}
 
         {/* Modo Gestor — visível só para gestores */}
         {isGestor && (
