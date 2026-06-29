@@ -73,6 +73,19 @@ const CLOSER_SECTIONS = [
   { label: 'Cultura e Time',    routes: ['/historias'] },
 ];
 
+/** Dashboard de Representante: nav própria, limpa. */
+const NAV_REPRESENTANTE: NavItem[] = [
+  { to: '/start',    label: 'Comece Aqui',    icon: 'Sparkles',       end: false },
+  { to: '/playbook', label: 'Playbook',       icon: 'BookOpen',       end: false },
+  { to: '/pipeline', label: 'Pipeline',       icon: 'BarChart2',      end: false },
+  { to: '/meta',     label: 'Meta do Mes',    icon: 'Target',         end: false },
+  { to: '/ajuda',    label: 'Central de Ajuda', icon: 'HelpCircle',  end: false },
+];
+
+const REPRESENTANTE_SECTIONS = [
+  { label: 'Comercial', routes: ['/playbook', '/pipeline', '/meta'] },
+];
+
 /** Seletor de playbooks — cada opção troca o papel inteiro do app */
 const PLAYBOOK_OPTIONS: { label: string; papel: Papel; icon: LucideIcon; short: string }[] = [
   { label: 'SDR',            papel: 'SDR',          icon: Zap,     short: 'SDR'   },
@@ -90,12 +103,11 @@ export function Sidebar() {
   const { isFav, toggle: toggleFav } = useNavFavorites(userProfile.email ?? '');
   const navigate = useNavigate();
   const isCloser = papel === 'Closer';
+  const isRep = papel === 'Representante';
   const rawItems = useGlobalEditableContent<NavItem[]>(STORE_KEY, NAV_PADRAO);
-  // Closer tem navegação própria, hardcoded (não passa pelo override global).
-  const items = isCloser ? NAV_CLOSER : rawItems.filter(i => i.to !== '/mural');
-  const sections = isCloser ? CLOSER_SECTIONS : SECTIONS;
-  // Edição de nav só vale para o nav global (SDR/Liderança), não para o do Closer.
-  const navEditable = isEditing && !isCloser;
+  const items = isCloser ? NAV_CLOSER : isRep ? NAV_REPRESENTANTE : rawItems.filter(i => i.to !== '/mural');
+  const sections = isCloser ? CLOSER_SECTIONS : isRep ? REPRESENTANTE_SECTIONS : SECTIONS;
+  const navEditable = isEditing && !isCloser && !isRep;
   const saveGlobalOverride = useContentStore((s) => s.saveGlobalOverride);
 
   const update = async (next: NavItem[]) => {
@@ -130,7 +142,7 @@ export function Sidebar() {
     setSwitching(null);
   };
 
-  const visiblePlaybooks = (papel === 'Liderança' || isEditing || isMaster)
+  const visiblePlaybooks = (!isRep && (papel === 'Liderança' || isEditing || isMaster))
     ? PLAYBOOK_OPTIONS
     : [];
 
@@ -320,8 +332,8 @@ export function Sidebar() {
       {/* ── Footer ── */}
       <div className="px-3 pb-4 space-y-1.5">
 
-        {/* Promoções — visível só para quem lidera squad */}
-        {squadsLideradas.length > 0 && (
+        {/* Promoções — visível só para quem lidera squad e não é Rep */}
+        {!isRep && squadsLideradas.length > 0 && (
           <NavLink
             to="/promocoes"
             className={({ isActive }) => cn(
@@ -336,8 +348,8 @@ export function Sidebar() {
           </NavLink>
         )}
 
-        {/* Modo Gestor — visível só para gestores */}
-        {isGestor && (
+        {/* Modo Gestor — visível só para gestores (não para Reps) */}
+        {!isRep && isGestor && (
           <NavLink
             to="/modo-gestor"
             className={({ isActive }) => cn(
