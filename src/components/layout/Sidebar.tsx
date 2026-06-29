@@ -104,12 +104,13 @@ export function Sidebar() {
   const userProfile = useUserProfile();
   const { isFav, toggle: toggleFav } = useNavFavorites(userProfile.email ?? '');
   const navigate = useNavigate();
-  const isCloser = papel === 'Closer';
-  const isRep = papel === 'Representante';
-  const rawItems = useGlobalEditableContent<NavItem[]>(STORE_KEY, NAV_PADRAO);
-  const items = isCloser ? NAV_CLOSER : isRep ? NAV_REPRESENTANTE : rawItems.filter(i => i.to !== '/mural');
-  const sections = isCloser ? CLOSER_SECTIONS : isRep ? REPRESENTANTE_SECTIONS : SECTIONS;
-  const navEditable = isEditing && !isCloser && !isRep;
+  // Este é o dashboard de Representantes — nav sempre fixo, independente do papel.
+  const isCloser = false;
+  const isRep = true;
+  useGlobalEditableContent<NavItem[]>(STORE_KEY, NAV_PADRAO); // mantém hook ativo (contentStore)
+  const items = NAV_REPRESENTANTE;
+  const sections = REPRESENTANTE_SECTIONS;
+  const navEditable = false;
   const saveGlobalOverride = useContentStore((s) => s.saveGlobalOverride);
 
   const update = async (next: NavItem[]) => {
