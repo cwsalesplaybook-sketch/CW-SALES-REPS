@@ -47,11 +47,13 @@ export function Sidebar() {
       style={{ background: 'linear-gradient(180deg, #1a0f2e 0%, #130a22 100%)' }}
     >
       {/* Logo */}
-      <div className="px-4 pt-5 pb-2 flex flex-col items-center">
-        <div className="bg-white rounded-2xl px-4 py-2 flex items-center justify-center mb-2 w-fit">
-          <span className="text-[13px] font-black text-[#1A0A2E] tracking-tight whitespace-nowrap">
-            Cardápio Web
-          </span>
+      <div className="px-4 pt-5 pb-2">
+        <div className="bg-white rounded-2xl px-3 py-2.5 flex items-center justify-center mb-3">
+          <img
+            src="/cardapio-web-logotype-fundo-off-rgb-2800px-w-144ppi.jpg"
+            alt="Cardapio Web"
+            className="h-7 max-w-[140px] object-contain"
+          />
         </div>
         <p className="text-center text-[10px] text-[#7c5aa8] uppercase tracking-[0.2em] font-bold">
           Representantes
