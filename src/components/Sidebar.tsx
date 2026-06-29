@@ -52,7 +52,7 @@ export function Sidebar() {
           <img
             src="/cardapio-web-logotype-fundo-off-rgb-2800px-w-144ppi.jpg"
             alt="Cardapio Web"
-            className="h-7 max-w-[140px] object-contain"
+            className="h-12 max-w-[160px] object-contain"
           />
         </div>
         <p className="text-center text-[10px] text-[#7c5aa8] uppercase tracking-[0.2em] font-bold">
