@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import { X, Users2, BookOpen, BarChart2, Target, HelpCircle, CheckCircle2 } from 'lucide-react';
+import { X, Sparkles, ArrowRight, Calendar, BookOpen, Users2, Target, HelpCircle, BarChart2, CheckCircle2 } from 'lucide-react';
+import { NavLink } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 
 type Papel = 'Representante' | 'Liderança';
@@ -10,43 +11,37 @@ const ADMIN_EMAILS: Record<string, Papel> = {
   'rafael.barbosa@cardapioweb.com':    'Liderança',
 };
 
-const TABS = [
-  { Icon: Users2,     label: 'Comunidade',      desc: 'Troque experiencias, compartilhe conquistas e interaja com outros representantes de canal.' },
-  { Icon: BookOpen,   label: 'Playbook',         desc: 'Materiais de treinamento, metodologias e guias para representantes de canal.' },
-  { Icon: BarChart2,  label: 'Pipeline',         desc: 'Acompanhe suas oportunidades em andamento e o status de cada negocio.' },
-  { Icon: Target,     label: 'Meta do Mes',      desc: 'Visualize e acompanhe sua meta mensal em tempo real.' },
-  { Icon: HelpCircle, label: 'Central de Ajuda', desc: 'Tire duvidas sobre produto, planos, comissoes e processos.' },
+const TIMELINE = [
+  { ano: '2015', titulo: 'Fundacao', descricao: 'A Cardapio Web nasce com o objetivo de digitalizar o setor de food service.' },
+  { ano: '2018', titulo: 'Canal Indireto', descricao: 'Lancamento do programa de representantes de canal, expandindo para todo o Brasil.' },
+  { ano: '2021', titulo: 'Crescimento', descricao: 'Mais de 5.000 estabelecimentos usando a plataforma atraves do canal indireto.' },
+  { ano: '2024', titulo: 'Expansao', descricao: 'Nova fase do programa de representantes com mais recursos e suporte dedicado.' },
+  { ano: '2025', titulo: 'Hoje', descricao: 'Voce faz parte de um time que esta transformando o food service no Brasil.' },
 ];
 
 const PASSOS = [
-  'Acesse o Playbook e leia os materiais de canal indireto',
-  'Apresente-se na Comunidade para os outros representantes',
-  'Registre suas oportunidades no Pipeline',
-  'Acompanhe sua meta do mes em tempo real',
-  'Em caso de duvidas, acesse a Central de Ajuda',
+  { label: 'Leia os materiais no Playbook',       to: '/playbook',   Icon: BookOpen   },
+  { label: 'Apresente-se na Comunidade',           to: '/comunidade', Icon: Users2     },
+  { label: 'Registre oportunidades no Pipeline',   to: '/pipeline',   Icon: BarChart2  },
+  { label: 'Acompanhe sua Meta do Mes',            to: '/meta',       Icon: Target     },
+  { label: 'Tire duvidas na Central de Ajuda',     to: '/ajuda',      Icon: HelpCircle },
 ];
 
 function WelcomeBanner({ nome, onDismiss }: { nome: string; onDismiss: () => void }) {
   return (
-    <div className="rounded-2xl p-6 border border-cw-purple/30 bg-white">
-      <div className="flex items-start justify-between mb-3">
-        <h2 className="text-xl font-black text-cw-text">Bem-vindo, {nome}</h2>
-        <button onClick={onDismiss} className="text-cw-muted hover:text-cw-text transition-colors ml-4 shrink-0 mt-0.5">
+    <div className="cw-card p-5 border-l-4 border-cw-purple">
+      <div className="flex items-start justify-between mb-2">
+        <div className="flex items-center gap-2">
+          <Sparkles className="h-4 w-4 text-cw-purple shrink-0" />
+          <h2 className="text-base font-bold text-cw-text">Bem-vindo ao portal, {nome}!</h2>
+        </div>
+        <button onClick={onDismiss} className="text-cw-muted hover:text-cw-text ml-4 shrink-0 transition-colors">
           <X className="h-4 w-4" />
         </button>
       </div>
-      <p className="text-sm text-cw-muted mb-5">Aqui esta o que cada area deste dashboard oferece para voce.</p>
-      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
-        {TABS.map(({ Icon, label, desc }) => (
-          <div key={label} className="p-4 rounded-xl bg-cw-elevated border border-cw-border flex gap-3">
-            <Icon className="h-4 w-4 text-cw-purple shrink-0 mt-0.5" />
-            <div>
-              <p className="text-[13px] font-bold text-cw-text mb-0.5">{label}</p>
-              <p className="text-[12px] text-cw-muted leading-snug">{desc}</p>
-            </div>
-          </div>
-        ))}
-      </div>
+      <p className="text-sm text-cw-muted leading-relaxed">
+        Este e o portal exclusivo dos representantes de canal da Cardapio Web. Use o menu lateral para navegar: Comunidade, Playbook, Pipeline, Meta do Mes e Central de Ajuda. Sem bloqueios, sem wizard.
+      </p>
     </div>
   );
 }
@@ -88,7 +83,7 @@ export default function Start() {
   }
 
   return (
-    <div className="p-6 md:p-8 space-y-6 max-w-5xl mx-auto">
+    <div className="p-8 space-y-6">
       {showBanner && (
         <WelcomeBanner
           nome={nome}
@@ -96,57 +91,98 @@ export default function Start() {
         />
       )}
 
-      <div
-        className="rounded-2xl p-8"
-        style={{ background: 'linear-gradient(135deg, #2d1760 0%, #1a0f2e 100%)' }}
-      >
-        <p className="text-[9px] font-bold tracking-widest text-yellow-400/80 uppercase mb-3">
-          Dashboard de Representantes
-        </p>
-        <h1 className="text-3xl font-black text-white mb-2">Bem-vindo, {nome}</h1>
-        <p className="text-purple-200/70 text-sm leading-relaxed max-w-lg">
-          Este e o portal dos representantes de canal da Cardapio Web. Aqui voce encontra
-          materiais de treinamento, acompanha sua performance e se conecta com a comunidade.
-        </p>
-      </div>
+      {/* Hero — gradient-hot identico ao SDR */}
+      <section className="relative rounded-2xl gradient-hot p-6">
+        <div className="absolute inset-0 overflow-hidden rounded-2xl pointer-events-none">
+          <div className="absolute inset-0 gradient-glow" />
+          <div className="absolute -top-16 -right-16 w-48 h-48 rounded-full bg-white/5" />
+        </div>
+        <div className="relative grid md:grid-cols-2 gap-7 items-center">
+          <div className="flex flex-col justify-center gap-4">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/20 backdrop-blur text-white text-xs font-semibold uppercase tracking-widest border border-white/20 w-fit">
+              <Sparkles className="h-3.5 w-3.5 text-yellow-300" />
+              Portal de Representantes
+            </div>
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-black text-white leading-[1.1] tracking-tight">
+              Voce faz parte do canal que esta expandindo a Cardapio Web pelo Brasil.
+            </h1>
+            <p className="text-white/85 leading-relaxed text-base md:text-lg">
+              Este portal e o seu ponto central de recursos, comunidade, metas e materiais. Aqui voce encontra tudo que precisa para vender mais e crescer junto com a Cardapio Web.
+            </p>
+            <NavLink
+              to="/playbook"
+              className="inline-flex items-center gap-2 bg-white/20 hover:bg-white/30 border border-white/30 text-white font-semibold px-5 py-2.5 rounded-xl transition-all w-fit text-sm backdrop-blur"
+            >
+              Acessar o Playbook <ArrowRight className="h-4 w-4" />
+            </NavLink>
+          </div>
 
-      <div className="grid md:grid-cols-2 gap-6">
-        <div className="bg-white rounded-2xl border border-cw-border p-6">
-          <h2 className="text-xs font-bold text-cw-muted uppercase tracking-widest mb-4">Por onde comecar</h2>
-          <ul className="space-y-3">
-            {PASSOS.map((p, i) => (
-              <li key={i} className="flex gap-3 text-sm text-cw-muted">
-                <CheckCircle2 className="h-4 w-4 text-cw-purple shrink-0 mt-0.5" />
-                <span>{p}</span>
+          <div className="relative w-full rounded-xl overflow-hidden border border-white/20 shadow-xl" style={{ paddingTop: '56.25%' }}>
+            <iframe
+              src="https://www.youtube.com/embed/At4i9h8-fNI"
+              title="Bem-vindo aos Representantes Cardapio Web"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+              className="absolute inset-0 w-full h-full"
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* Grid: Timeline + Primeiros Passos */}
+      <div className="grid lg:grid-cols-3 gap-6">
+        {/* Timeline da empresa */}
+        <div className="lg:col-span-2 cw-card p-6">
+          <div className="flex items-center gap-2 mb-4">
+            <Calendar className="h-5 w-5 text-cw-purple-light" />
+            <h2 className="text-xl font-bold text-cw-text">A jornada da CW</h2>
+          </div>
+          <ol className="relative border-l-2 border-[#D8B8F7] ml-3 space-y-6">
+            {TIMELINE.map((m, idx) => (
+              <li key={m.ano} className="ml-6">
+                <span className={`absolute -left-3 flex items-center justify-center w-6 h-6 rounded-full text-[10px] font-bold border-2 border-white shadow-sm ${
+                  idx === TIMELINE.length - 1
+                    ? 'bg-cw-yellow text-cw-purple-dark'
+                    : idx === 0
+                      ? 'gradient-primary text-white border-white'
+                      : 'bg-white border-[#D8B8F7] text-cw-purple'
+                }`}>
+                  ●
+                </span>
+                <div className="flex items-baseline gap-3 flex-wrap">
+                  <p className={`text-lg font-black ${idx === TIMELINE.length - 1 ? 'text-cw-yellow' : 'text-cw-purple'}`}>
+                    {m.ano}
+                  </p>
+                  <p className="font-bold text-cw-text">{m.titulo}</p>
+                </div>
+                <p className="text-sm text-cw-muted mt-1 leading-relaxed">{m.descricao}</p>
+              </li>
+            ))}
+          </ol>
+        </div>
+
+        {/* Primeiros passos */}
+        <div className="cw-card p-6">
+          <div className="flex items-center gap-2 mb-5">
+            <div className="w-8 h-8 rounded-lg bg-cw-purple/10 flex items-center justify-center">
+              <CheckCircle2 className="h-4 w-4 text-cw-purple" />
+            </div>
+            <h2 className="text-lg font-bold text-cw-text">Seus primeiros passos</h2>
+          </div>
+          <ul className="space-y-2.5">
+            {PASSOS.map(({ label, to, Icon }) => (
+              <li key={to}>
+                <NavLink
+                  to={to}
+                  className="flex items-center gap-3 p-3.5 rounded-xl bg-cw-elevated border border-cw-border hover:border-cw-purple/40 hover:bg-white transition-all duration-150 group"
+                >
+                  <Icon className="h-4 w-4 text-cw-purple shrink-0" />
+                  <span className="text-sm text-cw-text leading-snug flex-1">{label}</span>
+                  <ArrowRight className="h-3.5 w-3.5 text-cw-muted group-hover:text-cw-purple transition-colors" />
+                </NavLink>
               </li>
             ))}
           </ul>
-        </div>
-
-        <div className="bg-white rounded-2xl border border-cw-border p-6">
-          <h2 className="text-xs font-bold text-cw-muted uppercase tracking-widest mb-4">Sobre o Programa</h2>
-          <div className="space-y-3 text-sm text-cw-muted leading-relaxed">
-            <p>O programa de representantes da Cardapio Web e um canal indireto de vendas onde parceiros externos comercializam os planos da plataforma em suas regioes.</p>
-            <p>Como representante, voce tem acesso a materiais de treinamento, suporte comercial e ferramentas para acompanhar seus resultados.</p>
-            <p>Em caso de duvidas sobre comissoes, processos ou produto, use a <strong className="text-cw-text">Central de Ajuda</strong>.</p>
-          </div>
-        </div>
-      </div>
-
-      <div>
-        <h2 className="text-xs font-bold text-cw-muted uppercase tracking-widest mb-3">Explore o dashboard</h2>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
-          {TABS.map(({ Icon, label, desc }) => (
-            <div key={label} className="bg-white rounded-xl border border-cw-border p-4 flex gap-3">
-              <div className="h-8 w-8 rounded-lg bg-cw-purple/10 flex items-center justify-center shrink-0">
-                <Icon className="h-4 w-4 text-cw-purple" />
-              </div>
-              <div>
-                <p className="text-[13px] font-bold text-cw-text mb-0.5">{label}</p>
-                <p className="text-[12px] text-cw-muted leading-snug">{desc}</p>
-              </div>
-            </div>
-          ))}
         </div>
       </div>
     </div>
