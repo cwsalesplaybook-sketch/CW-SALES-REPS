@@ -34,6 +34,7 @@ import Ranking from '@/components/ranking/Ranking';
 import MetaMes from '@/components/meta/MetaMes';
 import Promocoes from '@/pages/Promocoes';
 import Start from '@/pages/Start';
+import StartRep from '@/pages/StartRep';
 import BadgesPage from '@/pages/Badges';
 import FaqPage from '@/pages/Faq';
 import MuralPage from '@/pages/MuralPage';
@@ -153,7 +154,7 @@ function AnimatedRoutes() {
           <Route path="/" element={<Dashboard />} />
           {/* Comece Aqui, Cultura, Histórias e Pipeline são idênticos em todos os
               dashboards: ForcePapel="SDR" faz lerem o conteúdo global (sem prefixo). */}
-          <Route path="/start" element={<ForcePapel papel="SDR"><Start /></ForcePapel>} />
+          <Route path="/start" element={<StartRep />} />
           <Route path="/playbook" element={<Playbook />} />
           <Route path="/playbook/closer" element={<PlaybookCloser />} />
           <Route path="/playbook/parcerias" element={<PlaybookParcerias />} />
