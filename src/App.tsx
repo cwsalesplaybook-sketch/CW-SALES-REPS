@@ -153,7 +153,7 @@ function AnimatedRoutes() {
           <Route path="/" element={<Dashboard />} />
           {/* Comece Aqui, Cultura, Histórias e Pipeline são idênticos em todos os
               dashboards: ForcePapel="SDR" faz lerem o conteúdo global (sem prefixo). */}
-          <Route path="/start" element={<Start />} />
+          <Route path="/start" element={<ForcePapel papel="SDR"><Start /></ForcePapel>} />
           <Route path="/playbook" element={<Playbook />} />
           <Route path="/playbook/closer" element={<PlaybookCloser />} />
           <Route path="/playbook/parcerias" element={<PlaybookParcerias />} />
