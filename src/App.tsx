@@ -52,6 +52,7 @@ import CloserProcesso from '@/pages/closer/Processo';
 import CloserRotina from '@/pages/closer/Rotina';
 import CloserConcorrentes from '@/pages/closer/Concorrentes';
 import CentralAjuda from '@/pages/CentralAjuda';
+import Comunidade from '@/pages/Comunidade';
 import Automacoes from '@/pages/Automacoes';
 import Biblioteca from '@/pages/Biblioteca';
 import RegrasConduta from '@/pages/RegrasConduta';
@@ -152,7 +153,7 @@ function AnimatedRoutes() {
           <Route path="/" element={<Dashboard />} />
           {/* Comece Aqui, Cultura, Histórias e Pipeline são idênticos em todos os
               dashboards: ForcePapel="SDR" faz lerem o conteúdo global (sem prefixo). */}
-          <Route path="/start" element={<ForcePapel papel="SDR"><Start /></ForcePapel>} />
+          <Route path="/start" element={<Start />} />
           <Route path="/playbook" element={<Playbook />} />
           <Route path="/playbook/closer" element={<PlaybookCloser />} />
           <Route path="/playbook/parcerias" element={<PlaybookParcerias />} />
@@ -183,6 +184,7 @@ function AnimatedRoutes() {
           <Route path="/promocoes" element={<Promocoes />} />
           <Route path="/faq" element={<FaqPage />} />
           <Route path="/ajuda" element={<CentralAjuda />} />
+          <Route path="/comunidade" element={<Comunidade />} />
           <Route path="/mural" element={<MuralPage />} />
           <Route path="/changelog" element={<ChangelogPage />} />
           <Route path="/calculadora" element={<Calculadora />} />

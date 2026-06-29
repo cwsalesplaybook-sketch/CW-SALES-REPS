@@ -6,7 +6,7 @@ import {
   TrendingUp, BarChart3, Sword, Sparkles, Award, Crown,
   ArrowUp, ArrowDown, ChevronRight, Trophy, Target,
   HelpCircle, Zap, ShieldCheck, Calculator, LogOut, Trash2,
-  Loader2, Users, Library, GraduationCap, FileText, Percent, Star,
+  Loader2, Users, Users2, Library, GraduationCap, FileText, Percent, Star,
   PartyPopper,
   type LucideIcon,
 } from 'lucide-react';
@@ -24,7 +24,7 @@ interface NavItem { to: string; label: string; icon: keyof typeof ICON_MAP; end?
 
 const ICON_MAP = {
   Sparkles, BookOpen, LayoutDashboard, BarChart2, Heart, MapIcon,
-  Award, TrendingUp, BarChart3, Sword, Trophy, Target, HelpCircle, Zap, ShieldCheck, Calculator, Library, GraduationCap, FileText, Percent,
+  Award, TrendingUp, BarChart3, Sword, Trophy, Target, HelpCircle, Zap, ShieldCheck, Calculator, Library, GraduationCap, FileText, Percent, Users2,
 } as const satisfies Record<string, LucideIcon>;
 const ICON_KEYS = Object.keys(ICON_MAP) as (keyof typeof ICON_MAP)[];
 
@@ -75,15 +75,17 @@ const CLOSER_SECTIONS = [
 
 /** Dashboard de Representante: nav própria, limpa. */
 const NAV_REPRESENTANTE: NavItem[] = [
-  { to: '/start',    label: 'Comece Aqui',    icon: 'Sparkles',       end: false },
-  { to: '/playbook', label: 'Playbook',       icon: 'BookOpen',       end: false },
-  { to: '/pipeline', label: 'Pipeline',       icon: 'BarChart2',      end: false },
-  { to: '/meta',     label: 'Meta do Mes',    icon: 'Target',         end: false },
-  { to: '/ajuda',    label: 'Central de Ajuda', icon: 'HelpCircle',  end: false },
+  { to: '/start',       label: 'Comece Aqui',     icon: 'Sparkles',   end: false },
+  { to: '/comunidade',  label: 'Comunidade',       icon: 'Users2',     end: false },
+  { to: '/playbook',    label: 'Playbook',          icon: 'BookOpen',   end: false },
+  { to: '/pipeline',    label: 'Pipeline',          icon: 'BarChart2',  end: false },
+  { to: '/meta',        label: 'Meta do Mes',       icon: 'Target',     end: false },
+  { to: '/ajuda',       label: 'Central de Ajuda',  icon: 'HelpCircle', end: false },
 ];
 
 const REPRESENTANTE_SECTIONS = [
-  { label: 'Comercial', routes: ['/playbook', '/pipeline', '/meta'] },
+  { label: 'Comunidade', routes: ['/comunidade'] },
+  { label: 'Comercial',  routes: ['/playbook', '/pipeline', '/meta'] },
 ];
 
 /** Seletor de playbooks — cada opção troca o papel inteiro do app */
