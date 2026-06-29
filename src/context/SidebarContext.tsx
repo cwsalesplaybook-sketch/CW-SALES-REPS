@@ -36,8 +36,11 @@ export function SidebarProvider({ children }: { children: ReactNode }) {
       setPapelState(saved);
       setLockedPapel(saved);
       localStorage.setItem('cw-papel', saved);
+    } else {
+      // Sem papel no metadata: garante que o nav de Representantes aparece imediatamente.
+      setPapelState('Representante');
+      localStorage.setItem('cw-papel', 'Representante');
     }
-    // Nunca bloqueia no dashboard de Representantes — Start.tsx cuida do setup.
     setSquad((m?.squad as string) ?? null);
     setSquadsLideradas(Array.isArray(m?.squads_lideradas) ? (m.squads_lideradas as string[]) : []);
     setApelido((m?.apelido as string) ?? null);
