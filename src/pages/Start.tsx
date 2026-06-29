@@ -1,7 +1,14 @@
 import { useEffect, useState } from 'react';
-import { X, Sparkles, ArrowRight, Calendar, BookOpen, Users2, Target, HelpCircle, BarChart2, CheckCircle2 } from 'lucide-react';
+import { X, Sparkles, ArrowRight, Calendar, CheckCircle2 } from 'lucide-react';
 import { NavLink } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
+import { Valores } from '@/components/start/Valores';
+import { TimeGrid } from '@/components/start/TimeGrid';
+import { CulturaComercial } from '@/components/start/CulturaComercial';
+import { Glossario } from '@/components/start/Glossario';
+import { FaqNovato } from '@/components/start/FaqNovato';
+import { TIMELINE_EMPRESA } from '@/data/timelineEmpresa';
+import { BookOpen, Users2, BarChart2, Target, HelpCircle } from 'lucide-react';
 
 type Papel = 'Representante' | 'Liderança';
 
@@ -10,14 +17,6 @@ const ADMIN_EMAILS: Record<string, Papel> = {
   'hyorranes.souza@cardapioweb.com':   'Liderança',
   'rafael.barbosa@cardapioweb.com':    'Liderança',
 };
-
-const TIMELINE = [
-  { ano: '2015', titulo: 'Fundacao', descricao: 'A Cardapio Web nasce com o objetivo de digitalizar o setor de food service.' },
-  { ano: '2018', titulo: 'Canal Indireto', descricao: 'Lancamento do programa de representantes de canal, expandindo para todo o Brasil.' },
-  { ano: '2021', titulo: 'Crescimento', descricao: 'Mais de 5.000 estabelecimentos usando a plataforma atraves do canal indireto.' },
-  { ano: '2024', titulo: 'Expansao', descricao: 'Nova fase do programa de representantes com mais recursos e suporte dedicado.' },
-  { ano: '2025', titulo: 'Hoje', descricao: 'Voce faz parte de um time que esta transformando o food service no Brasil.' },
-];
 
 const PASSOS = [
   { label: 'Leia os materiais no Playbook',       to: '/playbook',   Icon: BookOpen   },
@@ -40,7 +39,7 @@ function WelcomeBanner({ nome, onDismiss }: { nome: string; onDismiss: () => voi
         </button>
       </div>
       <p className="text-sm text-cw-muted leading-relaxed">
-        Este e o portal exclusivo dos representantes de canal da Cardapio Web. Use o menu lateral para navegar: Comunidade, Playbook, Pipeline, Meta do Mes e Central de Ajuda. Sem bloqueios, sem wizard.
+        Este e o portal exclusivo dos representantes de canal da Cardapio Web. Use o menu lateral para navegar: Comunidade, Playbook, Pipeline, Meta do Mes e Central de Ajuda.
       </p>
     </div>
   );
@@ -138,10 +137,10 @@ export default function Start() {
             <h2 className="text-xl font-bold text-cw-text">A jornada da CW</h2>
           </div>
           <ol className="relative border-l-2 border-[#D8B8F7] ml-3 space-y-6">
-            {TIMELINE.map((m, idx) => (
+            {TIMELINE_EMPRESA.map((m, idx) => (
               <li key={m.ano} className="ml-6">
                 <span className={`absolute -left-3 flex items-center justify-center w-6 h-6 rounded-full text-[10px] font-bold border-2 border-white shadow-sm ${
-                  idx === TIMELINE.length - 1
+                  idx === TIMELINE_EMPRESA.length - 1
                     ? 'bg-cw-yellow text-cw-purple-dark'
                     : idx === 0
                       ? 'gradient-primary text-white border-white'
@@ -150,7 +149,7 @@ export default function Start() {
                   ●
                 </span>
                 <div className="flex items-baseline gap-3 flex-wrap">
-                  <p className={`text-lg font-black ${idx === TIMELINE.length - 1 ? 'text-cw-yellow' : 'text-cw-purple'}`}>
+                  <p className={`text-lg font-black ${idx === TIMELINE_EMPRESA.length - 1 ? 'text-cw-yellow' : 'text-cw-purple'}`}>
                     {m.ano}
                   </p>
                   <p className="font-bold text-cw-text">{m.titulo}</p>
@@ -185,6 +184,12 @@ export default function Start() {
           </ul>
         </div>
       </div>
+
+      <Valores />
+      <TimeGrid />
+      <CulturaComercial />
+      <Glossario />
+      <FaqNovato />
     </div>
   );
 }

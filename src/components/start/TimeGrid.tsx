@@ -1,17 +1,9 @@
-/** Grid "Quem é quem" do time comercial — agrupado por hierarquia, foto via Google OAuth. */
-import { Users, Plus, Trash2 } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { Users } from 'lucide-react';
 import { TIME } from '@/data/time';
-import { useEditableContent, useContentStore } from '@/store/contentStore';
-import { useEditor } from '@/admin/EditorContext';
-import { EditableText } from '@/admin/EditableText';
-import { Button } from '@/components/ui/button';
-import { toast } from '@/hooks/use-toast';
-import { useUserProfile } from '@/hooks/useUserProfile';
+import { supabase } from '@/integrations/supabase/client';
 import type { Pessoa } from '@/types';
 
-const STORE_KEY = 'start.time';
-
-// Ordem e rótulos dos grupos por cargo
 const GRUPOS = [
   { label: 'Sócio Fundador',         match: (c: string) => c.toLowerCase().includes('sócio') || c.toLowerCase().includes('socio') },
   { label: 'Coordenação',            match: (c: string) => c.toLowerCase().includes('coordenador') },
@@ -27,25 +19,26 @@ function getGrupo(cargo: string) {
 }
 
 export function TimeGrid() {
-  const { isEditing } = useEditor();
-  const items = useEditableContent<Pessoa[]>(STORE_KEY, TIME);
-  const saveOverride = useContentStore((s) => s.saveOverride);
-  const { avatarUrl, email } = useUserProfile();
+  const [myEmail, setMyEmail] = useState('');
+  const [myAvatar, setMyAvatar] = useState<string | null>(null);
 
-  const update = async (next: Pessoa[]) => {
-    try { await saveOverride(STORE_KEY, next); }
-    catch (e) { toast({ title: 'Falha ao salvar', description: e instanceof Error ? e.message : '', variant: 'destructive' }); }
-  };
-  const add = () => update([...items, { id: `p-${Date.now()}`, nome: 'Nova Pessoa', cargo: 'SDR', slack: '@user', bio: '' }]);
-  const remove = (idx: number) => update(items.filter((_, i) => i !== idx));
+  useEffect(() => {
+    supabase.auth.getUser().then(({ data }) => {
+      const u = data.user;
+      if (u) {
+        setMyEmail(u.email ?? '');
+        setMyAvatar(u.user_metadata?.avatar_url ?? null);
+      }
+    });
+  }, []);
 
-  // Agrupa por hierarquia mantendo a ordem dos GRUPOS
+  const items: Pessoa[] = TIME;
+
   const grupos: { label: string; pessoas: { p: Pessoa; idx: number }[] }[] = [];
   items.forEach((p, idx) => {
     const label = getGrupo(p.cargo);
     let g = grupos.find(x => x.label === label);
     if (!g) {
-      // Insere na posição correta segundo GRUPOS
       const ordem = GRUPOS.findIndex(x => x.label === label);
       let pos = grupos.findIndex(x => GRUPOS.findIndex(y => y.label === x.label) > ordem);
       if (pos === -1) pos = grupos.length;
@@ -57,29 +50,19 @@ export function TimeGrid() {
 
   return (
     <section className="cw-card p-6">
-      <div className="flex items-center justify-between mb-6">
-        <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-lg bg-cw-purple/10 flex items-center justify-center">
-            <Users className="h-4 w-4 text-cw-purple" />
-          </div>
-          <div>
-            <h2 className="text-xl font-bold text-cw-text">
-              <EditableText storeKey="start.time.titulo" defaultValue="Quem é quem no time" className="text-xl font-bold text-cw-text" />
-            </h2>
-            <p className="text-xs text-cw-muted">As pessoas que fazem a Cardápio Web acontecer todos os dias</p>
-          </div>
+      <div className="flex items-center gap-2 mb-6">
+        <div className="w-8 h-8 rounded-lg bg-cw-purple/10 flex items-center justify-center">
+          <Users className="h-4 w-4 text-cw-purple" />
         </div>
-        {isEditing && (
-          <Button size="sm" onClick={add} className="gradient-primary text-white h-8">
-            <Plus className="h-3.5 w-3.5 mr-1" /> Pessoa
-          </Button>
-        )}
+        <div>
+          <h2 className="text-xl font-bold text-cw-text">Quem é quem no time</h2>
+          <p className="text-xs text-cw-muted">As pessoas que fazem a Cardápio Web acontecer todos os dias</p>
+        </div>
       </div>
 
       <div className="space-y-8">
         {grupos.map(({ label, pessoas }) => (
           <div key={label}>
-            {/* Separador de grupo */}
             <div className="flex items-center gap-3 mb-3">
               <span className="text-[11px] font-black uppercase tracking-widest text-cw-purple">{label}</span>
               <div className="flex-1 h-px bg-cw-border" />
@@ -87,28 +70,17 @@ export function TimeGrid() {
             </div>
 
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-2">
-              {pessoas.map(({ p, idx }) => {
+              {pessoas.map(({ p }) => {
                 const initials = p.nome.split(' ').slice(0, 2).map(n => n[0]).join('').toUpperCase();
-                const isMe = !!email && (
-                  p.email === email ||
-                  p.slack?.toLowerCase().includes(email.split('@')[0].toLowerCase()) === true
+                const isMe = !!myEmail && (
+                  p.email === myEmail ||
+                  p.slack?.toLowerCase().includes(myEmail.split('@')[0].toLowerCase()) === true
                 );
 
                 return (
-                  <div key={p.id} className="group relative flex items-center gap-2.5 px-3 py-2.5 rounded-xl bg-cw-elevated border border-cw-border hover:border-cw-purple/40 hover:bg-white hover:shadow-sm transition-all duration-150">
-                    {isEditing && (
-                      <button
-                        onClick={() => remove(idx)}
-                        className="absolute top-1.5 right-1.5 h-5 w-5 rounded bg-cw-red/10 text-cw-red border border-cw-red/20 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
-                        title="Remover"
-                      >
-                        <Trash2 className="h-2.5 w-2.5" />
-                      </button>
-                    )}
-
-                    {/* Avatar — prioridade: foto Google (eu logado) > foto estática > iniciais */}
-                    {isMe && avatarUrl ? (
-                      <img src={avatarUrl} alt={p.nome} className="h-9 w-9 rounded-full object-cover shrink-0 border-2 border-cw-purple/40" referrerPolicy="no-referrer" />
+                  <div key={p.id} className="flex items-center gap-2.5 px-3 py-2.5 rounded-xl bg-cw-elevated border border-cw-border hover:border-cw-purple/40 hover:bg-white hover:shadow-sm transition-all duration-150">
+                    {isMe && myAvatar ? (
+                      <img src={myAvatar} alt={p.nome} className="h-9 w-9 rounded-full object-cover shrink-0 border-2 border-cw-purple/40" referrerPolicy="no-referrer" />
                     ) : p.foto ? (
                       <img src={p.foto} alt={p.nome} className="h-9 w-9 rounded-full object-cover shrink-0 border border-cw-border" />
                     ) : (
@@ -116,14 +88,9 @@ export function TimeGrid() {
                         {initials}
                       </div>
                     )}
-
                     <div className="min-w-0 flex-1">
-                      <p className="font-semibold text-xs text-cw-text leading-snug truncate">
-                        <EditableText storeKey={`${STORE_KEY}.${idx}.nome`} defaultValue={p.nome} className="font-semibold text-xs text-cw-text" />
-                      </p>
-                      <p className="text-[11px] text-cw-muted truncate">
-                        <EditableText storeKey={`${STORE_KEY}.${idx}.cargo`} defaultValue={p.cargo} className="text-[11px] text-cw-muted" />
-                      </p>
+                      <p className="font-semibold text-xs text-cw-text leading-snug truncate">{p.nome}</p>
+                      <p className="text-[11px] text-cw-muted truncate">{p.cargo}</p>
                     </div>
                   </div>
                 );
