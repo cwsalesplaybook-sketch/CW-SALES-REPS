@@ -8,7 +8,7 @@ import { CulturaComercial } from '@/components/start/CulturaComercial';
 import { Glossario } from '@/components/start/Glossario';
 import { FaqNovato } from '@/components/start/FaqNovato';
 import { TIMELINE_EMPRESA } from '@/data/timelineEmpresa';
-import { BookOpen, Users2, BarChart2, Target, HelpCircle } from 'lucide-react';
+import { BookOpen, Users2, BarChart2, Target, HelpCircle, ClipboardCheck } from 'lucide-react';
 
 type Papel = 'Representante' | 'Liderança';
 
@@ -19,11 +19,12 @@ const ADMIN_EMAILS: Record<string, Papel> = {
 };
 
 const PASSOS = [
-  { label: 'Leia os materiais no Playbook',       to: '/playbook',   Icon: BookOpen   },
-  { label: 'Apresente-se na Comunidade',           to: '/comunidade', Icon: Users2     },
-  { label: 'Registre oportunidades no Pipeline',   to: '/pipeline',   Icon: BarChart2  },
-  { label: 'Acompanhe sua Meta do Mes',            to: '/meta',       Icon: Target     },
-  { label: 'Tire duvidas na Central de Ajuda',     to: '/ajuda',      Icon: HelpCircle },
+  { label: 'Complete seu Onboarding',             to: '/onboarding', Icon: ClipboardCheck },
+  { label: 'Leia os materiais no Playbook',       to: '/playbook',   Icon: BookOpen       },
+  { label: 'Apresente-se na Comunidade',           to: '/comunidade', Icon: Users2         },
+  { label: 'Registre oportunidades no Pipeline',   to: '/pipeline',   Icon: BarChart2      },
+  { label: 'Acompanhe sua Meta do Mes',            to: '/meta',       Icon: Target         },
+  { label: 'Tire duvidas na Central de Ajuda',     to: '/ajuda',      Icon: HelpCircle     },
 ];
 
 function WelcomeBanner({ nome, onDismiss }: { nome: string; onDismiss: () => void }) {

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { Sparkles, Users2, BookOpen, BarChart2, Target, HelpCircle, ChevronRight, LogOut } from 'lucide-react';
+import { Sparkles, Users2, BookOpen, BarChart2, Target, HelpCircle, ChevronRight, LogOut, ClipboardCheck } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { supabase } from '@/integrations/supabase/client';
 
@@ -14,6 +14,7 @@ const SECTIONS = [
   {
     label: 'Comercial',
     items: [
+      { to: '/onboarding', label: 'Onboarding',       Icon: ClipboardCheck },
       { to: '/playbook', label: 'Playbook',         Icon: BookOpen   },
       { to: '/pipeline', label: 'Pipeline',          Icon: BarChart2  },
       { to: '/meta',     label: 'Meta do Mes',       Icon: Target     },

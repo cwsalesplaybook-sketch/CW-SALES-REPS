@@ -6,6 +6,7 @@ import { Toaster } from '@/components/ui/toaster';
 import { Sidebar } from '@/components/Sidebar';
 import Login from '@/pages/Login';
 import Start from '@/pages/Start';
+import Onboarding from '@/pages/Onboarding';
 import Comunidade from '@/pages/Comunidade';
 import Playbook from '@/pages/Playbook';
 import Pipeline from '@/pages/Pipeline';
@@ -20,6 +21,7 @@ function AppLayout() {
         <Routes>
           <Route path="/" element={<Navigate to="/start" replace />} />
           <Route path="/start" element={<Start />} />
+          <Route path="/onboarding" element={<Onboarding />} />
           <Route path="/comunidade" element={<Comunidade />} />
           <Route path="/playbook" element={<Playbook />} />
           <Route path="/pipeline" element={<Pipeline />} />

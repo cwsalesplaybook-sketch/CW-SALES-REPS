@@ -14,7 +14,7 @@ export function FaqNovato() {
     <section className="cw-card p-6">
       <div className="flex items-center gap-2 mb-4">
         <HelpCircle className="h-5 w-5 text-cw-purple-light" />
-        <h2 className="text-xl font-bold">Perguntas que todo novato faz</h2>
+        <h2 className="text-xl font-bold">Perguntas que todo representante novato faz</h2>
       </div>
       <Accordion type="single" collapsible className="w-full">
         {FAQ.map((f, i) => (
