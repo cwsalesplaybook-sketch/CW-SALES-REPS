@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { Sparkles, Users2, BookOpen, BarChart2, Target, HelpCircle, ChevronRight, LogOut, ClipboardCheck } from 'lucide-react';
+import { Sparkles, Users2, BookOpen, BarChart2, Target, HelpCircle, ChevronRight, LogOut, ClipboardCheck, KanbanSquare } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { supabase } from '@/integrations/supabase/client';
 
-const SECTIONS = [
+const REP_SECTIONS = [
   {
     label: 'Comunidade',
     items: [
@@ -14,11 +14,36 @@ const SECTIONS = [
   {
     label: 'Comercial',
     items: [
-      { to: '/onboarding', label: 'Onboarding',       Icon: ClipboardCheck },
-      { to: '/playbook', label: 'Playbook',         Icon: BookOpen   },
-      { to: '/pipeline', label: 'Pipeline',          Icon: BarChart2  },
-      { to: '/meta',     label: 'Meta do Mes',       Icon: Target     },
-      { to: '/ajuda',    label: 'Central de Ajuda',  Icon: HelpCircle },
+      { to: '/onboarding', label: 'Onboarding',      Icon: ClipboardCheck },
+      { to: '/playbook',   label: 'Playbook',        Icon: BookOpen       },
+      { to: '/pipeline',   label: 'Pipeline',        Icon: BarChart2      },
+      { to: '/meta',       label: 'Meta do Mes',     Icon: Target         },
+      { to: '/ajuda',      label: 'Central de Ajuda', Icon: HelpCircle   },
+    ],
+  },
+];
+
+const INTERNAL_SECTIONS = [
+  {
+    label: 'Gestao',
+    items: [
+      { to: '/kanban', label: 'Kanban Reps', Icon: KanbanSquare },
+    ],
+  },
+  {
+    label: 'Comunidade',
+    items: [
+      { to: '/comunidade', label: 'Comunidade', Icon: Users2 },
+    ],
+  },
+  {
+    label: 'Comercial',
+    items: [
+      { to: '/onboarding', label: 'Onboarding',      Icon: ClipboardCheck },
+      { to: '/playbook',   label: 'Playbook',        Icon: BookOpen       },
+      { to: '/pipeline',   label: 'Pipeline',        Icon: BarChart2      },
+      { to: '/meta',       label: 'Meta do Mes',     Icon: Target         },
+      { to: '/ajuda',      label: 'Central de Ajuda', Icon: HelpCircle   },
     ],
   },
 ];
@@ -29,18 +54,23 @@ function initials(name: string) {
 
 export function Sidebar() {
   const [user, setUser] = useState<{ name: string; email: string; avatar: string | null } | null>(null);
+  const [isInternal, setIsInternal] = useState(false);
 
   useEffect(() => {
     supabase.auth.getUser().then(({ data }) => {
       const u = data.user;
       if (!u) return;
+      const email = u.email ?? '';
+      setIsInternal(email.toLowerCase().endsWith('@cardapioweb.com'));
       setUser({
-        name: u.user_metadata?.full_name ?? u.email?.split('@')[0] ?? 'Representante',
-        email: u.email ?? '',
+        name: u.user_metadata?.full_name ?? email.split('@')[0] ?? 'Representante',
+        email,
         avatar: u.user_metadata?.avatar_url ?? null,
       });
     });
   }, []);
+
+  const SECTIONS = isInternal ? INTERNAL_SECTIONS : REP_SECTIONS;
 
   return (
     <aside
@@ -57,13 +87,13 @@ export function Sidebar() {
           />
         </div>
         <p className="text-center text-[10px] text-[#7c5aa8] uppercase tracking-[0.2em] font-bold">
-          Representantes
+          {isInternal ? 'Equipe Interna' : 'Representantes'}
         </p>
       </div>
 
       {/* Nav */}
       <nav className="flex-1 px-3 py-2 overflow-y-auto scrollbar-cw space-y-4">
-        {/* Comece Aqui — destaque amarelo */}
+        {/* Comece Aqui */}
         <NavLink
           to="/start"
           className="flex items-center gap-2.5 px-3 py-2.5 rounded-2xl font-bold text-[13px] text-[#1a0020] transition-all duration-150 hover:brightness-110 shadow-lg"
@@ -77,7 +107,7 @@ export function Sidebar() {
           <ChevronRight className="h-4 w-4 opacity-60" />
         </NavLink>
 
-        {/* Secoes */}
+        {/* Sections */}
         {SECTIONS.map(section => (
           <div key={section.label}>
             <p className="px-1 mb-1 text-[10px] font-bold uppercase tracking-[0.18em] text-[#7c5aa8]">
@@ -122,7 +152,9 @@ export function Sidebar() {
             )}
             <div className="flex-1 min-w-0 text-left">
               <p className="text-[12px] font-semibold text-white truncate leading-tight">{user.name}</p>
-              <p className="text-[10px] text-[#7c5aa8] truncate leading-tight">Representante</p>
+              <p className="text-[10px] text-[#7c5aa8] truncate leading-tight">
+                {isInternal ? 'Equipe Cardapio Web' : 'Representante'}
+              </p>
             </div>
           </div>
         )}
