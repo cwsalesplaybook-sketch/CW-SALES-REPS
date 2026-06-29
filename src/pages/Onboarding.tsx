@@ -57,7 +57,7 @@ export default function Onboarding() {
   const pct    = Math.round((feitos / total) * 100);
 
   return (
-    <div className="p-8 max-w-3xl space-y-8">
+    <div className="p-8 space-y-8">
       {/* Header */}
       <div>
         <h1 className="text-2xl font-black text-cw-text">Onboarding</h1>

@@ -1,4 +1,4 @@
-import { ExternalLink, ChevronDown, ChevronUp } from 'lucide-react';
+import { ExternalLink, ChevronDown, ChevronUp, BookOpen, Wrench, FileText, DollarSign, Handshake } from 'lucide-react';
 import { useState } from 'react';
 
 interface Artigo {
@@ -6,6 +6,9 @@ interface Artigo {
   fonte: string;
   url: string;
   tag: string;
+  tagColor: string;
+  Icon: React.ComponentType<{ className?: string }>;
+  preview: string;
   pontos: string[];
   conclusao: string;
 }
@@ -16,6 +19,9 @@ const ARTIGOS: Artigo[] = [
     fonte: 'Canalize PRM',
     url: 'https://canalizeprm.com.br/blog/como-usar-prm-do-vendor-para-vender-mais/',
     tag: 'Ferramentas',
+    tagColor: 'bg-cw-purple/10 text-cw-purple border-cw-purple/20',
+    Icon: Wrench,
+    preview: 'O PRM é a central que organiza operações comerciais, acompanha resultados e fortalece o relacionamento com a empresa parceira.',
     pontos: [
       'O PRM e uma central para organizar operacoes comerciais, acompanhar resultados e fortalecer relacionamentos com a empresa parceira.',
       'Estruturar e monitorar o proprio funil de vendas no PRM melhora a taxa de conversao, mantendo visibilidade de indicacoes, qualificacao, negociacao e fechamento.',
@@ -30,6 +36,9 @@ const ARTIGOS: Artigo[] = [
     fonte: 'Canalize PRM',
     url: 'https://canalizeprm.com.br/blog/direitos-e-deveres-do-parceiro/',
     tag: 'Contrato',
+    tagColor: 'bg-blue-50 text-blue-700 border-blue-200',
+    Icon: FileText,
+    preview: 'O contrato define obrigações, prazos, remuneração e condições de encerramento — a base de qualquer parceria sólida.',
     pontos: [
       'O contrato estabelece obrigacoes, prazos, remuneracao, treinamentos e condicoes de encerramento, dando previsibilidade para a atuacao conjunta.',
       'Direitos essenciais do parceiro: acesso a materiais de apoio, remuneracao transparente, suporte tecnico e participacao em campanhas.',
@@ -44,6 +53,9 @@ const ARTIGOS: Artigo[] = [
     fonte: 'Canalize PRM',
     url: 'https://canalizeprm.com.br/blog/revenue-share-vs-comissao-parceiros/',
     tag: 'Remuneracao',
+    tagColor: 'bg-amber-50 text-amber-700 border-amber-200',
+    Icon: DollarSign,
+    preview: 'Comissão, margem ou revenue share — cada modelo tem o seu perfil ideal de parceiro. Entenda qual combina com você.',
     pontos: [
       'Comissao: modelo simples onde o parceiro recebe valor fixo ou percentual por venda. Ideal para indicacoes, mas pode limitar ganhos de canais maiores.',
       'Margem: o parceiro compra com desconto e revende, obtendo autonomia na precificacao. Excelente para revendedores, mas demanda mais estrutura.',
@@ -58,6 +70,9 @@ const ARTIGOS: Artigo[] = [
     fonte: 'Canalize PRM',
     url: 'https://canalizeprm.com.br/blog/o-erro-de-tratar-parceiro-como-cliente/',
     tag: 'Relacionamento',
+    tagColor: 'bg-green-50 text-green-700 border-green-200',
+    Icon: Handshake,
+    preview: 'Parceiros são agentes estratégicos de crescimento mútuo, não consumidores finais. Essa diferença muda tudo.',
     pontos: [
       'Parceiros sao agentes estrategicos de crescimento mutuo, nao consumidores finais. Essa diferenca muda tudo na forma de se relacionar.',
       'Erros comuns: onboarding generico, suporte apenas reativo, cobranca constante por vendas e pouco estimulo ao engajamento.',
@@ -69,28 +84,44 @@ const ARTIGOS: Artigo[] = [
   },
 ];
 
+const MATERIAIS = [
+  'Apresentacao de produto Cardapio Web',
+  'Tabela de planos e precos atualizada',
+  'Guia de objecoes mais comuns',
+  'Script de abordagem inicial',
+  'Manual de onboarding de novos clientes',
+];
+
 function ArtigoCard({ artigo }: { artigo: Artigo }) {
   const [aberto, setAberto] = useState(false);
+  const Icon = artigo.Icon;
 
   return (
-    <div className="cw-card overflow-hidden">
+    <div className="cw-card overflow-hidden flex flex-col">
       <button
         onClick={() => setAberto(!aberto)}
-        className="w-full text-left p-5 flex items-start gap-4 hover:bg-cw-elevated transition-colors"
+        className="text-left p-5 hover:bg-cw-elevated transition-colors"
       >
-        <div className="flex-1 min-w-0">
-          <div className="flex items-center gap-2 mb-2 flex-wrap">
-            <span className="text-[10px] font-bold text-cw-purple bg-cw-purple/10 rounded-full px-2.5 py-0.5">
-              {artigo.tag}
-            </span>
-            <span className="text-[10px] text-cw-muted">{artigo.fonte}</span>
+        <div className="flex items-start gap-3 mb-3">
+          <div className="w-9 h-9 rounded-lg gradient-primary flex items-center justify-center shrink-0">
+            <Icon className="h-4 w-4 text-white" />
           </div>
-          <p className="text-sm font-bold text-cw-text leading-snug">{artigo.titulo}</p>
+          <div className="flex-1 min-w-0">
+            <div className="flex items-center gap-2 mb-1.5 flex-wrap">
+              <span className={`text-[10px] font-bold rounded-md px-2 py-0.5 border ${artigo.tagColor}`}>
+                {artigo.tag}
+              </span>
+              <span className="text-[10px] text-cw-muted">{artigo.fonte}</span>
+            </div>
+            <p className="text-sm font-bold text-cw-text leading-snug">{artigo.titulo}</p>
+          </div>
+          <div className="shrink-0 mt-0.5 text-cw-muted">
+            {aberto ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+          </div>
         </div>
-        {aberto
-          ? <ChevronUp className="h-4 w-4 text-cw-muted shrink-0 mt-0.5" />
-          : <ChevronDown className="h-4 w-4 text-cw-muted shrink-0 mt-0.5" />
-        }
+        {!aberto && (
+          <p className="text-xs text-cw-muted leading-relaxed line-clamp-2 pl-12">{artigo.preview}</p>
+        )}
       </button>
 
       {aberto && (
@@ -121,39 +152,43 @@ function ArtigoCard({ artigo }: { artigo: Artigo }) {
   );
 }
 
-const MATERIAIS = [
-  'Apresentacao de produto Cardapio Web',
-  'Tabela de planos e precos atualizada',
-  'Guia de objecoes mais comuns',
-  'Script de abordagem inicial',
-  'Manual de onboarding de novos clientes',
-];
-
 export default function Playbook() {
   return (
-    <div className="p-8 space-y-8 max-w-4xl">
-      <div>
-        <h1 className="text-2xl font-black text-cw-text">Playbook</h1>
-        <p className="text-sm text-cw-muted mt-0.5">
-          Leituras e materiais para representantes de canal da Cardapio Web.
-        </p>
+    <div className="p-8 space-y-8">
+      <div className="flex items-start justify-between flex-wrap gap-4">
+        <div>
+          <h1 className="text-2xl font-black text-cw-text">Playbook</h1>
+          <p className="text-sm text-cw-muted mt-0.5">
+            Leituras e materiais para representantes de canal da Cardapio Web.
+          </p>
+        </div>
+        <div className="flex gap-3">
+          {[
+            { n: ARTIGOS.length, label: 'artigos' },
+            { n: MATERIAIS.length, label: 'materiais' },
+          ].map(({ n, label }) => (
+            <div key={label} className="cw-card px-4 py-2.5 flex items-center gap-2">
+              <BookOpen className="h-4 w-4 text-cw-purple" />
+              <span className="text-sm font-black text-cw-text">{n}</span>
+              <span className="text-xs text-cw-muted">{label}</span>
+            </div>
+          ))}
+        </div>
       </div>
 
-      {/* Artigos com conteudo real */}
       <div>
-        <h2 className="text-xs font-bold text-cw-muted uppercase tracking-widest mb-4">
+        <p className="text-xs font-bold text-cw-muted uppercase tracking-widest mb-4">
           Leitura recomendada — Canalize PRM
-        </h2>
-        <div className="space-y-3">
+        </p>
+        <div className="grid md:grid-cols-2 gap-4">
           {ARTIGOS.map((a) => (
             <ArtigoCard key={a.url} artigo={a} />
           ))}
         </div>
       </div>
 
-      {/* Materiais internos */}
       <div>
-        <h2 className="text-xs font-bold text-cw-muted uppercase tracking-widest mb-4">Materiais internos</h2>
+        <p className="text-xs font-bold text-cw-muted uppercase tracking-widest mb-4">Materiais internos</p>
         <div className="cw-card divide-y divide-cw-border">
           {MATERIAIS.map((m) => (
             <div key={m} className="flex items-center gap-3 px-5 py-3.5">

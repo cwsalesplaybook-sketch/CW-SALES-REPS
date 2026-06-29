@@ -128,7 +128,7 @@ export default function Comunidade() {
   }
 
   return (
-    <div className="p-6 md:p-8 max-w-2xl mx-auto space-y-5">
+    <div className="p-6 md:p-8 space-y-5">
       <div>
         <h1 className="text-2xl font-black text-cw-text">Comunidade</h1>
         <p className="text-sm text-cw-muted mt-0.5">Compartilhe conquistas, aprendizados e novidades com outros representantes.</p>

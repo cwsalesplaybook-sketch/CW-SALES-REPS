@@ -5,12 +5,9 @@ import { supabase } from '@/integrations/supabase/client';
 import type { Pessoa } from '@/types';
 
 const GRUPOS = [
-  { label: 'Sócio Fundador',         match: (c: string) => c.toLowerCase().includes('sócio') || c.toLowerCase().includes('socio') },
-  { label: 'Coordenação',            match: (c: string) => c.toLowerCase().includes('coordenador') },
-  { label: 'Liderança',              match: (c: string) => c.toLowerCase().includes('liderança') || c.toLowerCase().includes('lideranca') || c.toLowerCase().includes('supervisor') || c.toLowerCase().includes('supervisora') },
-  { label: 'Analistas & Assessores', match: (c: string) => c.toLowerCase().includes('analista') || c.toLowerCase().includes('assessor') },
-  { label: 'Closers',                match: (c: string) => c.toLowerCase().includes('closer') },
-  { label: 'SDRs',                   match: (c: string) => c.toLowerCase().includes('sdr') },
+  { label: 'Sócio Fundador', match: (c: string) => c.toLowerCase().includes('sócio') || c.toLowerCase().includes('socio') },
+  { label: 'Liderança',      match: (c: string) => c.toLowerCase().includes('liderança') || c.toLowerCase().includes('lideranca') || c.toLowerCase().includes('head') },
+  { label: 'PSM',            match: (c: string) => c.toLowerCase().includes('psm') },
 ];
 
 function getGrupo(cargo: string) {

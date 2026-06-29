@@ -27,7 +27,7 @@ const FAQ = [
 
 export default function Ajuda() {
   return (
-    <div className="p-6 md:p-8 max-w-3xl mx-auto space-y-8">
+    <div className="p-6 md:p-8 space-y-8">
       <div>
         <h1 className="text-2xl font-black text-cw-text">Central de Ajuda</h1>
         <p className="text-sm text-cw-muted mt-0.5">Duvidas frequentes sobre o programa de representantes da Cardapio Web.</p>

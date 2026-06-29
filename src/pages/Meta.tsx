@@ -2,7 +2,7 @@ import { Target } from 'lucide-react';
 
 export default function Meta() {
   return (
-    <div className="p-6 md:p-8 max-w-4xl mx-auto space-y-6">
+    <div className="p-6 md:p-8 space-y-6">
       <div>
         <h1 className="text-2xl font-black text-cw-text">Meta do Mes</h1>
         <p className="text-sm text-cw-muted mt-0.5">Visualize e acompanhe sua meta mensal em tempo real.</p>
