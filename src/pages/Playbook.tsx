@@ -180,6 +180,25 @@ export default function Playbook() {
         </div>
       </div>
 
+      <div className="space-y-6">
+        <p className="text-xs font-bold text-cw-muted uppercase tracking-widest">
+          Central de Ajuda — Sistema Cardápio Web
+        </p>
+        {[
+          { titulo: '🏁 Primeiros Passos', Componente: PlaybookPrimeirosPassos },
+          { titulo: '🗂️ Gestão', Componente: PlaybookGestaoCW },
+          { titulo: '🤖 Automação', Componente: PlaybookAutomacaoCW },
+          { titulo: '📈 Aumento de Vendas', Componente: PlaybookAumentoVendasCW },
+          { titulo: '🧩 Módulos do Sistema', Componente: PlaybookModulosCW },
+          { titulo: '🎧 Suporte', Componente: PlaybookSuporteCW },
+        ].map(({ titulo, Componente }) => (
+          <div key={titulo}>
+            <p className="text-sm font-bold text-cw-text mb-3">{titulo}</p>
+            <Componente />
+          </div>
+        ))}
+      </div>
+
       <div>
         <p className="text-xs font-bold text-cw-muted uppercase tracking-widest mb-4">
           Leitura recomendada — Canalize PRM
@@ -204,25 +223,6 @@ export default function Playbook() {
             </div>
           ))}
         </div>
-      </div>
-
-      <div className="space-y-6">
-        <p className="text-xs font-bold text-cw-muted uppercase tracking-widest">
-          Central de Ajuda — Sistema Cardápio Web
-        </p>
-        {[
-          { titulo: '🏁 Primeiros Passos', Componente: PlaybookPrimeirosPassos },
-          { titulo: '🗂️ Gestão', Componente: PlaybookGestaoCW },
-          { titulo: '🤖 Automação', Componente: PlaybookAutomacaoCW },
-          { titulo: '📈 Aumento de Vendas', Componente: PlaybookAumentoVendasCW },
-          { titulo: '🧩 Módulos do Sistema', Componente: PlaybookModulosCW },
-          { titulo: '🎧 Suporte', Componente: PlaybookSuporteCW },
-        ].map(({ titulo, Componente }) => (
-          <div key={titulo}>
-            <p className="text-sm font-bold text-cw-text mb-3">{titulo}</p>
-            <Componente />
-          </div>
-        ))}
       </div>
     </div>
   );
