@@ -4,6 +4,7 @@ import { supabase } from '@/integrations/supabase/client';
 import type { Session } from '@supabase/supabase-js';
 import { Toaster } from '@/components/ui/toaster';
 import { Sidebar } from '@/components/Sidebar';
+import { RepAssistant } from '@/components/RepAssistant';
 import Login from '@/pages/Login';
 import Start from '@/pages/Start';
 import Onboarding from '@/pages/Onboarding';
@@ -32,6 +33,7 @@ function AppLayout() {
           <Route path="*"          element={<Navigate to="/start" replace />} />
         </Routes>
       </main>
+      <RepAssistant />
     </div>
   );
 }

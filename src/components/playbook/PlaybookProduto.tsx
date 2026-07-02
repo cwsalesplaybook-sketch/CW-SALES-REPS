@@ -1,5 +1,6 @@
 /** Aba Produto — 3 focos da CW, funcionalidades por plano e módulos extras. */
-import { Bot, TrendingUp, BarChart3, Check, ExternalLink } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Bot, TrendingUp, BarChart3, Check, ExternalLink, ArrowRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 const FOCOS = [
@@ -102,12 +103,12 @@ const PLANOS = [
 ];
 
 const MODULOS = [
-  { nome: 'Módulo iFood', desc: 'Integração completa com iFood' },
-  { nome: 'Estoque Avançado', desc: 'Com ficha técnica de insumos' },
-  { nome: 'Cupom Fiscal', desc: 'Emissão de NF-e/NFC-e' },
-  { nome: 'Entregadores', desc: 'Gestão e rotas de entrega' },
-  { nome: 'Financeiro', desc: 'Gestão financeira completa' },
-  { nome: 'Totem', desc: 'Autoatendimento touchscreen — cliente faz o pedido sozinho, com pagamento integrado. R$99,99/dispositivo.' },
+  { nome: 'Módulo iFood', desc: 'Integração completa com iFood', link: '/playbook?tab=modulos-cw&q=29' },
+  { nome: 'Estoque Avançado', desc: 'Com ficha técnica de insumos', link: '/playbook?tab=modulos-cw&q=26' },
+  { nome: 'Cupom Fiscal', desc: 'Emissão de NF-e/NFC-e', link: '/playbook?tab=modulos-cw&q=30' },
+  { nome: 'Entregadores', desc: 'Gestão e rotas de entrega', link: '/playbook?tab=modulos-cw&q=28' },
+  { nome: 'Financeiro', desc: 'Gestão financeira completa', link: '/playbook?tab=modulos-cw&q=27' },
+  { nome: 'Totem', desc: 'Autoatendimento touchscreen — cliente faz o pedido sozinho, com pagamento integrado. R$99,99/dispositivo.', link: '/playbook?tab=faq&q=totem' },
 ];
 
 export function PlaybookProduto() {
@@ -189,10 +190,15 @@ export function PlaybookProduto() {
         <p className="text-[10px] font-black text-cw-purple uppercase tracking-widest mb-3">Módulos extras (add-ons)</p>
         <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
           {MODULOS.map(m => (
-            <div key={m.nome} className="cw-card p-4">
-              <p className="text-sm font-bold text-cw-text">{m.nome}</p>
-              <p className="text-xs text-cw-muted mt-0.5">{m.desc}</p>
-            </div>
+            <Link key={m.nome} to={m.link} className="cw-card cw-card-hover p-4 flex flex-col justify-between group">
+              <div>
+                <p className="text-sm font-bold text-cw-text">{m.nome}</p>
+                <p className="text-xs text-cw-muted mt-0.5">{m.desc}</p>
+              </div>
+              <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-cw-purple mt-2 group-hover:gap-1.5 transition-all">
+                Ver artigo <ArrowRight className="h-3 w-3" />
+              </span>
+            </Link>
           ))}
         </div>
       </div>

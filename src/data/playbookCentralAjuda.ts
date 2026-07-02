@@ -19,6 +19,22 @@ export const CENTRAL_AJUDA_INTRO: string[] = [
   "Data de compilação: Julho de 2026"
 ];
 
+/** Agrupa as seções numeradas por aba do Playbook — fonte única usada tanto
+ *  para renderizar os accordions quanto para o assistente de busca fazer
+ *  o deep-link direto pro artigo certo. */
+export const GRUPOS_TOPICO: { tab: string; numeros: number[] }[] = [
+  { tab: 'primeiros-passos', numeros: [1, 3, 4] },
+  { tab: 'gestao-cw',        numeros: [5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20] },
+  { tab: 'automacao-cw',     numeros: [21, 22, 23] },
+  { tab: 'vendas-cw',        numeros: [24, 25] },
+  { tab: 'modulos-cw',       numeros: [26, 27, 28, 29, 30] },
+  { tab: 'suporte-cw',       numeros: [31] },
+];
+
+export const NUMERO_TAB: Record<number, string> = Object.fromEntries(
+  GRUPOS_TOPICO.flatMap((g) => g.numeros.map((n) => [n, g.tab] as const)),
+);
+
 export const CENTRAL_AJUDA_SECOES: CentralAjudaSecao[] = [
   {
     "numero": 1,

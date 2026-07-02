@@ -3,6 +3,7 @@
  *  generico (Cultura, Produto, Planos, Concorrentes, Cargos, ICP, Hacks,
  *  Objecoes, Motivos de Perda) e "Em construcao" onde falta conteudo
  *  especifico de representantes (Territorio, Abordagem, Negociacao, Fechamento). */
+import { useSearchParams } from 'react-router-dom';
 import { Briefcase, Target, Lightbulb, Swords, XCircle, ExternalLink } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { CARGOS, HACKS, OBJECOES, MOTIVOS_PERDA, PLAYBOOK_URL } from '@/data/playbook';
@@ -11,6 +12,7 @@ import CulturaEstrategia from './CulturaEstrategia';
 import { PlaybookProduto } from './PlaybookProduto';
 import { PlaybookPlanos } from './PlaybookPlanos';
 import { PlaybookConcorrentes } from './PlaybookConcorrentes';
+import PlaybookFaq from './PlaybookFaq';
 import {
   PlaybookPrimeirosPassos, PlaybookGestaoCW, PlaybookAutomacaoCW,
   PlaybookAumentoVendasCW, PlaybookModulosCW, PlaybookSuporteCW,
@@ -36,6 +38,7 @@ const TABS = [
   { id: 'objecoes',     label: '⚡ Objeções' },
   { id: 'fechamento',   label: '🤝 Fechamento' },
   { id: 'perda',        label: '❌ Motivos de Perda' },
+  { id: 'faq',          label: '❔ FAQ' },
   { id: 'materiais',    label: '📚 Materiais' },
 ];
 
@@ -260,17 +263,21 @@ const CONTEUDO: Record<string, React.ComponentType> = {
   hacks: Hacks,
   objecoes: Objecoes,
   perda: MotivosPerda,
+  faq: PlaybookFaq,
   materiais: Materiais,
 };
 
 export default function PlaybookRepresentantes() {
+  const [searchParams] = useSearchParams();
+  const tabFromUrl = searchParams.get('tab') ?? 'cultura';
+
   return (
     <div className="p-8">
       <div className="mb-6">
         <h1 className="text-2xl font-black text-cw-text">Playbook de Representantes</h1>
         <p className="text-sm text-cw-muted mt-1">Conteúdo exclusivo para o time de Representantes da Cardápio Web.</p>
       </div>
-      <Tabs defaultValue="cultura" className="w-full">
+      <Tabs defaultValue={tabFromUrl} key={tabFromUrl} className="w-full">
         <div className="overflow-x-auto scrollbar-cw -mx-1 pb-2">
           <TabsList className="bg-cw-surface border border-cw-border p-1 inline-flex w-max">
             {TABS.map(t => (

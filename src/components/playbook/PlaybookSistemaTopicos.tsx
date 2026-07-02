@@ -1,11 +1,14 @@
 /** Tópicos do sistema Cardápio Web — conteúdo da Central de Ajuda, dividido por
  *  setor/assunto em abas próprias do Playbook (Primeiros Passos, Gestão, Automação,
- *  Aumento de Vendas, Módulos do Sistema, Suporte). Dados em src/data/playbookCentralAjuda.ts. */
-import { useMemo, useState } from 'react';
+ *  Aumento de Vendas, Módulos do Sistema, Suporte). Dados em src/data/playbookCentralAjuda.ts.
+ *  Suporta deep-link via ?q= (numero da seção ou palavra-chave) vindo do assistente
+ *  de busca ou de outros links do Playbook — abre e rola até o artigo certo. */
+import { useEffect, useMemo, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { Search } from 'lucide-react';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Input } from '@/components/ui/input';
-import { CENTRAL_AJUDA_SECOES, type CentralAjudaSecao } from '@/data/playbookCentralAjuda';
+import { CENTRAL_AJUDA_SECOES, GRUPOS_TOPICO, type CentralAjudaSecao } from '@/data/playbookCentralAjuda';
 
 function normalizar(txt: string) {
   return txt.normalize('NFD').replace(new RegExp('[̀-ͯ]', 'g'), '').toLowerCase();
@@ -20,6 +23,15 @@ function secaoContemBusca(secao: CentralAjudaSecao, busca: string) {
     if (b.itens && b.itens.some((i) => normalizar(i).includes(alvo))) return true;
     return false;
   });
+}
+
+function pontuarSecao(secao: CentralAjudaSecao, q: string) {
+  const alvo = normalizar(q);
+  const titulo = normalizar(secao.titulo);
+  if (titulo === alvo) return 6;
+  if (titulo.includes(alvo)) return 4;
+  if (secaoContemBusca(secao, q)) return 1;
+  return 0;
 }
 
 function BlocoView({ bloco }: { bloco: CentralAjudaSecao['blocos'][number] }) {
@@ -43,12 +55,38 @@ function BlocoView({ bloco }: { bloco: CentralAjudaSecao['blocos'][number] }) {
 
 /** Accordion de tópicos, com busca por palavra-chave — usado por cada aba de setor. */
 function TopicosAccordion({ secoes, buscaPlaceholder }: { secoes: CentralAjudaSecao[]; buscaPlaceholder: string }) {
-  const [busca, setBusca] = useState('');
+  const [searchParams] = useSearchParams();
+  const qParam = searchParams.get('q') ?? '';
+  const [busca, setBusca] = useState(qParam);
 
   const filtradas = useMemo(
     () => secoes.filter((s) => secaoContemBusca(s, busca)),
     [secoes, busca],
   );
+
+  const melhorMatch = useMemo(() => {
+    if (!qParam) return null;
+    if (/^\d+$/.test(qParam)) {
+      const direto = secoes.find((s) => String(s.numero) === qParam);
+      if (direto) return direto;
+    }
+    let melhor: CentralAjudaSecao | null = null;
+    let melhorScore = 0;
+    for (const s of secoes) {
+      const score = pontuarSecao(s, qParam);
+      if (score > melhorScore) { melhor = s; melhorScore = score; }
+    }
+    return melhor;
+  }, [secoes, qParam]);
+
+  useEffect(() => {
+    if (!melhorMatch) return;
+    const el = document.getElementById(`central-ajuda-${melhorMatch.numero}`);
+    if (el) {
+      const t = setTimeout(() => el.scrollIntoView({ behavior: 'smooth', block: 'start' }), 150);
+      return () => clearTimeout(t);
+    }
+  }, [melhorMatch]);
 
   return (
     <div className="space-y-4">
@@ -69,12 +107,13 @@ function TopicosAccordion({ secoes, buscaPlaceholder }: { secoes: CentralAjudaSe
           Nenhum resultado para essa busca.
         </div>
       ) : (
-        <Accordion type="single" collapsible className="space-y-2">
+        <Accordion type="single" collapsible defaultValue={melhorMatch ? `st-${melhorMatch.numero}` : undefined} className="space-y-2">
           {filtradas.map((secao) => (
             <AccordionItem
               key={secao.numero}
+              id={`central-ajuda-${secao.numero}`}
               value={`st-${secao.numero}`}
-              className="border border-cw-border rounded-lg px-4 bg-cw-surface hover:border-cw-purple/50 transition-colors"
+              className="border border-cw-border rounded-lg px-4 bg-cw-surface hover:border-cw-purple/50 transition-colors scroll-mt-4"
             >
               <AccordionTrigger className="text-sm font-semibold text-cw-text hover:no-underline py-3 text-left">
                 {secao.titulo}
@@ -92,32 +131,34 @@ function TopicosAccordion({ secoes, buscaPlaceholder }: { secoes: CentralAjudaSe
   );
 }
 
-function porNumero(numeros: number[]): CentralAjudaSecao[] {
-  return numeros
+function secoesPorTab(tab: string): CentralAjudaSecao[] {
+  const grupo = GRUPOS_TOPICO.find((g) => g.tab === tab);
+  if (!grupo) return [];
+  return grupo.numeros
     .map((n) => CENTRAL_AJUDA_SECOES.find((s) => s.numero === n))
     .filter((s): s is CentralAjudaSecao => Boolean(s));
 }
 
 export function PlaybookPrimeirosPassos() {
-  return <TopicosAccordion secoes={porNumero([1, 3, 4])} buscaPlaceholder="Buscar (ex: senha, login, cardápio demo...)" />;
+  return <TopicosAccordion secoes={secoesPorTab('primeiros-passos')} buscaPlaceholder="Buscar (ex: senha, login, cardápio demo...)" />;
 }
 
 export function PlaybookGestaoCW() {
-  return <TopicosAccordion secoes={porNumero([5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20])} buscaPlaceholder="Buscar (ex: mesas, KDS, caixa, catálogo, fiado...)" />;
+  return <TopicosAccordion secoes={secoesPorTab('gestao-cw')} buscaPlaceholder="Buscar (ex: mesas, KDS, caixa, catálogo, fiado...)" />;
 }
 
 export function PlaybookAutomacaoCW() {
-  return <TopicosAccordion secoes={porNumero([21, 22, 23])} buscaPlaceholder="Buscar (ex: chatbot, disparo, integração...)" />;
+  return <TopicosAccordion secoes={secoesPorTab('automacao-cw')} buscaPlaceholder="Buscar (ex: chatbot, disparo, integração...)" />;
 }
 
 export function PlaybookAumentoVendasCW() {
-  return <TopicosAccordion secoes={porNumero([24, 25])} buscaPlaceholder="Buscar (ex: cupom, fidelidade, cashback...)" />;
+  return <TopicosAccordion secoes={secoesPorTab('vendas-cw')} buscaPlaceholder="Buscar (ex: cupom, fidelidade, cashback...)" />;
 }
 
 export function PlaybookModulosCW() {
-  return <TopicosAccordion secoes={porNumero([26, 27, 28, 29, 30])} buscaPlaceholder="Buscar (ex: estoque, financeiro, fiscal, entregadores...)" />;
+  return <TopicosAccordion secoes={secoesPorTab('modulos-cw')} buscaPlaceholder="Buscar (ex: estoque, financeiro, fiscal, entregadores...)" />;
 }
 
 export function PlaybookSuporteCW() {
-  return <TopicosAccordion secoes={porNumero([31])} buscaPlaceholder="Buscar" />;
+  return <TopicosAccordion secoes={secoesPorTab('suporte-cw')} buscaPlaceholder="Buscar" />;
 }
