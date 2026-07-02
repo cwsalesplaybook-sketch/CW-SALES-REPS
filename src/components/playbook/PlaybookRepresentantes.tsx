@@ -3,9 +3,16 @@
  *  generico (Cultura, Produto, Planos, Concorrentes, Cargos, ICP, Hacks,
  *  Objecoes, Motivos de Perda) e "Em construcao" onde falta conteudo
  *  especifico de representantes (Territorio, Abordagem, Negociacao, Fechamento). */
+import { useEffect, useRef, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { Briefcase, Target, Lightbulb, Swords, XCircle, ExternalLink } from 'lucide-react';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import {
+  Briefcase, Target, Lightbulb, Swords, XCircle, ExternalLink,
+  Compass, Box, Rocket, FolderKanban, Bot, TrendingUp, Puzzle, Headphones,
+  DollarSign, Flag, Megaphone, Repeat, Handshake, HelpCircle, BookOpen,
+  ChevronRight, type LucideIcon,
+} from 'lucide-react';
+import { Tabs, TabsContent } from '@/components/ui/tabs';
+import { cn } from '@/lib/utils';
 import { CARGOS, HACKS, OBJECOES, MOTIVOS_PERDA, PLAYBOOK_URL } from '@/data/playbook';
 import { ARTIGOS, MATERIAIS, ArtigoCard } from '@/pages/Playbook';
 import CulturaEstrategia from './CulturaEstrategia';
@@ -18,28 +25,42 @@ import {
   PlaybookAumentoVendasCW, PlaybookModulosCW, PlaybookSuporteCW,
 } from './PlaybookSistemaTopicos';
 
-const TABS = [
-  { id: 'cultura',      label: '🧭 Cultura & Estratégia' },
-  { id: 'produto',      label: '🛠️ Produto' },
-  { id: 'primeiros-passos', label: '🏁 Primeiros Passos' },
-  { id: 'gestao-cw',    label: '🗂️ Gestão' },
-  { id: 'automacao-cw', label: '🤖 Automação' },
-  { id: 'vendas-cw',    label: '📈 Aumento de Vendas' },
-  { id: 'modulos-cw',   label: '🧩 Módulos do Sistema' },
-  { id: 'suporte-cw',   label: '🎧 Suporte' },
-  { id: 'planos',       label: '💰 Planos & Preços' },
-  { id: 'concorrentes', label: '⚔️ Concorrentes' },
-  { id: 'territorio',   label: '🗺️ Território' },
-  { id: 'cargos',       label: '📋 Cargos' },
-  { id: 'icp',          label: '🎯 ICP' },
-  { id: 'abordagem',    label: '📣 Abordagem' },
-  { id: 'negociacao',   label: '🔄 Negociação' },
-  { id: 'hacks',        label: '💡 Hacks' },
-  { id: 'objecoes',     label: '⚡ Objeções' },
-  { id: 'fechamento',   label: '🤝 Fechamento' },
-  { id: 'perda',        label: '❌ Motivos de Perda' },
-  { id: 'faq',          label: '❔ FAQ' },
-  { id: 'materiais',    label: '📚 Materiais' },
+type Cor = 'purple' | 'blue' | 'green' | 'orange' | 'teal' | 'red' | 'yellow' | 'pink' | 'gray';
+
+const CORES: Record<Cor, { bg: string; text: string }> = {
+  purple: { bg: 'bg-cw-purple/15', text: 'text-cw-purple' },
+  blue:   { bg: 'bg-blue-100',     text: 'text-blue-600' },
+  green:  { bg: 'bg-emerald-100',  text: 'text-emerald-600' },
+  orange: { bg: 'bg-orange-100',   text: 'text-orange-600' },
+  teal:   { bg: 'bg-teal-100',     text: 'text-teal-600' },
+  red:    { bg: 'bg-red-100',      text: 'text-red-600' },
+  yellow: { bg: 'bg-amber-100',    text: 'text-amber-600' },
+  pink:   { bg: 'bg-pink-100',     text: 'text-pink-600' },
+  gray:   { bg: 'bg-gray-100',     text: 'text-gray-600' },
+};
+
+const TABS: { id: string; label: string; icon: LucideIcon; cor: Cor }[] = [
+  { id: 'cultura',          label: 'Cultura & Estratégia', icon: Compass,     cor: 'purple' },
+  { id: 'produto',          label: 'Produto',              icon: Box,         cor: 'blue' },
+  { id: 'primeiros-passos', label: 'Primeiros Passos',     icon: Rocket,      cor: 'green' },
+  { id: 'gestao-cw',        label: 'Gestão',                icon: FolderKanban, cor: 'orange' },
+  { id: 'automacao-cw',     label: 'Automação',            icon: Bot,         cor: 'teal' },
+  { id: 'vendas-cw',        label: 'Aumento de Vendas',    icon: TrendingUp,  cor: 'green' },
+  { id: 'modulos-cw',       label: 'Módulos do Sistema',   icon: Puzzle,      cor: 'purple' },
+  { id: 'suporte-cw',       label: 'Suporte',              icon: Headphones,  cor: 'gray' },
+  { id: 'planos',           label: 'Planos & Preços',      icon: DollarSign,  cor: 'green' },
+  { id: 'concorrentes',     label: 'Concorrentes',         icon: Swords,      cor: 'orange' },
+  { id: 'territorio',       label: 'Território',           icon: Flag,        cor: 'red' },
+  { id: 'cargos',           label: 'Cargos',               icon: Briefcase,   cor: 'purple' },
+  { id: 'icp',              label: 'ICP',                  icon: Target,      cor: 'red' },
+  { id: 'abordagem',        label: 'Abordagem',            icon: Megaphone,   cor: 'purple' },
+  { id: 'negociacao',       label: 'Negociação',           icon: Repeat,      cor: 'pink' },
+  { id: 'hacks',            label: 'Hacks',                icon: Lightbulb,   cor: 'yellow' },
+  { id: 'objecoes',         label: 'Objeções',             icon: Swords,      cor: 'red' },
+  { id: 'fechamento',       label: 'Fechamento',           icon: Handshake,   cor: 'pink' },
+  { id: 'perda',            label: 'Motivos de Perda',     icon: XCircle,     cor: 'red' },
+  { id: 'faq',              label: 'FAQ',                  icon: HelpCircle,  cor: 'blue' },
+  { id: 'materiais',        label: 'Materiais',            icon: BookOpen,    cor: 'purple' },
 ];
 
 function SectionCard({ children, className }: { children: React.ReactNode; className?: string }) {
@@ -270,6 +291,10 @@ const CONTEUDO: Record<string, React.ComponentType> = {
 export default function PlaybookRepresentantes() {
   const [searchParams] = useSearchParams();
   const tabFromUrl = searchParams.get('tab') ?? 'cultura';
+  const [activeTab, setActiveTab] = useState(tabFromUrl);
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => { setActiveTab(tabFromUrl); }, [tabFromUrl]);
 
   return (
     <div className="p-8">
@@ -277,19 +302,46 @@ export default function PlaybookRepresentantes() {
         <h1 className="text-2xl font-black text-cw-text">Playbook de Representantes</h1>
         <p className="text-sm text-cw-muted mt-1">Conteúdo exclusivo para o time de Representantes da Cardápio Web.</p>
       </div>
-      <Tabs defaultValue={tabFromUrl} key={tabFromUrl} className="w-full">
-        <div className="overflow-x-auto scrollbar-cw -mx-1 pb-2">
-          <TabsList className="bg-cw-surface border border-cw-border p-1 inline-flex w-max">
-            {TABS.map(t => (
-              <TabsTrigger
-                key={t.id}
-                value={t.id}
-                className="data-[state=active]:gradient-primary data-[state=active]:text-white whitespace-nowrap text-xs font-medium"
-              >
-                {t.label}
-              </TabsTrigger>
-            ))}
-          </TabsList>
+      <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+        <div className="relative mb-2">
+          <div ref={scrollRef} className="overflow-x-auto scrollbar-cw pb-1">
+            <div className="flex items-center gap-2 w-max pr-10">
+              {TABS.map((t) => {
+                const Icon = t.icon;
+                const ativo = activeTab === t.id;
+                const cor = CORES[t.cor];
+                return (
+                  <button
+                    key={t.id}
+                    onClick={() => setActiveTab(t.id)}
+                    className={cn(
+                      'relative flex shrink-0 items-center rounded-2xl transition-all',
+                      ativo
+                        ? 'gradient-primary gap-2 px-4 py-2.5 shadow-md'
+                        : 'flex-col justify-center gap-1.5 bg-cw-surface border border-cw-border px-3.5 py-2.5 min-w-[84px] hover:border-cw-purple/40',
+                    )}
+                  >
+                    <span className={cn('flex items-center justify-center rounded-full shrink-0', ativo ? 'h-7 w-7 bg-white/20' : cn('h-8 w-8', cor.bg))}>
+                      <Icon className={cn('h-4 w-4', ativo ? 'text-white' : cor.text)} />
+                    </span>
+                    <span className={cn('whitespace-nowrap font-bold', ativo ? 'text-xs text-white' : 'text-[11px] text-cw-text/80')}>
+                      {t.label}
+                    </span>
+                    {ativo && (
+                      <span className="absolute -bottom-1.5 left-4 right-4 h-1 rounded-full bg-cw-purple-light" />
+                    )}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+          <button
+            onClick={() => scrollRef.current?.scrollBy({ left: 320, behavior: 'smooth' })}
+            className="absolute right-0 top-1/2 -translate-y-1/2 h-8 w-8 rounded-full bg-cw-surface border border-cw-border shadow flex items-center justify-center text-cw-muted hover:text-cw-purple hover:border-cw-purple/40 transition-colors"
+            title="Ver mais abas"
+          >
+            <ChevronRight className="h-4 w-4" />
+          </button>
         </div>
         {TABS.map(t => {
           const Conteudo = CONTEUDO[t.id];
