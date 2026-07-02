@@ -9,7 +9,7 @@ import {
   Briefcase, Target, Lightbulb, Swords, XCircle, ExternalLink,
   Compass, Box, Rocket, FolderKanban, Bot, TrendingUp, Puzzle, Headphones,
   DollarSign, Flag, Megaphone, Repeat, Handshake, HelpCircle, BookOpen,
-  ChevronRight, type LucideIcon,
+  Presentation, ChevronRight, type LucideIcon,
 } from 'lucide-react';
 import { Tabs, TabsContent } from '@/components/ui/tabs';
 import { cn } from '@/lib/utils';
@@ -61,6 +61,7 @@ const TABS: { id: string; label: string; icon: LucideIcon; cor: Cor }[] = [
   { id: 'perda',            label: 'Motivos de Perda',     icon: XCircle,     cor: 'red' },
   { id: 'faq',              label: 'FAQ',                  icon: HelpCircle,  cor: 'blue' },
   { id: 'materiais',        label: 'Materiais',            icon: BookOpen,    cor: 'purple' },
+  { id: 'materiais-internos', label: 'Materiais Internos', icon: Presentation, cor: 'blue' },
 ];
 
 function SectionCard({ children, className }: { children: React.ReactNode; className?: string }) {
@@ -254,6 +255,46 @@ function Materiais() {
   );
 }
 
+const APRESENTACAO_ITENS = [
+  'Apresentação institucional Cardápio Web',
+  'Pitch deck para parceiros e indicações',
+  'Vídeo institucional da marca',
+];
+
+const PLANEJAMENTO_ITENS = [
+  'Calendário de metas do trimestre',
+  'Roadmap de produto',
+  'Plano de expansão do canal de representantes',
+];
+
+function ListaMateriais({ titulo, itens }: { titulo: string; itens: string[] }) {
+  return (
+    <div>
+      <p className="text-xs font-bold text-cw-muted tracking-wide mb-4">{titulo}</p>
+      <div className="cw-card divide-y divide-cw-border">
+        {itens.map((item) => (
+          <div key={item} className="flex items-center gap-3 px-5 py-3.5">
+            <div className="h-1.5 w-1.5 rounded-full bg-cw-purple shrink-0" />
+            <span className="text-sm text-cw-text flex-1">{item}</span>
+            <span className="text-[10px] font-medium text-cw-muted bg-cw-elevated rounded-full px-2.5 py-0.5">
+              Em breve
+            </span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function MateriaisInternos() {
+  return (
+    <div className="space-y-8">
+      <ListaMateriais titulo="Apresentação" itens={APRESENTACAO_ITENS} />
+      <ListaMateriais titulo="Planejamento" itens={PLANEJAMENTO_ITENS} />
+    </div>
+  );
+}
+
 const CONTEUDO: Record<string, React.ComponentType> = {
   cultura: CulturaEstrategia,
   produto: PlaybookProduto,
@@ -272,6 +313,7 @@ const CONTEUDO: Record<string, React.ComponentType> = {
   perda: MotivosPerda,
   faq: PlaybookFaq,
   materiais: Materiais,
+  'materiais-internos': MateriaisInternos,
 };
 
 export default function PlaybookRepresentantes() {
