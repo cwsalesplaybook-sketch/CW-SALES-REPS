@@ -1,11 +1,7 @@
 import { ExternalLink, ChevronDown, ChevronUp, BookOpen, Wrench, FileText, DollarSign, Handshake } from 'lucide-react';
 import { useState } from 'react';
-import {
-  PlaybookPrimeirosPassos, PlaybookGestaoCW, PlaybookAutomacaoCW,
-  PlaybookAumentoVendasCW, PlaybookModulosCW, PlaybookSuporteCW,
-} from '@/components/playbook/PlaybookSistemaTopicos';
 
-interface Artigo {
+export interface Artigo {
   titulo: string;
   fonte: string;
   url: string;
@@ -17,7 +13,7 @@ interface Artigo {
   conclusao: string;
 }
 
-const ARTIGOS: Artigo[] = [
+export const ARTIGOS: Artigo[] = [
   {
     titulo: 'Como usar o PRM do vendor para vender mais',
     fonte: 'Canalize PRM',
@@ -88,7 +84,7 @@ const ARTIGOS: Artigo[] = [
   },
 ];
 
-const MATERIAIS = [
+export const MATERIAIS = [
   'Apresentacao de produto Cardapio Web',
   'Tabela de planos e precos atualizada',
   'Guia de objecoes mais comuns',
@@ -96,7 +92,7 @@ const MATERIAIS = [
   'Manual de onboarding de novos clientes',
 ];
 
-function ArtigoCard({ artigo }: { artigo: Artigo }) {
+export function ArtigoCard({ artigo }: { artigo: Artigo }) {
   const [aberto, setAberto] = useState(false);
   const Icon = artigo.Icon;
 
@@ -178,25 +174,6 @@ export default function Playbook() {
             </div>
           ))}
         </div>
-      </div>
-
-      <div className="space-y-6">
-        <p className="text-xs font-bold text-cw-muted uppercase tracking-widest">
-          Central de Ajuda — Sistema Cardápio Web
-        </p>
-        {[
-          { titulo: '🏁 Primeiros Passos', Componente: PlaybookPrimeirosPassos },
-          { titulo: '🗂️ Gestão', Componente: PlaybookGestaoCW },
-          { titulo: '🤖 Automação', Componente: PlaybookAutomacaoCW },
-          { titulo: '📈 Aumento de Vendas', Componente: PlaybookAumentoVendasCW },
-          { titulo: '🧩 Módulos do Sistema', Componente: PlaybookModulosCW },
-          { titulo: '🎧 Suporte', Componente: PlaybookSuporteCW },
-        ].map(({ titulo, Componente }) => (
-          <div key={titulo}>
-            <p className="text-sm font-bold text-cw-text mb-3">{titulo}</p>
-            <Componente />
-          </div>
-        ))}
       </div>
 
       <div>

@@ -8,7 +8,7 @@ import Login from '@/pages/Login';
 import Start from '@/pages/Start';
 import Onboarding from '@/pages/Onboarding';
 import Comunidade from '@/pages/Comunidade';
-import Playbook from '@/pages/Playbook';
+import Playbook from '@/components/playbook/PlaybookRepresentantes';
 import Pipeline from '@/pages/Pipeline';
 import Meta from '@/pages/Meta';
 import Ajuda from '@/pages/Ajuda';
