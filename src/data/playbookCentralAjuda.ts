@@ -38,7 +38,7 @@ export const NUMERO_TAB: Record<number, string> = Object.fromEntries(
 export const CENTRAL_AJUDA_SECOES: CentralAjudaSecao[] = [
   {
     "numero": 1,
-    "titulo": "BOAS-VINDAS",
+    "titulo": "Boas-vindas",
     "categoria": "Boas-vindas",
     "blocos": [
       {
@@ -63,7 +63,7 @@ export const CENTRAL_AJUDA_SECOES: CentralAjudaSecao[] = [
   },
   {
     "numero": 2,
-    "titulo": "PLANOS, FUNCIONALIDADES E MÓDULOS ADICIONAIS",
+    "titulo": "Planos, Funcionalidades e Módulos Adicionais",
     "categoria": "Planos",
     "blocos": [
       {
@@ -148,7 +148,7 @@ export const CENTRAL_AJUDA_SECOES: CentralAjudaSecao[] = [
   },
   {
     "numero": 3,
-    "titulo": "ACESSANDO O SISTEMA PELA PRIMEIRA VEZ",
+    "titulo": "Acessando o Sistema pela Primeira Vez",
     "categoria": "Primeiros Passos",
     "blocos": [
       {
@@ -194,7 +194,7 @@ export const CENTRAL_AJUDA_SECOES: CentralAjudaSecao[] = [
   },
   {
     "numero": 4,
-    "titulo": "CARDÁPIOS DEMONSTRATIVOS",
+    "titulo": "Cardápios Demonstrativos",
     "categoria": "Vendas",
     "blocos": [
       {
@@ -227,7 +227,7 @@ export const CENTRAL_AJUDA_SECOES: CentralAjudaSecao[] = [
   },
   {
     "numero": 5,
-    "titulo": "GESTÃO DE PEDIDOS",
+    "titulo": "Gestão de Pedidos",
     "categoria": "Gestão",
     "blocos": [
       {
@@ -252,7 +252,7 @@ export const CENTRAL_AJUDA_SECOES: CentralAjudaSecao[] = [
   },
   {
     "numero": 6,
-    "titulo": "MESAS E COMANDAS",
+    "titulo": "Mesas e Comandas",
     "categoria": "Gestão",
     "blocos": [
       {
@@ -346,7 +346,7 @@ export const CENTRAL_AJUDA_SECOES: CentralAjudaSecao[] = [
   },
   {
     "numero": 7,
-    "titulo": "KDS - KITCHEN DISPLAY SYSTEM",
+    "titulo": "KDS - Kitchen Display System",
     "categoria": "Gestão",
     "blocos": [
       {
@@ -407,7 +407,7 @@ export const CENTRAL_AJUDA_SECOES: CentralAjudaSecao[] = [
   },
   {
     "numero": 8,
-    "titulo": "CAIXA",
+    "titulo": "Caixa",
     "categoria": "Gestão",
     "blocos": [
       {
@@ -464,7 +464,7 @@ export const CENTRAL_AJUDA_SECOES: CentralAjudaSecao[] = [
   },
   {
     "numero": 9,
-    "titulo": "DESEMPENHO",
+    "titulo": "Desempenho",
     "categoria": "Gestão",
     "blocos": [
       {
@@ -510,7 +510,7 @@ export const CENTRAL_AJUDA_SECOES: CentralAjudaSecao[] = [
   },
   {
     "numero": 10,
-    "titulo": "HISTÓRICO DE PEDIDOS",
+    "titulo": "Histórico de Pedidos",
     "categoria": "Gestão",
     "blocos": [
       {
@@ -563,7 +563,7 @@ export const CENTRAL_AJUDA_SECOES: CentralAjudaSecao[] = [
   },
   {
     "numero": 11,
-    "titulo": "MINHA EMPRESA",
+    "titulo": "Minha Empresa",
     "categoria": "Gestão",
     "blocos": [
       {
@@ -604,7 +604,7 @@ export const CENTRAL_AJUDA_SECOES: CentralAjudaSecao[] = [
   },
   {
     "numero": 12,
-    "titulo": "CATÁLOGO",
+    "titulo": "Catálogo",
     "categoria": "Gestão",
     "blocos": [
       {
@@ -661,7 +661,7 @@ export const CENTRAL_AJUDA_SECOES: CentralAjudaSecao[] = [
   },
   {
     "numero": 13,
-    "titulo": "DELIVERY",
+    "titulo": "Delivery",
     "categoria": "Gestão",
     "blocos": [
       {
@@ -734,7 +734,7 @@ export const CENTRAL_AJUDA_SECOES: CentralAjudaSecao[] = [
   },
   {
     "numero": 14,
-    "titulo": "CLIENTES",
+    "titulo": "Clientes",
     "categoria": "Gestão",
     "blocos": [
       {
@@ -796,7 +796,7 @@ export const CENTRAL_AJUDA_SECOES: CentralAjudaSecao[] = [
   },
   {
     "numero": 15,
-    "titulo": "AVALIAÇÕES",
+    "titulo": "Avaliações",
     "categoria": "Gestão",
     "blocos": [
       {
@@ -827,7 +827,7 @@ export const CENTRAL_AJUDA_SECOES: CentralAjudaSecao[] = [
   },
   {
     "numero": 16,
-    "titulo": "FIADO",
+    "titulo": "Fiado",
     "categoria": "Gestão",
     "blocos": [
       {
@@ -868,7 +868,7 @@ export const CENTRAL_AJUDA_SECOES: CentralAjudaSecao[] = [
   },
   {
     "numero": 17,
-    "titulo": "ADMINISTRATIVO",
+    "titulo": "Administrativo",
     "categoria": "Gestão",
     "blocos": [
       {
@@ -925,7 +925,7 @@ export const CENTRAL_AJUDA_SECOES: CentralAjudaSecao[] = [
   },
   {
     "numero": 18,
-    "titulo": "CONFIGURAÇÕES",
+    "titulo": "Configurações",
     "categoria": "Configurações",
     "blocos": [
       {
@@ -951,7 +951,7 @@ export const CENTRAL_AJUDA_SECOES: CentralAjudaSecao[] = [
   },
   {
     "numero": 19,
-    "titulo": "IMPRESSORA",
+    "titulo": "Impressora",
     "categoria": "Configurações",
     "blocos": [
       {
@@ -975,7 +975,7 @@ export const CENTRAL_AJUDA_SECOES: CentralAjudaSecao[] = [
   },
   {
     "numero": 20,
-    "titulo": "VER MEUS LINKS",
+    "titulo": "Ver Meus Links",
     "categoria": "Vendas",
     "blocos": [
       {
@@ -1014,7 +1014,7 @@ export const CENTRAL_AJUDA_SECOES: CentralAjudaSecao[] = [
   },
   {
     "numero": 21,
-    "titulo": "FOOD MARKETING / CAMPANHAS VIA WHATSAPP",
+    "titulo": "Food Marketing / Campanhas via WhatsApp",
     "categoria": "Automação",
     "blocos": [
       {
@@ -1054,7 +1054,7 @@ export const CENTRAL_AJUDA_SECOES: CentralAjudaSecao[] = [
   },
   {
     "numero": 22,
-    "titulo": "CHATBOT - CARDAPINHO",
+    "titulo": "Chatbot - Cardapinho",
     "categoria": "Automação",
     "blocos": [
       {
@@ -1128,7 +1128,7 @@ export const CENTRAL_AJUDA_SECOES: CentralAjudaSecao[] = [
   },
   {
     "numero": 23,
-    "titulo": "INTEGRAÇÕES",
+    "titulo": "Integrações",
     "categoria": "Automação",
     "blocos": [
       {
@@ -1201,7 +1201,7 @@ export const CENTRAL_AJUDA_SECOES: CentralAjudaSecao[] = [
   },
   {
     "numero": 24,
-    "titulo": "CUPONS E DESCONTOS",
+    "titulo": "Cupons e Descontos",
     "categoria": "Vendas",
     "blocos": [
       {
@@ -1263,7 +1263,7 @@ export const CENTRAL_AJUDA_SECOES: CentralAjudaSecao[] = [
   },
   {
     "numero": 25,
-    "titulo": "FIDELIDADE E CASHBACK",
+    "titulo": "Fidelidade e Cashback",
     "categoria": "Vendas",
     "blocos": [
       {
@@ -1328,7 +1328,7 @@ export const CENTRAL_AJUDA_SECOES: CentralAjudaSecao[] = [
   },
   {
     "numero": 26,
-    "titulo": "ESTOQUE AVANÇADO",
+    "titulo": "Estoque Avançado",
     "categoria": "Módulos",
     "blocos": [
       {
@@ -1378,7 +1378,7 @@ export const CENTRAL_AJUDA_SECOES: CentralAjudaSecao[] = [
   },
   {
     "numero": 27,
-    "titulo": "MÓDULO FINANCEIRO",
+    "titulo": "Módulo Financeiro",
     "categoria": "Módulos",
     "blocos": [
       {
@@ -1424,7 +1424,7 @@ export const CENTRAL_AJUDA_SECOES: CentralAjudaSecao[] = [
   },
   {
     "numero": 28,
-    "titulo": "MÓDULO DE GESTÃO DE ENTREGADORES",
+    "titulo": "Módulo de Gestão de Entregadores",
     "categoria": "Módulos",
     "blocos": [
       {
@@ -1485,7 +1485,7 @@ export const CENTRAL_AJUDA_SECOES: CentralAjudaSecao[] = [
   },
   {
     "numero": 29,
-    "titulo": "MÓDULO DE INTEGRAÇÃO COM MARKETPLACES",
+    "titulo": "Módulo de Integração com Marketplaces",
     "categoria": "Módulos",
     "blocos": [
       {
@@ -1533,7 +1533,7 @@ export const CENTRAL_AJUDA_SECOES: CentralAjudaSecao[] = [
   },
   {
     "numero": 30,
-    "titulo": "MÓDULO FISCAL",
+    "titulo": "Módulo Fiscal",
     "categoria": "Módulos",
     "blocos": [
       {
@@ -1592,7 +1592,7 @@ export const CENTRAL_AJUDA_SECOES: CentralAjudaSecao[] = [
   },
   {
     "numero": 31,
-    "titulo": "SUPORTE",
+    "titulo": "Suporte",
     "categoria": "Suporte",
     "blocos": [
       {

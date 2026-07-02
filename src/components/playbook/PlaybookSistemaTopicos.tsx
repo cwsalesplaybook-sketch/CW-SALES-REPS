@@ -36,7 +36,7 @@ function pontuarSecao(secao: CentralAjudaSecao, q: string) {
 
 function BlocoView({ bloco }: { bloco: CentralAjudaSecao['blocos'][number] }) {
   if (bloco.tipo === 'subtitulo') {
-    return <h5 className="text-xs font-bold uppercase tracking-wider text-cw-purple-light mt-4 mb-1.5 first:mt-0">{bloco.texto}</h5>;
+    return <h5 className="text-xs font-bold tracking-wide text-cw-purple-light mt-4 mb-1.5 first:mt-0">{bloco.texto}</h5>;
   }
   if (bloco.tipo === 'lista') {
     return (
@@ -57,7 +57,8 @@ function BlocoView({ bloco }: { bloco: CentralAjudaSecao['blocos'][number] }) {
 function TopicosAccordion({ secoes, buscaPlaceholder }: { secoes: CentralAjudaSecao[]; buscaPlaceholder: string }) {
   const [searchParams] = useSearchParams();
   const qParam = searchParams.get('q') ?? '';
-  const [busca, setBusca] = useState(qParam);
+  const qEhNumero = /^\d+$/.test(qParam);
+  const [busca, setBusca] = useState(qEhNumero ? '' : qParam);
 
   const filtradas = useMemo(
     () => secoes.filter((s) => secaoContemBusca(s, busca)),
@@ -66,7 +67,7 @@ function TopicosAccordion({ secoes, buscaPlaceholder }: { secoes: CentralAjudaSe
 
   const melhorMatch = useMemo(() => {
     if (!qParam) return null;
-    if (/^\d+$/.test(qParam)) {
+    if (qEhNumero) {
       const direto = secoes.find((s) => String(s.numero) === qParam);
       if (direto) return direto;
     }

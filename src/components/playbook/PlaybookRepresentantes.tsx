@@ -14,7 +14,7 @@ import {
 import { Tabs, TabsContent } from '@/components/ui/tabs';
 import { cn } from '@/lib/utils';
 import { CARGOS, HACKS, OBJECOES, MOTIVOS_PERDA, PLAYBOOK_URL } from '@/data/playbook';
-import { ARTIGOS, MATERIAIS, ArtigoCard } from '@/pages/Playbook';
+import { ARTIGOS, ArtigoCard } from '@/pages/Playbook';
 import CulturaEstrategia from './CulturaEstrategia';
 import { PlaybookProduto } from './PlaybookProduto';
 import { PlaybookPlanos } from './PlaybookPlanos';
@@ -241,26 +241,12 @@ function Materiais() {
   return (
     <div className="space-y-8">
       <div>
-        <p className="text-xs font-bold text-cw-muted uppercase tracking-widest mb-4">
+        <p className="text-xs font-bold text-cw-muted tracking-wide mb-4">
           Leitura recomendada — Canalize PRM
         </p>
         <div className="grid md:grid-cols-2 gap-4">
           {ARTIGOS.map((a) => (
             <ArtigoCard key={a.url} artigo={a} />
-          ))}
-        </div>
-      </div>
-      <div>
-        <p className="text-xs font-bold text-cw-muted uppercase tracking-widest mb-4">Materiais internos</p>
-        <div className="cw-card divide-y divide-cw-border">
-          {MATERIAIS.map((m) => (
-            <div key={m} className="flex items-center gap-3 px-5 py-3.5">
-              <div className="h-1.5 w-1.5 rounded-full bg-cw-purple shrink-0" />
-              <span className="text-sm text-cw-text flex-1">{m}</span>
-              <span className="text-[10px] font-medium text-cw-muted bg-cw-elevated rounded-full px-2.5 py-0.5">
-                Em breve
-              </span>
-            </div>
           ))}
         </div>
       </div>
