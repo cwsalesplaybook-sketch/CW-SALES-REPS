@@ -1,5 +1,9 @@
 import { ExternalLink, ChevronDown, ChevronUp, BookOpen, Wrench, FileText, DollarSign, Handshake } from 'lucide-react';
 import { useState } from 'react';
+import {
+  PlaybookPrimeirosPassos, PlaybookGestaoCW, PlaybookAutomacaoCW,
+  PlaybookAumentoVendasCW, PlaybookModulosCW, PlaybookSuporteCW,
+} from '@/components/playbook/PlaybookSistemaTopicos';
 
 interface Artigo {
   titulo: string;
@@ -200,6 +204,25 @@ export default function Playbook() {
             </div>
           ))}
         </div>
+      </div>
+
+      <div className="space-y-6">
+        <p className="text-xs font-bold text-cw-muted uppercase tracking-widest">
+          Central de Ajuda — Sistema Cardápio Web
+        </p>
+        {[
+          { titulo: '🏁 Primeiros Passos', Componente: PlaybookPrimeirosPassos },
+          { titulo: '🗂️ Gestão', Componente: PlaybookGestaoCW },
+          { titulo: '🤖 Automação', Componente: PlaybookAutomacaoCW },
+          { titulo: '📈 Aumento de Vendas', Componente: PlaybookAumentoVendasCW },
+          { titulo: '🧩 Módulos do Sistema', Componente: PlaybookModulosCW },
+          { titulo: '🎧 Suporte', Componente: PlaybookSuporteCW },
+        ].map(({ titulo, Componente }) => (
+          <div key={titulo}>
+            <p className="text-sm font-bold text-cw-text mb-3">{titulo}</p>
+            <Componente />
+          </div>
+        ))}
       </div>
     </div>
   );

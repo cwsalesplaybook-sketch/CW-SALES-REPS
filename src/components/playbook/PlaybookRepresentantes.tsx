@@ -1,20 +1,9 @@
-/** Playbook de Representantes — estrutura pronta, conteúdo em construção
- *  (exceto os tópicos do sistema Cardápio Web, já com conteúdo completo). */
+/** Playbook de Representantes — estrutura pronta, conteúdo em construção. */
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import {
-  PlaybookPrimeirosPassos, PlaybookGestaoCW, PlaybookAutomacaoCW,
-  PlaybookAumentoVendasCW, PlaybookModulosCW, PlaybookSuporteCW,
-} from './PlaybookSistemaTopicos';
 
 const TABS = [
   { id: 'cultura',      label: '🧭 Cultura & Estratégia' },
   { id: 'produto',      label: '🛠️ Produto' },
-  { id: 'primeiros-passos', label: '🏁 Primeiros Passos' },
-  { id: 'gestao-cw',    label: '🗂️ Gestão' },
-  { id: 'automacao-cw', label: '🤖 Automação' },
-  { id: 'vendas-cw',    label: '📈 Aumento de Vendas' },
-  { id: 'modulos-cw',   label: '🧩 Módulos do Sistema' },
-  { id: 'suporte-cw',   label: '🎧 Suporte' },
   { id: 'planos',       label: '💰 Planos & Preços' },
   { id: 'concorrentes', label: '⚔️ Concorrentes' },
   { id: 'territorio',   label: '🗺️ Território' },
@@ -27,15 +16,6 @@ const TABS = [
   { id: 'fechamento',   label: '🤝 Fechamento' },
   { id: 'perda',        label: '❌ Motivos de Perda' },
 ];
-
-const CONTEUDO_PRONTO: Record<string, React.ComponentType> = {
-  'primeiros-passos': PlaybookPrimeirosPassos,
-  'gestao-cw': PlaybookGestaoCW,
-  'automacao-cw': PlaybookAutomacaoCW,
-  'vendas-cw': PlaybookAumentoVendasCW,
-  'modulos-cw': PlaybookModulosCW,
-  'suporte-cw': PlaybookSuporteCW,
-};
 
 function EmBreve() {
   return (
@@ -72,14 +52,11 @@ export default function PlaybookRepresentantes() {
             ))}
           </TabsList>
         </div>
-        {TABS.map(t => {
-          const Conteudo = CONTEUDO_PRONTO[t.id];
-          return (
-            <TabsContent key={t.id} value={t.id} className="mt-6">
-              {Conteudo ? <Conteudo /> : <EmBreve />}
-            </TabsContent>
-          );
-        })}
+        {TABS.map(t => (
+          <TabsContent key={t.id} value={t.id} className="mt-6">
+            <EmBreve />
+          </TabsContent>
+        ))}
       </Tabs>
     </div>
   );
