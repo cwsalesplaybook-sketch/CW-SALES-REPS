@@ -1,11 +1,7 @@
-import { useEffect, useState } from 'react';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
-import { supabase } from '@/integrations/supabase/client';
-import type { Session } from '@supabase/supabase-js';
 import { Toaster } from '@/components/ui/toaster';
 import { Sidebar } from '@/components/Sidebar';
 import { RepAssistant } from '@/components/RepAssistant';
-import Login from '@/pages/Login';
 import Start from '@/pages/Start';
 import Onboarding from '@/pages/Onboarding';
 import Comunidade from '@/pages/Comunidade';
@@ -39,27 +35,11 @@ function AppLayout() {
 }
 
 export default function App() {
-  const [session, setSession] = useState<Session | null | undefined>(undefined);
-
-  useEffect(() => {
-    supabase.auth.getSession().then(({ data }) => setSession(data.session));
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_, s) => setSession(s ?? null));
-    return () => subscription.unsubscribe();
-  }, []);
-
-  if (session === undefined) {
-    return (
-      <div className="min-h-screen bg-cw-bg flex items-center justify-center">
-        <div className="w-8 h-8 border-2 border-cw-purple border-t-transparent rounded-full animate-spin" />
-      </div>
-    );
-  }
-
   return (
     <>
       <Toaster />
       <BrowserRouter>
-        {session ? <AppLayout /> : <Login />}
+        <AppLayout />
       </BrowserRouter>
     </>
   );
