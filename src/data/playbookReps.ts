@@ -30,6 +30,8 @@ export const IPP: IppData = {
   ],
   diferenciaisCompetitivos: [
     'Capacidade futura de escalar operação (time, parceiros, volume)',
+    'Time comercial próprio',
+    'Atuação regional consolidada',
   ],
 };
 
@@ -444,18 +446,6 @@ export const CADASTRO_CLIENTE_TEXTO = [
 // Estrutura de Representantes (Definir)
 // ────────────────────────────────────────────────────────────────────────────
 export const ESTRUTURA_REPRESENTANTES = {
-  ipp: {
-    perfil: 'Vendedores de software com experiência comprovada em vendas B2B, preferencialmente com atuação no segmento de tecnologia, SaaS, sistemas de gestão, automação comercial ou soluções para food service.',
-    caracteristicas: [
-      'Experiência prévia na venda de software ou soluções digitais',
-      'Carteira ativa ou potencial de clientes na região de atuação',
-      'Conhecimento básico de funil de vendas e processos comerciais',
-      'Capacidade de prospecção ativa',
-      'Perfil empreendedor, com visão de ganho recorrente',
-      'Organização mínima para gestão de clientes',
-    ],
-    diferenciais: ['Time comercial próprio', 'Atuação regional consolidada'],
-  },
   funcionamento: [
     {
       titulo: 'Qualificação',

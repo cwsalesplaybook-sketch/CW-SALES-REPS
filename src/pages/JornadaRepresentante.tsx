@@ -8,7 +8,7 @@ import { useEffect, useState } from 'react';
 import type { LucideIcon } from 'lucide-react';
 import { UserCheck, Workflow, Wallet, Layers, MessagesSquare, Check } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { ESTRUTURA_REPRESENTANTES } from '@/data/playbookReps';
+import { ESTRUTURA_REPRESENTANTES, IPP } from '@/data/playbookReps';
 import { PlaybookJornadaRepresentante } from '@/components/playbook/PlaybookProcessos';
 
 const e = ESTRUTURA_REPRESENTANTES;
@@ -101,18 +101,26 @@ export default function JornadaRepresentante() {
         <section id="perfil" className="scroll-mt-16">
           <SectionHeading icon={UserCheck} titulo="Perfil Ideal de Representante (IPP)" />
           <div className="cw-card p-5">
-            <p className="text-sm text-cw-text/85 leading-relaxed mb-4">{e.ipp.perfil}</p>
+            <p className="text-sm text-cw-text/85 leading-relaxed mb-4">{IPP.perfil}</p>
             <p className="text-xs font-bold text-cw-muted uppercase tracking-wider mb-1.5">Características esperadas</p>
             <ul className="space-y-1 mb-4">
-              {e.ipp.caracteristicas.map((c) => (
+              {IPP.caracteristicas.map((c) => (
                 <li key={c} className="flex items-start gap-2 text-sm text-cw-muted">
                   <Check className="h-3.5 w-3.5 text-cw-purple-light shrink-0 mt-0.5" />{c}
                 </li>
               ))}
             </ul>
             <p className="text-xs font-bold text-cw-muted uppercase tracking-wider mb-1.5">Diferenciais desejáveis</p>
+            <ul className="space-y-1 mb-4">
+              {IPP.diferenciaisDesejaveis.map((c) => (
+                <li key={c} className="flex items-start gap-2 text-sm text-cw-muted">
+                  <Check className="h-3.5 w-3.5 text-cw-purple-light shrink-0 mt-0.5" />{c}
+                </li>
+              ))}
+            </ul>
+            <p className="text-xs font-bold text-cw-muted uppercase tracking-wider mb-1.5">Diferenciais competitivos</p>
             <ul className="space-y-1">
-              {e.ipp.diferenciais.map((c) => (
+              {IPP.diferenciaisCompetitivos.map((c) => (
                 <li key={c} className="flex items-start gap-2 text-sm text-cw-muted">
                   <Check className="h-3.5 w-3.5 text-cw-purple-light shrink-0 mt-0.5" />{c}
                 </li>
