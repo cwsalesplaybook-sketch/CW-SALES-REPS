@@ -10,28 +10,30 @@ import { supabase } from '@/integrations/supabase/client';
 
 const HOME_ITEM = { to: '/jornada-representante', label: 'Jornada do Representante', Icon: Milestone };
 
-/** Seção original de navegação comercial — mantida sem alterações. */
+/** Itens ordenados por tamanho do label (menor pro maior). Central de Ajuda
+ *  saiu daqui e foi para o fim de Playbook & Referência, junto com FAQ. */
 const COMERCIAL_ITEMS = [
-  { to: '/onboarding', label: 'Onboarding',        Icon: ClipboardCheck },
   { to: '/playbook',   label: 'Playbook',          Icon: BookOpen       },
   { to: '/pipeline',   label: 'Pipeline',          Icon: BarChart2      },
+  { to: '/onboarding', label: 'Onboarding',        Icon: ClipboardCheck },
   { to: '/meta',       label: 'Meta do Mes',       Icon: Target         },
-  { to: '/ajuda',      label: 'Central de Ajuda',  Icon: HelpCircle   },
 ];
 
 /** Grupos de conteúdo que antes eram abas do Playbook de Representantes e
  *  foram promovidos a páginas de primeiro nível — reunidos aqui numa seção
- *  própria para não inchar mais ainda a seção Comercial. */
+ *  própria para não inchar mais ainda a seção Comercial. Ordenados por
+ *  tamanho do label, com FAQ e Central de Ajuda fixados no fim. */
 const PLAYBOOK_REFERENCIA_ITEMS = [
   { to: '/templates',      label: 'Templates',          Icon: MessageSquareText },
-  { to: '/faq',            label: 'FAQ',                Icon: MessageCircleQuestion },
   { to: '/materiais',      label: 'Materiais',          Icon: Library },
   { to: '/estrutura',      label: 'Estrutura',          Icon: Building2 },
-  { to: '/funil-prospeccao', label: 'Funil de Prospecção', Icon: Filter },
-  { to: '/funil-clientes', label: 'Funil de Clientes e Acompanhamento', Icon: Users },
-  { to: '/progressao-carreira', label: 'Progressão de Carreira', Icon: LineChart },
   { to: '/planos-modulos', label: 'Planos e Módulos',    Icon: DollarSign },
+  { to: '/funil-prospeccao', label: 'Funil de Prospecção', Icon: Filter },
+  { to: '/progressao-carreira', label: 'Progressão de Carreira', Icon: LineChart },
   { to: '/concorrentes',   label: 'Matriz de Concorrentes', Icon: Swords },
+  { to: '/funil-clientes', label: 'Funil de Clientes e Acompanhamento', Icon: Users },
+  { to: '/faq',            label: 'FAQ',                Icon: MessageCircleQuestion },
+  { to: '/ajuda',          label: 'Central de Ajuda',   Icon: HelpCircle },
 ];
 
 const REP_SECTIONS = [
