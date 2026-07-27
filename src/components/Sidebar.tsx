@@ -80,18 +80,7 @@ export function Sidebar() {
       className="w-[240px] shrink-0 flex flex-col h-screen sticky top-0 z-30 border-r border-[#2a0016] overflow-hidden relative"
       style={{ background: 'linear-gradient(180deg, #0d0509 0%, #17020f 55%, #0d0509 100%)' }}
     >
-      {/* Logo */}
-      <div className="px-4 pt-5 pb-3">
-        <div className="bg-white rounded-2xl px-3 py-2.5 flex items-center justify-center">
-          <img
-            src="/cardapio-web-logotype-fundo-off-rgb-2800px-w-144ppi.jpg"
-            alt="Cardapio Web"
-            className="h-10 max-w-[150px] object-contain"
-          />
-        </div>
-      </div>
-
-      <div className="flex-1 flex flex-col overflow-y-auto scrollbar-cw px-3 pb-2 relative z-10">
+      <div className="flex-1 flex flex-col overflow-y-auto scrollbar-cw px-3 pt-5 pb-2 relative z-10">
         {/* Cartão de boas-vindas */}
         <div className="rounded-2xl border border-[#ff2d8a]/25 bg-gradient-to-br from-[#2a0016] to-[#1a0510] px-4 py-4 mb-3">
           <div className="h-9 w-9 rounded-full flex items-center justify-center mb-3 border border-[#ff2d8a]/40" style={{ background: 'radial-gradient(circle, rgba(255,45,138,0.25) 0%, rgba(255,45,138,0.05) 70%)' }}>
