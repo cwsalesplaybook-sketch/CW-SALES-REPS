@@ -38,8 +38,13 @@ const DESTINOS: Destino[] = [
   { tags: ['hack', 'dica', 'urgência'], label: 'Hacks', descricao: 'Scripts para situações difíceis', tab: 'hacks', cor: 'bg-cw-yellow/15 text-cw-yellow border-cw-yellow/30' },
   { tags: ['objeção', 'objeções', 'caro', 'resistência'], label: 'Objeções', descricao: 'Matriz de objeções', tab: 'objecoes', cor: 'bg-cw-red/15 text-cw-red border-cw-red/30' },
   { tags: ['perda', 'motivos de perda'], label: 'Motivos de Perda', descricao: 'Por que perdemos um lead', tab: 'perda', cor: 'bg-cw-red/15 text-cw-red border-cw-red/30' },
-  { tags: ['faq', 'maquininha', 'terminal', 'totem', 'app store', 'meta'], label: 'FAQ', descricao: 'Perguntas frequentes', tab: 'faq', cor: 'bg-blue-500/15 text-blue-400 border-blue-500/30' },
-  { tags: ['material', 'materiais', 'artigo', 'canalize'], label: 'Materiais', descricao: 'Artigos e materiais internos', tab: 'materiais', cor: 'bg-cw-purple/15 text-cw-purple-light border-cw-purple/30' },
+];
+
+/** FAQ e Materiais viraram páginas de primeiro nível (fora do Playbook) —
+ *  tratados à parte de DESTINOS porque o path deles não é mais `/playbook?tab=`. */
+const DESTINOS_TOP_LEVEL: { tags: string[]; label: string; descricao: string; path: string; cor: string }[] = [
+  { tags: ['faq', 'maquininha', 'terminal', 'totem', 'app store', 'meta'], label: 'FAQ', descricao: 'Perguntas frequentes', path: '/faq', cor: 'bg-blue-500/15 text-blue-400 border-blue-500/30' },
+  { tags: ['material', 'materiais', 'artigo', 'canalize'], label: 'Materiais', descricao: 'Artigos e materiais internos', path: '/materiais', cor: 'bg-cw-purple/15 text-cw-purple-light border-cw-purple/30' },
 ];
 
 function normalizar(s: string) {
@@ -61,6 +66,19 @@ function buscar(query: string): Resultado[] {
     }, 0);
     if (score > 0) {
       out.push({ score, r: { label: d.label, descricao: d.descricao, path: `/playbook?tab=${d.tab}`, cor: d.cor } });
+    }
+  }
+
+  for (const d of DESTINOS_TOP_LEVEL) {
+    const score = d.tags.reduce((acc, tag) => {
+      const t = normalizar(tag);
+      if (t === q) return acc + 4;
+      if (t.startsWith(q) || q.startsWith(t)) return acc + 2;
+      if (t.includes(q) || q.includes(t)) return acc + 1;
+      return acc;
+    }, 0);
+    if (score > 0) {
+      out.push({ score, r: { label: d.label, descricao: d.descricao, path: d.path, cor: d.cor } });
     }
   }
 
@@ -91,7 +109,7 @@ function buscar(query: string): Resultado[] {
       if (score > 0) {
         out.push({
           score,
-          r: { label: 'FAQ', descricao: item.pergunta, path: `/playbook?tab=faq&q=${encodeURIComponent(item.pergunta)}`, cor: 'bg-blue-500/15 text-blue-400 border-blue-500/30' },
+          r: { label: 'FAQ', descricao: item.pergunta, path: `/faq?q=${encodeURIComponent(item.pergunta)}`, cor: 'bg-blue-500/15 text-blue-400 border-blue-500/30' },
         });
       }
     }

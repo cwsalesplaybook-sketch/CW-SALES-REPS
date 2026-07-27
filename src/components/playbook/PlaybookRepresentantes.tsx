@@ -2,16 +2,22 @@
  *  (abas com Tabs/TabsList), com conteudo real onde ja existe material
  *  generico (Cultura, Produto, Planos, Concorrentes, Cargos, ICP, Hacks,
  *  Objecoes, Motivos de Perda) e "Em construcao" onde falta conteudo
- *  especifico de representantes (Territorio, Abordagem, Negociacao, Fechamento). */
+ *  especifico de representantes (Territorio, Abordagem, Negociacao, Fechamento).
+ *
+ *  Vários grupos de abas que antes viviam aqui (Templates de mensagens, FAQ,
+ *  Materiais, Estrutura, Funis, Jornada do Representante e Progressão de
+ *  Carreira) foram promovidos para páginas de primeiro nível na sidebar —
+ *  ver `src/pages/Templates.tsx`, `FaqPage.tsx`, `Materiais.tsx`,
+ *  `Estrutura.tsx`, `FunilProspeccao.tsx`, `FunilClientes.tsx`,
+ *  `JornadaRepresentante.tsx` e `ProgressaoCarreira.tsx`. Esta aba mantém
+ *  apenas o material de referência principal do time de representantes. */
 import { useEffect, useRef, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import {
   Briefcase, Target, Lightbulb, Swords, XCircle, ExternalLink,
   Compass, Box, Rocket, FolderKanban, Bot, TrendingUp, Puzzle, Headphones,
-  DollarSign, Flag, Megaphone, Repeat, Handshake, HelpCircle, BookOpen,
-  Presentation, ChevronRight, Milestone, MessageCircleMore, Shuffle, Lock,
-  Crosshair, Radar, Filter, Activity, Users, Building2, LineChart,
-  PhoneCall, PhoneOutgoing, PhoneIncoming, Phone, PhoneForwarded,
+  Flag, Megaphone, Repeat, Handshake, ChevronRight, Shuffle, Lock,
+  Crosshair, Radar,
   type LucideIcon,
 } from 'lucide-react';
 import { Tabs, TabsContent } from '@/components/ui/tabs';
@@ -20,31 +26,14 @@ import { HACKS, PLAYBOOK_URL } from '@/data/playbook';
 import {
   IPP, MATRIZ_OBJECOES_REP, FUNCOES_REP, MOTIVOS_PERDA_REP,
 } from '@/data/playbookReps';
-import { ARTIGOS, ArtigoCard } from '@/pages/Playbook';
 import CulturaEstrategia from './CulturaEstrategia';
 import { PlaybookProduto } from './PlaybookProduto';
-import { PlaybookPlanos } from './PlaybookPlanos';
-import { PlaybookConcorrentes } from './PlaybookConcorrentes';
-import PlaybookFaq from './PlaybookFaq';
 import {
   PlaybookPrimeirosPassos, PlaybookGestaoCW, PlaybookAutomacaoCW,
   PlaybookAumentoVendasCW, PlaybookModulosCW, PlaybookSuporteCW,
 } from './PlaybookSistemaTopicos';
-import {
-  PlaybookJornadaRepresentante, PlaybookMensagemConfirmacao,
-  PlaybookPassagemBastao, PlaybookRotinaAquisicao,
-} from './PlaybookProcessos';
+import { PlaybookPassagemBastao, PlaybookRotinaAquisicao } from './PlaybookProcessos';
 import { PlaybookSpin, PlaybookAida } from './PlaybookMetodologias';
-import {
-  PlaybookFunilProspeccao, PlaybookFunilAtivacao, PlaybookFunilClientes,
-} from './PlaybookFunis';
-import {
-  PlaybookEstruturaRepresentantes, PlaybookProgressaoCarreira,
-} from './PlaybookEstruturaCarreira';
-import {
-  PlaybookCadenciaProspeccao, PlaybookCadenciaPosReuniao, PlaybookCadenciaOnboarding,
-  PlaybookCadencia1Cliente, PlaybookCadencia2Cliente,
-} from './PlaybookCadencias';
 
 type Cor = 'purple' | 'blue' | 'green' | 'orange' | 'teal' | 'red' | 'yellow' | 'pink' | 'gray';
 
@@ -69,13 +58,9 @@ const TABS: { id: string; label: string; icon: LucideIcon; cor: Cor }[] = [
   { id: 'vendas-cw',        label: 'Aumento de Vendas',    icon: TrendingUp,  cor: 'green' },
   { id: 'modulos-cw',       label: 'Módulos do Sistema',   icon: Puzzle,      cor: 'purple' },
   { id: 'suporte-cw',       label: 'Suporte',              icon: Headphones,  cor: 'gray' },
-  { id: 'planos',           label: 'Planos & Preços',      icon: DollarSign,  cor: 'green' },
-  { id: 'concorrentes',     label: 'Concorrentes',         icon: Swords,      cor: 'orange' },
   { id: 'territorio',       label: 'Território',           icon: Flag,        cor: 'red' },
   { id: 'cargos',           label: 'Funções',              icon: Briefcase,   cor: 'purple' },
   { id: 'icp',              label: 'IPP / Perfil Ideal de Parceiro', icon: Target, cor: 'red' },
-  { id: 'jornada-representante', label: 'Jornada do Representante', icon: Milestone, cor: 'blue' },
-  { id: 'mensagem-confirmacao',  label: 'Confirmação de Apresentação', icon: MessageCircleMore, cor: 'green' },
   { id: 'passagem-bastao',   label: 'Passagem de Bastão',  icon: Shuffle,     cor: 'orange' },
   { id: 'spin',             label: 'SPIN Selling',         icon: Crosshair,   cor: 'purple' },
   { id: 'aida',             label: 'AIDA',                 icon: Radar,       cor: 'red' },
@@ -85,20 +70,7 @@ const TABS: { id: string; label: string; icon: LucideIcon; cor: Cor }[] = [
   { id: 'objecoes',         label: 'Matriz de Objeções',   icon: Swords,      cor: 'red' },
   { id: 'fechamento',       label: 'Fechamento',           icon: Handshake,   cor: 'pink' },
   { id: 'perda',            label: 'Motivos de Perda',     icon: XCircle,     cor: 'red' },
-  { id: 'funil-prospeccao', label: 'Funil de Prospecção',  icon: Filter,      cor: 'teal' },
-  { id: 'funil-ativacao',   label: 'Funil de Acompanhamento', icon: Activity, cor: 'teal' },
-  { id: 'funil-clientes',   label: 'Funil de Clientes',    icon: Users,       cor: 'teal' },
-  { id: 'estrutura-representantes', label: 'Estrutura de Representantes', icon: Building2, cor: 'purple' },
-  { id: 'progressao-carreira', label: 'Progressão de Carreira', icon: LineChart, cor: 'orange' },
-  { id: 'cadencia-prospeccao', label: 'Cadência de Prospecção', icon: PhoneCall, cor: 'blue' },
-  { id: 'cadencia-followup-pos-reuniao', label: 'Follow-up (Pós-reunião)', icon: PhoneOutgoing, cor: 'blue' },
-  { id: 'cadencia-followup-onboarding',  label: 'Follow-up (Onboarding)', icon: PhoneIncoming, cor: 'green' },
-  { id: 'cadencia-followup-1cliente',    label: 'Follow-up (1º Cliente)', icon: Phone, cor: 'green' },
-  { id: 'cadencia-followup-2cliente',    label: 'Follow-up (2º Cliente)', icon: PhoneForwarded, cor: 'green' },
   { id: 'rotina-aquisicao', label: 'Rotina Aquisição',     icon: Lock,        cor: 'gray' },
-  { id: 'faq',              label: 'FAQ',                  icon: HelpCircle,  cor: 'blue' },
-  { id: 'materiais',        label: 'Materiais',            icon: BookOpen,    cor: 'purple' },
-  { id: 'materiais-internos', label: 'Materiais Internos', icon: Presentation, cor: 'blue' },
 ];
 
 function SectionCard({ children, className }: { children: React.ReactNode; className?: string }) {
@@ -305,63 +277,6 @@ function MotivosPerda() {
   );
 }
 
-function Materiais() {
-  return (
-    <div className="space-y-8">
-      <div>
-        <p className="text-xs font-bold text-cw-muted tracking-wide mb-4">
-          Leitura recomendada — Canalize PRM
-        </p>
-        <div className="grid md:grid-cols-2 gap-4">
-          {ARTIGOS.map((a) => (
-            <ArtigoCard key={a.url} artigo={a} />
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-}
-
-const APRESENTACAO_ITENS = [
-  'Apresentação institucional Cardápio Web',
-  'Pitch deck para parceiros e indicações',
-  'Vídeo institucional da marca',
-];
-
-const PLANEJAMENTO_ITENS = [
-  'Calendário de metas do trimestre',
-  'Roadmap de produto',
-  'Plano de expansão do canal de representantes',
-];
-
-function ListaMateriais({ titulo, itens }: { titulo: string; itens: string[] }) {
-  return (
-    <div>
-      <p className="text-xs font-bold text-cw-muted tracking-wide mb-4">{titulo}</p>
-      <div className="cw-card divide-y divide-cw-border">
-        {itens.map((item) => (
-          <div key={item} className="flex items-center gap-3 px-5 py-3.5">
-            <div className="h-1.5 w-1.5 rounded-full bg-cw-purple shrink-0" />
-            <span className="text-sm text-cw-text flex-1">{item}</span>
-            <span className="text-[10px] font-medium text-cw-muted bg-cw-elevated rounded-full px-2.5 py-0.5">
-              Em breve
-            </span>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-function MateriaisInternos() {
-  return (
-    <div className="space-y-8">
-      <ListaMateriais titulo="Apresentação" itens={APRESENTACAO_ITENS} />
-      <ListaMateriais titulo="Planejamento" itens={PLANEJAMENTO_ITENS} />
-    </div>
-  );
-}
-
 const CONTEUDO: Record<string, React.ComponentType> = {
   cultura: CulturaEstrategia,
   produto: PlaybookProduto,
@@ -371,32 +286,15 @@ const CONTEUDO: Record<string, React.ComponentType> = {
   'vendas-cw': PlaybookAumentoVendasCW,
   'modulos-cw': PlaybookModulosCW,
   'suporte-cw': PlaybookSuporteCW,
-  planos: PlaybookPlanos,
-  concorrentes: PlaybookConcorrentes,
   cargos: Cargos,
   icp: Icp,
-  'jornada-representante': PlaybookJornadaRepresentante,
-  'mensagem-confirmacao': PlaybookMensagemConfirmacao,
   'passagem-bastao': PlaybookPassagemBastao,
   spin: PlaybookSpin,
   aida: PlaybookAida,
   hacks: Hacks,
   objecoes: Objecoes,
   perda: MotivosPerda,
-  'funil-prospeccao': PlaybookFunilProspeccao,
-  'funil-ativacao': PlaybookFunilAtivacao,
-  'funil-clientes': PlaybookFunilClientes,
-  'estrutura-representantes': PlaybookEstruturaRepresentantes,
-  'progressao-carreira': PlaybookProgressaoCarreira,
-  'cadencia-prospeccao': PlaybookCadenciaProspeccao,
-  'cadencia-followup-pos-reuniao': PlaybookCadenciaPosReuniao,
-  'cadencia-followup-onboarding': PlaybookCadenciaOnboarding,
-  'cadencia-followup-1cliente': PlaybookCadencia1Cliente,
-  'cadencia-followup-2cliente': PlaybookCadencia2Cliente,
   'rotina-aquisicao': PlaybookRotinaAquisicao,
-  faq: PlaybookFaq,
-  materiais: Materiais,
-  'materiais-internos': MateriaisInternos,
 };
 
 export default function PlaybookRepresentantes() {
