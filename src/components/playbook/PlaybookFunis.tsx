@@ -1,10 +1,50 @@
 /** Definição das etapas dos três funis do time de Representantes: prospecção,
  *  ativação (acompanhamento de representantes) e clientes de representantes. */
-import { Filter, Activity, Users } from 'lucide-react';
-import { FUNIL_PROSPECCAO, FUNIL_ATIVACAO, FUNIL_CLIENTES, type FunilEtapa } from '@/data/playbookReps';
+import { ClipboardList, Copy, Filter, Activity, Users } from 'lucide-react';
+import {
+  FUNIL_PROSPECCAO, FUNIL_ATIVACAO, FUNIL_CLIENTES,
+  CADASTRO_CLIENTE_CAMPOS, CADASTRO_CLIENTE_TEXTO, type FunilEtapa,
+} from '@/data/playbookReps';
+import { toast } from '@/hooks/use-toast';
 
 function SectionCard({ children, className }: { children: React.ReactNode; className?: string }) {
   return <div className={`cw-card cw-card-hover p-5 ${className ?? ''}`}>{children}</div>;
+}
+
+function CadastroClienteCard() {
+  const copiar = () => {
+    navigator.clipboard?.writeText(CADASTRO_CLIENTE_TEXTO)
+      .then(() => toast({ title: 'Modelo copiado!' }))
+      .catch(() => toast({ title: 'Não foi possível copiar', variant: 'destructive' }));
+  };
+
+  return (
+    <SectionCard>
+      <div className="flex items-center justify-between gap-2 mb-3">
+        <div className="flex items-center gap-2">
+          <ClipboardList className="h-5 w-5 text-teal-600" />
+          <h3 className="text-sm font-bold text-cw-text">Modelo de dados do cliente</h3>
+        </div>
+        <button
+          onClick={copiar}
+          className="inline-flex items-center gap-1.5 rounded-lg bg-cw-elevated border border-cw-border px-2.5 py-1.5 text-[11px] font-bold text-cw-muted hover:text-cw-purple hover:border-cw-purple/40 transition-colors shrink-0"
+        >
+          <Copy className="h-3 w-3" /> Copiar
+        </button>
+      </div>
+      <p className="text-xs text-cw-muted leading-relaxed mb-3">
+        É o que o representante envia na etapa "Dados recebidos" para um cliente pronto pra implementação.
+      </p>
+      <div className="bg-cw-elevated border border-cw-border rounded-xl divide-y divide-cw-border">
+        {CADASTRO_CLIENTE_CAMPOS.map((c) => (
+          <div key={c.campo} className="flex items-center gap-2.5 px-3.5 py-2.5">
+            <span className="text-base shrink-0">{c.icone}</span>
+            <span className="text-sm text-cw-text/85">{c.campo}</span>
+          </div>
+        ))}
+      </div>
+    </SectionCard>
+  );
 }
 
 function FunilEtapas({ etapas }: { etapas: FunilEtapa[] }) {
@@ -68,6 +108,7 @@ export function PlaybookFunilClientes() {
         </p>
       </SectionCard>
       <FunilEtapas etapas={FUNIL_CLIENTES} />
+      <CadastroClienteCard />
     </div>
   );
 }

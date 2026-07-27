@@ -10,10 +10,11 @@ import { toast } from '@/hooks/use-toast';
 import {
   CADENCIA_PROSPECCAO, CADENCIA_POS_REUNIAO, CADENCIA_ONBOARDING,
   CADENCIA_1_CLIENTE, CADENCIA_2_CLIENTE, MENSAGENS_CONFIRMACAO,
+  CADASTRO_CLIENTE_TEXTO,
   type CadenciaData,
 } from '@/data/playbookReps';
 
-type Categoria = 'Prospecção' | 'Pós-reunião' | 'Onboarding' | '1º Cliente' | '2º Cliente' | 'Confirmação';
+type Categoria = 'Prospecção' | 'Pós-reunião' | 'Onboarding' | '1º Cliente' | '2º Cliente' | 'Confirmação' | 'Cadastro';
 
 interface Template {
   id: string;
@@ -55,9 +56,16 @@ const TEMPLATES: Template[] = [
     subtitulo: 'Confirmação de Apresentação',
     texto: m.texto,
   })),
+  {
+    id: 'cadastro-cliente',
+    titulo: 'Modelo de dados do cliente',
+    categoria: 'Cadastro' as Categoria,
+    subtitulo: 'Funil de Clientes · Dados recebidos',
+    texto: CADASTRO_CLIENTE_TEXTO,
+  },
 ];
 
-const CATEGORIAS: Categoria[] = ['Prospecção', 'Pós-reunião', 'Onboarding', '1º Cliente', '2º Cliente', 'Confirmação'];
+const CATEGORIAS: Categoria[] = ['Prospecção', 'Pós-reunião', 'Onboarding', '1º Cliente', '2º Cliente', 'Confirmação', 'Cadastro'];
 const FAVORITOS_KEY = 'cw-templates-favoritos';
 
 function lerFavoritos(): string[] {

@@ -413,7 +413,7 @@ export const FUNIL_ATIVACAO: FunilEtapa[] = [
 export const FUNIL_CLIENTES: FunilEtapa[] = [
   {
     etapa: 'Dados recebidos',
-    desc: 'Representante enviou os dados do cliente. Apenas clientes que precisam ir para implementação da Cardápio Web.\n\nO modelo de dados dos clientes que precisamos é:\n\n📋 CADASTRO\n🏪 Nome da loja:\n👤 Nome do titular:\n📄 CPF:\n📍 Endereço:\n🗺️ CEP:\n📱 WhatsApp (para implementação):\n📧 E-mail:\n⭐ Plano escolhido:',
+    desc: 'Representante enviou os dados do cliente. Apenas clientes que precisam ir para implementação da Cardápio Web. Veja abaixo o modelo de dados que precisamos.',
   },
   {
     etapa: 'Proposta enviada',
@@ -421,6 +421,24 @@ export const FUNIL_CLIENTES: FunilEtapa[] = [
   },
   { etapa: 'Negócio Fechado', desc: 'Cliente com link de pagamento e no aguardo para ser dado ganho para implementação.' },
 ];
+
+/** Campos do modelo de dados que o representante envia ao indicar um cliente
+ *  pronto para implementação (etapa "Dados recebidos" do funil de clientes). */
+export const CADASTRO_CLIENTE_CAMPOS: { icone: string; campo: string }[] = [
+  { icone: '🏪', campo: 'Nome da loja' },
+  { icone: '👤', campo: 'Nome do titular' },
+  { icone: '📄', campo: 'CPF' },
+  { icone: '📍', campo: 'Endereço' },
+  { icone: '🗺️', campo: 'CEP' },
+  { icone: '📱', campo: 'WhatsApp (para implementação)' },
+  { icone: '📧', campo: 'E-mail' },
+  { icone: '⭐', campo: 'Plano escolhido' },
+];
+
+export const CADASTRO_CLIENTE_TEXTO = [
+  '📋 CADASTRO',
+  ...CADASTRO_CLIENTE_CAMPOS.map((c) => `${c.icone} ${c.campo}:`),
+].join('\n');
 
 // ────────────────────────────────────────────────────────────────────────────
 // Estrutura de Representantes (Definir)
