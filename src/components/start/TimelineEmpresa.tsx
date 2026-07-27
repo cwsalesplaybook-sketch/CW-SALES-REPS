@@ -38,12 +38,12 @@ export function TimelineEmpresa() {
         )}
       </div>
 
-      <ol className="relative border-l-2 border-[#D8B8F7] ml-3 space-y-6">
+      <ol className="relative border-l-2 border-[#FFC1DE] ml-3 space-y-6">
         {items.map((m, idx) => {
           const isFuture = m.ano === '2040';
           return (
             <li key={`${m.ano}-${idx}`} className="ml-6 group/m">
-              <span className={`absolute -left-3 flex items-center justify-center w-6 h-6 rounded-full text-[10px] font-bold border-2 border-white shadow-sm ${isFuture ? 'bg-cw-yellow text-cw-purple-dark' : idx === 0 ? 'gradient-primary text-white border-white' : 'bg-white border-[#D8B8F7] text-cw-purple'}`}>
+              <span className={`absolute -left-3 flex items-center justify-center w-6 h-6 rounded-full text-[10px] font-bold border-2 border-white shadow-sm ${isFuture ? 'bg-cw-yellow text-cw-purple-dark' : idx === 0 ? 'gradient-primary text-white border-white' : 'bg-white border-[#FFC1DE] text-cw-purple'}`}>
                 ●
               </span>
               <div className="flex items-baseline gap-3 flex-wrap">

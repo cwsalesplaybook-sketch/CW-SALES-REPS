@@ -136,7 +136,7 @@ export default function Start() {
             <Calendar className="h-5 w-5 text-cw-purple-light" />
             <h2 className="text-xl font-bold text-cw-text">A jornada da CW</h2>
           </div>
-          <ol className="relative border-l-2 border-[#D8B8F7] ml-3 space-y-6">
+          <ol className="relative border-l-2 border-[#FFC1DE] ml-3 space-y-6">
             {TIMELINE_EMPRESA.map((m, idx) => (
               <li key={m.ano} className="ml-6">
                 <span className={`absolute -left-3 flex items-center justify-center w-6 h-6 rounded-full text-[10px] font-bold border-2 border-white shadow-sm ${
@@ -144,7 +144,7 @@ export default function Start() {
                     ? 'bg-cw-yellow text-cw-purple-dark'
                     : idx === 0
                       ? 'gradient-primary text-white border-white'
-                      : 'bg-white border-[#D8B8F7] text-cw-purple'
+                      : 'bg-white border-[#FFC1DE] text-cw-purple'
                 }`}>
                   ●
                 </span>

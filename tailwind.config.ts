@@ -59,9 +59,10 @@ export default {
           ring: "hsl(var(--sidebar-ring))",
         },
         // CW brand palette — Cardápio Web (Light theme)
-        'cw-purple':       '#A543FA',
-        'cw-purple-dark':  '#59327A',
-        'cw-purple-light': '#A543FA',
+        // Rosa igual ao da sidebar (#ff2d8a / #7c003f), pra dashboard e menu combinarem.
+        'cw-purple':       '#FF2D8A',
+        'cw-purple-dark':  '#7C003F',
+        'cw-purple-light': '#FF2D8A',
         'cw-red':          '#FF5959',
         'cw-yellow':       '#FFB600',
         // Light main area
@@ -70,12 +71,12 @@ export default {
         'cw-elevated':     '#FAF7FC',   // inner panels / task rows
         'cw-border':       '#E9DDF2',   // light border
         'cw-text':         '#1A0A2E',   // near-black
-        'cw-muted':        '#7B5EA7',   // muted body text
+        'cw-muted':        '#9F567A',   // muted body text
         // Sidebar stays dark — uses sidebar-* CSS vars, not these tokens
         'cw-sidebar':      '#20092F',
         // Aliases legados
-        'cw-orange':       '#A543FA',
-        'cw-orange-hover': '#8B2FE0',
+        'cw-orange':       '#FF2D8A',
+        'cw-orange-hover': '#E0257A',
       },
       borderRadius: {
         lg: "var(--radius)",
