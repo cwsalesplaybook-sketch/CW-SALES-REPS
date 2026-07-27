@@ -13,7 +13,7 @@ import {
   type CadenciaData,
 } from '@/data/playbookReps';
 
-type Categoria = 'Prospecção' | 'Follow-up' | 'Confirmação';
+type Categoria = 'Prospecção' | 'Pós-reunião' | 'Onboarding' | '1º Cliente' | '2º Cliente' | 'Confirmação';
 
 interface Template {
   id: string;
@@ -26,28 +26,28 @@ interface Template {
 /** Extrai só os passos com mensagem/script real, pulando ligações sem
  *  roteiro escrito (onde `texto` é idêntico ao `tipo`, ex: "Ligação de
  *  diagnóstico"). */
-function passosComTexto(cadencia: CadenciaData, prefixo: string, nomeCadencia?: string): Template[] {
+function passosComTexto(cadencia: CadenciaData, prefixo: string, categoria: Categoria): Template[] {
   return cadencia.passos
     .filter((p) => p.texto !== p.tipo)
     .map((p, i) => ({
       id: `${prefixo}-${i}`,
       titulo: p.tipo,
-      categoria: (nomeCadencia ? 'Follow-up' : 'Prospecção') as Categoria,
-      subtitulo: nomeCadencia ? `Follow-up · ${nomeCadencia}` : `Prospecção · ${p.dia}`,
+      categoria,
+      subtitulo: `${categoria} · ${p.dia}`,
       texto: p.texto,
     }));
 }
 
-const FOLLOWUPS: { data: CadenciaData; nome: string; prefixo: string }[] = [
-  { data: CADENCIA_POS_REUNIAO, nome: 'Pós-reunião', prefixo: 'followup-pos-reuniao' },
-  { data: CADENCIA_ONBOARDING, nome: 'Onboarding', prefixo: 'followup-onboarding' },
-  { data: CADENCIA_1_CLIENTE, nome: '1º Cliente', prefixo: 'followup-1cliente' },
-  { data: CADENCIA_2_CLIENTE, nome: '2º Cliente', prefixo: 'followup-2cliente' },
+const FOLLOWUPS: { data: CadenciaData; categoria: Categoria; prefixo: string }[] = [
+  { data: CADENCIA_POS_REUNIAO, categoria: 'Pós-reunião', prefixo: 'followup-pos-reuniao' },
+  { data: CADENCIA_ONBOARDING, categoria: 'Onboarding', prefixo: 'followup-onboarding' },
+  { data: CADENCIA_1_CLIENTE, categoria: '1º Cliente', prefixo: 'followup-1cliente' },
+  { data: CADENCIA_2_CLIENTE, categoria: '2º Cliente', prefixo: 'followup-2cliente' },
 ];
 
 const TEMPLATES: Template[] = [
-  ...passosComTexto(CADENCIA_PROSPECCAO, 'prospeccao'),
-  ...FOLLOWUPS.flatMap(({ data, nome, prefixo }) => passosComTexto(data, prefixo, nome)),
+  ...passosComTexto(CADENCIA_PROSPECCAO, 'prospeccao', 'Prospecção'),
+  ...FOLLOWUPS.flatMap(({ data, categoria, prefixo }) => passosComTexto(data, prefixo, categoria)),
   ...MENSAGENS_CONFIRMACAO.map((m, i) => ({
     id: `confirmacao-${i}`,
     titulo: m.etapa,
@@ -57,7 +57,7 @@ const TEMPLATES: Template[] = [
   })),
 ];
 
-const CATEGORIAS: Categoria[] = ['Prospecção', 'Follow-up', 'Confirmação'];
+const CATEGORIAS: Categoria[] = ['Prospecção', 'Pós-reunião', 'Onboarding', '1º Cliente', '2º Cliente', 'Confirmação'];
 const FAVORITOS_KEY = 'cw-templates-favoritos';
 
 function lerFavoritos(): string[] {
