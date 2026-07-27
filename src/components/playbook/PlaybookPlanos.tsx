@@ -376,8 +376,8 @@ const MODULOS: Modulo[] = [
     ],
   },
   {
-    id: 'roteirizacao', nome: 'Roteirização de Entregas', icon: Route, nota: true,
-    resumo: 'Roteirização automática e relatórios de desempenho de entregas.',
+    id: 'roteirizacao', nome: 'Módulo Entregadores (Roteirização)', icon: Route, nota: true,
+    resumo: 'Roteirização automática e relatórios de desempenho de entregas, com tarifa adicional por volume de pedidos.',
     precos: {
       mensal:     { mes: '54,99', total: '54,99' },
       trimestral: { mes: '54,99', total: '164,97' },
@@ -390,6 +390,9 @@ const MODULOS: Modulo[] = [
       'Link exclusivo para o entregador ver entregas, mapa e avisar clientes',
       'Relatórios de desempenho: tempo de preparo, atrasos e mapa de calor',
       'Regiões com mais pedidos e tentativas fora da área de cobertura',
+      'Até 500 pedidos/mês: R$ 0,00 por pedido (sem custo adicional)',
+      'De 501 a 1.500 pedidos/mês: R$ 0,08 por pedido excedente',
+      'Acima de 1.500 pedidos/mês: R$ 0,06 por pedido excedente',
     ],
   },
   {

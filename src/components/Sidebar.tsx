@@ -1,16 +1,10 @@
 import { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { Sparkles, Users2, BookOpen, BarChart2, Target, HelpCircle, ChevronRight, LogOut, ClipboardCheck, KanbanSquare } from 'lucide-react';
+import { Sparkles, BookOpen, BarChart2, Target, HelpCircle, ChevronRight, LogOut, ClipboardCheck, KanbanSquare } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { supabase } from '@/integrations/supabase/client';
 
 const REP_SECTIONS = [
-  {
-    label: 'Comunidade',
-    items: [
-      { to: '/comunidade', label: 'Comunidade', Icon: Users2 },
-    ],
-  },
   {
     label: 'Comercial',
     items: [
@@ -28,12 +22,6 @@ const INTERNAL_SECTIONS = [
     label: 'Gestao',
     items: [
       { to: '/kanban', label: 'Kanban Reps', Icon: KanbanSquare },
-    ],
-  },
-  {
-    label: 'Comunidade',
-    items: [
-      { to: '/comunidade', label: 'Comunidade', Icon: Users2 },
     ],
   },
   {

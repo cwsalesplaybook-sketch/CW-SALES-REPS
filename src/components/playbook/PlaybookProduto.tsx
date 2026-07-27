@@ -6,7 +6,7 @@ import { cn } from '@/lib/utils';
 const FOCOS = [
   {
     icon: Bot,
-    titulo: 'Automação de Atendimento',
+    titulo: 'Cardápio Digital',
     cor: 'text-cw-purple',
     bg: 'bg-cw-purple/8',
     borda: 'border-cw-purple/20',
@@ -15,42 +15,54 @@ const FOCOS = [
       'Cardápio digital (delivery, mesa, balcão)',
       'Sistema PDV dentro do WhatsApp',
       'Cardápio rápido e com boa usabilidade',
-      'Pagamento online — Mercado Pago, Cielo, Pix',
+      'Pagamento online | Cartão (Mercado Pago, Cielo) - Pix (Tuna)',
       'Agendamento de pedidos',
     ],
-    integracoes: ['Mercado Pago', 'Cielo', 'Tuna (Pix)'],
+    integracoesGrupos: [
+      { tipo: 'Sistemas de pagamentos', itens: ['Cartão', 'Mercado Pago', 'Cielo', 'Pix', 'Tuna'] },
+    ],
   },
   {
     icon: TrendingUp,
-    titulo: 'Aumento de Vendas',
+    titulo: 'Food Marketing',
     cor: 'text-green-600',
     bg: 'bg-green-50',
     borda: 'border-green-200',
     features: [
       'Disparador de mensagens em massa no WhatsApp',
-      'Automações e agendamentos de mensagens',
+      'Integração com ferramentas de anúncio (Meta Ads, Google Ads, Facebook Pixel, GTM, GA)',
       'Programa de fidelidade',
+      'Cashback',
+      'Matriz RFV',
       'Cupons e descontos',
+      'Automações e agendamentos de mensagens no WhatsApp',
       'Filtros avançados de clientes',
-      'Integração com Meta Ads e Google Ads',
     ],
-    integracoes: ['Facebook Pixel', 'API de conversões Meta', 'Catálogo Facebook', 'Google Tag Manager', 'Google Analytics'],
+    integracoesGrupos: [
+      { tipo: 'Anúncios e tráfego pago', itens: ['Facebook Pixel', 'API de conversões do Meta', 'Catálogo do Facebook', 'Google Tag Manager', 'Google Analytics'] },
+    ],
   },
   {
     icon: BarChart3,
-    titulo: 'Gestão da Empresa',
+    titulo: 'Gestão do Negócio',
     cor: 'text-blue-600',
     bg: 'bg-blue-50',
     borda: 'border-blue-200',
     features: [
       'PDV, estoque, caixa e impressoras',
-      'Gestão de rotas de entrega',
       'Emissão de Nota Fiscal',
-      'Gestão financeira (F360)',
-      'Terceirização de entregadores',
-      'Integração com iFood e Entrega Fácil',
+      'Gestão de rotas de entregas',
+      'Gestão financeira',
+      'Relatórios avançados',
+      'Integração com marketplaces',
+      'Gestão de entregadores, fiado e KDS',
     ],
-    integracoes: ['F360', 'Foody Delivery', 'Pick N Go', 'Entrega Fácil iFood', 'Zumm', 'Saipos', 'Eclética', 'Berp Sistemas'],
+    integracoesGrupos: [
+      { tipo: 'Gestão de rotas de entrega', itens: ['iFood sob demanda', 'Bee Delivery', 'Foody Delivery', "Pick n Go!", 'Mottu', "Let's! Express", 'Husky', 'Machine', 'JAX Bus', 'Entregas Expressas', 'Moovery'] },
+      { tipo: 'Gestão financeira', itens: ['Saipos', 'Eclética', 'Sischef', 'F360 Finanças', 'Glow', 'Izzy Way'] },
+      { tipo: 'Marketplaces', itens: ['iFood', '99 Food', 'Keeta', 'Aiqfome'] },
+      { tipo: 'Outros', itens: ['Open Delivery (padrão de mercado)', 'API Aberta'] },
+    ],
   },
 ];
 
@@ -63,11 +75,13 @@ const PLANOS = [
     features: [
       'Cardápio digital para mesas e balcão',
       'Sistema PDV no WhatsApp',
+      'Cardápio rápido e com boa usabilidade',
       'Disparador de mensagens',
       'Automações de mensagens',
       'Cupons e descontos',
       'Filtros avançados de clientes',
-      'PDV + estoque simplificado + caixa',
+      'PDV + estoque simplificado (sem ficha técnica) + caixa',
+      'Gestão de rotas de entrega pela Foody Delivery e Pick N Go',
       'Gestão financeira F360',
       'Fiado e KDS',
       'Agendamento de pedidos',
@@ -151,13 +165,17 @@ export function PlaybookProduto() {
                     </li>
                   ))}
                 </ul>
-                <div className="border-t border-black/5 pt-3">
-                  <p className="text-[10px] font-bold text-cw-muted uppercase tracking-wider mb-1.5">Integrações</p>
-                  <div className="flex flex-wrap gap-1">
-                    {f.integracoes.map(i => (
-                      <span key={i} className="text-[10px] bg-white/70 border border-black/8 px-2 py-0.5 rounded-full text-cw-muted">{i}</span>
-                    ))}
-                  </div>
+                <div className="border-t border-black/5 pt-3 space-y-2">
+                  {f.integracoesGrupos.map((g) => (
+                    <div key={g.tipo}>
+                      <p className="text-[10px] font-bold text-cw-muted uppercase tracking-wider mb-1">{g.tipo}</p>
+                      <div className="flex flex-wrap gap-1">
+                        {g.itens.map(i => (
+                          <span key={i} className="text-[10px] bg-white/70 border border-black/8 px-2 py-0.5 rounded-full text-cw-muted">{i}</span>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </div>
             );

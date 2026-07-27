@@ -1,6 +1,6 @@
 /** Página inicial do Dashboard de Representantes — independente do SDR. */
 import { useEffect, useState } from 'react';
-import { X, BookOpen, Users2, BarChart2, Target, HelpCircle, Rocket, Star, TrendingUp, CheckCircle2 } from 'lucide-react';
+import { X, BookOpen, BarChart2, Target, HelpCircle, Rocket, Star, TrendingUp, CheckCircle2 } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useSidebarContext, type Papel } from '@/context/SidebarContext';
 
@@ -11,7 +11,6 @@ const ADMIN_EMAILS: Record<string, Papel> = {
 };
 
 const TABS = [
-  { icon: Users2,    label: 'Comunidade',      desc: 'Troque experiencias, compartilhe conquistas e interaja com outros representantes de canal.' },
   { icon: BookOpen,  label: 'Playbook',         desc: 'Materiais de treinamento, metodologias e guias para representantes de canal da Cardapio Web.' },
   { icon: BarChart2, label: 'Pipeline',         desc: 'Acompanhe suas oportunidades em andamento e o status de cada negocio.' },
   { icon: Target,    label: 'Meta do Mes',      desc: 'Visualize e acompanhe sua meta mensal em tempo real com dados do Pipedrive.' },
@@ -20,7 +19,6 @@ const TABS = [
 
 const PROXIMOS_PASSOS = [
   'Acesse o Playbook e leia os materiais de canal indireto',
-  'Apresente-se na Comunidade para os outros representantes',
   'Configure sua meta do mes na aba Meta do Mes',
   'Registre suas oportunidades no Pipeline',
   'Em caso de duvidas, acesse a Central de Ajuda',

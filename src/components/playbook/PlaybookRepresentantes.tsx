@@ -9,11 +9,17 @@ import {
   Briefcase, Target, Lightbulb, Swords, XCircle, ExternalLink,
   Compass, Box, Rocket, FolderKanban, Bot, TrendingUp, Puzzle, Headphones,
   DollarSign, Flag, Megaphone, Repeat, Handshake, HelpCircle, BookOpen,
-  Presentation, ChevronRight, type LucideIcon,
+  Presentation, ChevronRight, Milestone, MessageCircleMore, Shuffle, Lock,
+  Crosshair, Radar, Filter, Activity, Users, Building2, LineChart,
+  PhoneCall, PhoneOutgoing, PhoneIncoming, Phone, PhoneForwarded,
+  type LucideIcon,
 } from 'lucide-react';
 import { Tabs, TabsContent } from '@/components/ui/tabs';
 import { cn } from '@/lib/utils';
-import { CARGOS, HACKS, OBJECOES, MOTIVOS_PERDA, PLAYBOOK_URL } from '@/data/playbook';
+import { HACKS, PLAYBOOK_URL } from '@/data/playbook';
+import {
+  IPP, MATRIZ_OBJECOES_REP, FUNCOES_REP, MOTIVOS_PERDA_REP,
+} from '@/data/playbookReps';
 import { ARTIGOS, ArtigoCard } from '@/pages/Playbook';
 import CulturaEstrategia from './CulturaEstrategia';
 import { PlaybookProduto } from './PlaybookProduto';
@@ -24,6 +30,21 @@ import {
   PlaybookPrimeirosPassos, PlaybookGestaoCW, PlaybookAutomacaoCW,
   PlaybookAumentoVendasCW, PlaybookModulosCW, PlaybookSuporteCW,
 } from './PlaybookSistemaTopicos';
+import {
+  PlaybookJornadaRepresentante, PlaybookMensagemConfirmacao,
+  PlaybookPassagemBastao, PlaybookRotinaAquisicao,
+} from './PlaybookProcessos';
+import { PlaybookSpin, PlaybookAida } from './PlaybookMetodologias';
+import {
+  PlaybookFunilProspeccao, PlaybookFunilAtivacao, PlaybookFunilClientes,
+} from './PlaybookFunis';
+import {
+  PlaybookEstruturaRepresentantes, PlaybookProgressaoCarreira,
+} from './PlaybookEstruturaCarreira';
+import {
+  PlaybookCadenciaProspeccao, PlaybookCadenciaPosReuniao, PlaybookCadenciaOnboarding,
+  PlaybookCadencia1Cliente, PlaybookCadencia2Cliente,
+} from './PlaybookCadencias';
 
 type Cor = 'purple' | 'blue' | 'green' | 'orange' | 'teal' | 'red' | 'yellow' | 'pink' | 'gray';
 
@@ -51,14 +72,30 @@ const TABS: { id: string; label: string; icon: LucideIcon; cor: Cor }[] = [
   { id: 'planos',           label: 'Planos & Preços',      icon: DollarSign,  cor: 'green' },
   { id: 'concorrentes',     label: 'Concorrentes',         icon: Swords,      cor: 'orange' },
   { id: 'territorio',       label: 'Território',           icon: Flag,        cor: 'red' },
-  { id: 'cargos',           label: 'Cargos',               icon: Briefcase,   cor: 'purple' },
-  { id: 'icp',              label: 'ICP',                  icon: Target,      cor: 'red' },
+  { id: 'cargos',           label: 'Funções',              icon: Briefcase,   cor: 'purple' },
+  { id: 'icp',              label: 'IPP / Perfil Ideal de Parceiro', icon: Target, cor: 'red' },
+  { id: 'jornada-representante', label: 'Jornada do Representante', icon: Milestone, cor: 'blue' },
+  { id: 'mensagem-confirmacao',  label: 'Confirmação de Apresentação', icon: MessageCircleMore, cor: 'green' },
+  { id: 'passagem-bastao',   label: 'Passagem de Bastão',  icon: Shuffle,     cor: 'orange' },
+  { id: 'spin',             label: 'SPIN Selling',         icon: Crosshair,   cor: 'purple' },
+  { id: 'aida',             label: 'AIDA',                 icon: Radar,       cor: 'red' },
   { id: 'abordagem',        label: 'Abordagem',            icon: Megaphone,   cor: 'purple' },
   { id: 'negociacao',       label: 'Negociação',           icon: Repeat,      cor: 'pink' },
   { id: 'hacks',            label: 'Hacks',                icon: Lightbulb,   cor: 'yellow' },
-  { id: 'objecoes',         label: 'Objeções',             icon: Swords,      cor: 'red' },
+  { id: 'objecoes',         label: 'Matriz de Objeções',   icon: Swords,      cor: 'red' },
   { id: 'fechamento',       label: 'Fechamento',           icon: Handshake,   cor: 'pink' },
   { id: 'perda',            label: 'Motivos de Perda',     icon: XCircle,     cor: 'red' },
+  { id: 'funil-prospeccao', label: 'Funil de Prospecção',  icon: Filter,      cor: 'teal' },
+  { id: 'funil-ativacao',   label: 'Funil de Acompanhamento', icon: Activity, cor: 'teal' },
+  { id: 'funil-clientes',   label: 'Funil de Clientes',    icon: Users,       cor: 'teal' },
+  { id: 'estrutura-representantes', label: 'Estrutura de Representantes', icon: Building2, cor: 'purple' },
+  { id: 'progressao-carreira', label: 'Progressão de Carreira', icon: LineChart, cor: 'orange' },
+  { id: 'cadencia-prospeccao', label: 'Cadência de Prospecção', icon: PhoneCall, cor: 'blue' },
+  { id: 'cadencia-followup-pos-reuniao', label: 'Follow-up (Pós-reunião)', icon: PhoneOutgoing, cor: 'blue' },
+  { id: 'cadencia-followup-onboarding',  label: 'Follow-up (Onboarding)', icon: PhoneIncoming, cor: 'green' },
+  { id: 'cadencia-followup-1cliente',    label: 'Follow-up (1º Cliente)', icon: Phone, cor: 'green' },
+  { id: 'cadencia-followup-2cliente',    label: 'Follow-up (2º Cliente)', icon: PhoneForwarded, cor: 'green' },
+  { id: 'rotina-aquisicao', label: 'Rotina Aquisição',     icon: Lock,        cor: 'gray' },
   { id: 'faq',              label: 'FAQ',                  icon: HelpCircle,  cor: 'blue' },
   { id: 'materiais',        label: 'Materiais',            icon: BookOpen,    cor: 'purple' },
   { id: 'materiais-internos', label: 'Materiais Internos', icon: Presentation, cor: 'blue' },
@@ -97,21 +134,33 @@ function EmBreve() {
 
 function Cargos() {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-      {CARGOS.map((c) => (
-        <SectionCard key={c.sigla}>
-          <div className="flex items-start gap-3 mb-3">
-            <div className="h-10 w-10 rounded-lg gradient-primary flex items-center justify-center shrink-0">
-              <Briefcase className="h-5 w-5 text-white" />
+    <div className="space-y-4">
+      <SectionCard>
+        <div className="flex items-center gap-2 mb-2">
+          <Briefcase className="h-5 w-5 text-cw-purple-light" />
+          <h3 className="text-lg font-bold">Funções</h3>
+        </div>
+        <p className="text-sm text-cw-muted leading-relaxed">
+          Nessa área você vai encontrar as definições de cada profissional do processo.
+        </p>
+      </SectionCard>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {FUNCOES_REP.map((c) => (
+          <SectionCard key={c.nome}>
+            <div className="flex items-start gap-3 mb-3">
+              <div className="h-10 w-10 rounded-lg gradient-primary flex items-center justify-center shrink-0">
+                <Briefcase className="h-5 w-5 text-white" />
+              </div>
+              <h4 className="font-bold text-cw-text text-sm">{c.nome}</h4>
             </div>
-            <div>
-              <h4 className="font-bold text-cw-text">{c.sigla}</h4>
-              <p className="text-xs text-cw-muted">{c.nome}</p>
-            </div>
-          </div>
-          <p className="text-sm text-cw-muted leading-relaxed">{c.descricao}</p>
-        </SectionCard>
-      ))}
+            {c.descricao ? (
+              <p className="text-sm text-cw-muted leading-relaxed">{c.descricao}</p>
+            ) : (
+              <p className="text-xs text-cw-muted italic">Descrição ainda não preenchida pela liderança na planilha oficial.</p>
+            )}
+          </SectionCard>
+        ))}
+      </div>
     </div>
   );
 }
@@ -122,15 +171,38 @@ function Icp() {
       <SectionCard>
         <div className="flex items-center gap-2 mb-3">
           <Target className="h-5 w-5 text-cw-purple-light" />
-          <h3 className="text-lg font-bold">O que é o ICP</h3>
+          <h3 className="text-lg font-bold">Perfil Ideal de Parceiro (IPP)</h3>
         </div>
-        <p className="text-cw-muted leading-relaxed">
-          O ICP (Ideal Customer Profile) define o perfil do lead com maior probabilidade de fechar e se tornar um cliente de sucesso. Conhecer o ICP é fundamental para priorizar esforços de indicação e qualificação.
+        <p className="text-cw-muted leading-relaxed text-sm">
+          Esta aba tem como objetivo documentar o perfil ideal de parceiro (representante).
         </p>
       </SectionCard>
-      <div className="cw-card cw-card-hover p-5 border-l-4 border-l-cw-purple">
-        <p className="text-sm text-cw-muted">Acesse o ICP completo na planilha oficial.</p>
-        <SheetLink label="Ver ICP completo" />
+      <div className="cw-card p-5">
+        <p className="text-sm text-cw-text/85 leading-relaxed mb-4">{IPP.perfil}</p>
+        <p className="text-xs font-bold text-cw-muted uppercase tracking-wider mb-1.5">Características esperadas</p>
+        <ul className="space-y-1.5 mb-4">
+          {IPP.caracteristicas.map((c) => (
+            <li key={c} className="flex items-start gap-2 text-sm text-cw-muted">
+              <span className="h-1.5 w-1.5 rounded-full bg-cw-purple mt-1.5 shrink-0" />{c}
+            </li>
+          ))}
+        </ul>
+        <p className="text-xs font-bold text-cw-muted uppercase tracking-wider mb-1.5">Diferenciais desejáveis</p>
+        <ul className="space-y-1.5 mb-4">
+          {IPP.diferenciaisDesejaveis.map((c) => (
+            <li key={c} className="flex items-start gap-2 text-sm text-cw-muted">
+              <span className="h-1.5 w-1.5 rounded-full bg-cw-purple mt-1.5 shrink-0" />{c}
+            </li>
+          ))}
+        </ul>
+        <p className="text-xs font-bold text-cw-muted uppercase tracking-wider mb-1.5">Diferenciais competitivos (opcional, mas estratégico)</p>
+        <ul className="space-y-1.5">
+          {IPP.diferenciaisCompetitivos.map((c) => (
+            <li key={c} className="flex items-start gap-2 text-sm text-cw-muted">
+              <span className="h-1.5 w-1.5 rounded-full bg-cw-purple mt-1.5 shrink-0" />{c}
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   );
@@ -178,33 +250,28 @@ function Objecoes() {
           <h3 className="text-lg font-bold">Matriz de Objeções</h3>
         </div>
         <p className="text-sm text-cw-muted leading-relaxed">
-          Mapeia as principais resistências dos leads e os melhores argumentos para cada uma.
+          Esta aba reúne as principais objeções que surgem no processo de aquisição de parceiros e como contorná-las de forma estratégica, alinhada ao posicionamento do programa de representantes.
         </p>
       </SectionCard>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-        {OBJECOES.map((o, i) => (
-          <div key={o.objecao + i} className="cw-card cw-card-hover p-5">
-            <div className="flex items-center gap-2 mb-3 flex-wrap">
-              {o.tipo && (
-                <span className="px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-cw-red/10 text-cw-red border border-cw-red/25">
-                  {o.tipo}
-                </span>
-              )}
-              {o.momento && (
-                <span className="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-cw-elevated border border-cw-border text-cw-muted">
-                  {o.momento}
-                </span>
-              )}
-            </div>
-            <h4 className="font-bold text-cw-text mb-3 text-sm">"{o.objecao}"</h4>
+        {MATRIZ_OBJECOES_REP.map((o) => (
+          <div key={o.tipo} className="cw-card cw-card-hover p-5">
+            <span className="inline-block px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-cw-red/10 text-cw-red border border-cw-red/25 mb-3">
+              {o.tipo}
+            </span>
+            <p className="text-sm text-cw-text/85 mb-3 leading-relaxed">{o.explicacao}</p>
             <div className="border-l-2 border-cw-purple pl-3">
-              <p className="text-xs text-cw-purple font-semibold uppercase mb-1 tracking-wider">Como responder</p>
-              <p className="text-sm text-cw-muted leading-relaxed">{o.argumento}</p>
+              <p className="text-xs text-cw-purple font-semibold uppercase mb-1 tracking-wider">Como resolver</p>
+              <p className="text-sm text-cw-muted leading-relaxed">{o.comoResolver}</p>
             </div>
           </div>
         ))}
       </div>
-      <div className="cw-card p-4">
+      <div className="cw-card p-4 space-y-2">
+        <p className="text-xs font-bold text-cw-muted uppercase tracking-wider">Template para registrar novas objeções (planilha oficial)</p>
+        <p className="text-xs text-cw-muted leading-relaxed">
+          A planilha reserva uma tabela em branco para registrar objeções não mapeadas ainda, com as colunas: <strong>Descritivo da Objeção</strong> (o que o lead fala), <strong>Momento</strong> (etapa do processo em que apareceu), <strong>Tipo de Objeção</strong> (qual dos tipos acima se aplica) e <strong>Discurso de solução</strong> (o que pode ser falado para transpor a objeção). Nenhuma linha estava preenchida no momento da transcrição.
+        </p>
         <SheetLink label="Ver matriz completa" />
       </div>
     </div>
@@ -220,13 +287,13 @@ function MotivosPerda() {
           <h3 className="text-lg font-bold">Motivos de Perda</h3>
         </div>
         <p className="text-sm text-cw-muted leading-relaxed">
-          Entender por que perdemos um lead é tão importante quanto entender por que fechamos.
+          Os motivos de perda são as razões pelas quais os leads foram perdidos. São muito importantes para recuperação de oportunidades perdidas e ajustes de estratégias com foco em aumentar as vendas.
         </p>
       </SectionCard>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {MOTIVOS_PERDA.map((m) => (
-          <div key={m.motivo} className="cw-card cw-card-hover p-5 border-l-4 border-l-cw-red/70">
-            <h4 className="font-bold text-cw-text mb-2">{m.motivo}</h4>
+        {MOTIVOS_PERDA_REP.map((m) => (
+          <div key={m.tipo} className="cw-card cw-card-hover p-5 border-l-4 border-l-cw-red/70">
+            <h4 className="font-bold text-cw-text mb-2 text-sm">{m.tipo}</h4>
             <p className="text-sm text-cw-muted leading-relaxed">{m.desc}</p>
           </div>
         ))}
@@ -308,9 +375,25 @@ const CONTEUDO: Record<string, React.ComponentType> = {
   concorrentes: PlaybookConcorrentes,
   cargos: Cargos,
   icp: Icp,
+  'jornada-representante': PlaybookJornadaRepresentante,
+  'mensagem-confirmacao': PlaybookMensagemConfirmacao,
+  'passagem-bastao': PlaybookPassagemBastao,
+  spin: PlaybookSpin,
+  aida: PlaybookAida,
   hacks: Hacks,
   objecoes: Objecoes,
   perda: MotivosPerda,
+  'funil-prospeccao': PlaybookFunilProspeccao,
+  'funil-ativacao': PlaybookFunilAtivacao,
+  'funil-clientes': PlaybookFunilClientes,
+  'estrutura-representantes': PlaybookEstruturaRepresentantes,
+  'progressao-carreira': PlaybookProgressaoCarreira,
+  'cadencia-prospeccao': PlaybookCadenciaProspeccao,
+  'cadencia-followup-pos-reuniao': PlaybookCadenciaPosReuniao,
+  'cadencia-followup-onboarding': PlaybookCadenciaOnboarding,
+  'cadencia-followup-1cliente': PlaybookCadencia1Cliente,
+  'cadencia-followup-2cliente': PlaybookCadencia2Cliente,
+  'rotina-aquisicao': PlaybookRotinaAquisicao,
   faq: PlaybookFaq,
   materiais: Materiais,
   'materiais-internos': MateriaisInternos,
