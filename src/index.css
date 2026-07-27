@@ -38,7 +38,7 @@
 @layer base {
   :root {
     /* Light main area */
-    --background: 290 43% 95%;         /* cw-bg  #F4EDF7 magnolia */
+    --background: 260 43% 97%;         /* cw-bg  #F7F5FB */
     --foreground: 270 62% 11%;         /* cw-text #1A0A2E */
 
     --card: 0 0% 100%;                 /* cw-surface #FFFFFF */
@@ -47,59 +47,59 @@
     --popover: 0 0% 100%;
     --popover-foreground: 270 62% 11%;
 
-    --primary: 281 95% 62%;            /* cw-purple #A543FA */
+    --primary: 271 91% 65%;            /* cw-purple #A855F7 */
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 286 43% 97%;          /* cw-elevated #FAF7FC */
-    --secondary-foreground: 270 62% 11%;
+    --secondary: 330 81% 60%;          /* cw-pink #EC4899 */
+    --secondary-foreground: 0 0% 100%;
 
-    --muted: 286 43% 97%;
+    --muted: 261 41% 96%;
     --muted-foreground: 270 35% 50%;   /* cw-muted #7B5EA7 */
 
-    --accent: 286 43% 97%;
+    --accent: 261 41% 96%;
     --accent-foreground: 270 62% 11%;
 
     --destructive: 0 100% 67%;         /* cw-red #FF5959 */
     --destructive-foreground: 0 0% 100%;
 
-    --border: 285 42% 89%;             /* cw-border #E9DDF2 */
-    --input: 285 42% 89%;
-    --ring: 281 95% 62%;
+    --border: 261 41% 93%;             /* cw-border #ECE7F5 */
+    --input: 261 41% 93%;
+    --ring: 271 91% 65%;
 
-    --radius: 0.75rem;
+    --radius: 1rem;
 
     /* Sidebar stays dark — always */
-    --sidebar-background: 282 72% 11%;  /* #20092F */
-    --sidebar-foreground: 275 30% 75%;
-    --sidebar-primary: 281 95% 62%;
+    --sidebar-background: 280 37% 6%;   /* #120A16 */
+    --sidebar-foreground: 275 20% 70%;
+    --sidebar-primary: 271 91% 65%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 281 68% 17%;
+    --sidebar-accent: 280 30% 12%;
     --sidebar-accent-foreground: 270 60% 96%;
-    --sidebar-border: 280 60% 20%;
-    --sidebar-ring: 281 95% 62%;
+    --sidebar-border: 280 25% 16%;
+    --sidebar-ring: 271 91% 65%;
   }
 
   /* Keep .dark identical to :root light so we don't accidentally re-darken */
   .dark {
-    --background: 290 43% 95%;
+    --background: 260 43% 97%;
     --foreground: 270 62% 11%;
     --card: 0 0% 100%;
     --card-foreground: 270 62% 11%;
     --popover: 0 0% 100%;
     --popover-foreground: 270 62% 11%;
-    --primary: 281 95% 62%;
+    --primary: 271 91% 65%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 286 43% 97%;
-    --secondary-foreground: 270 62% 11%;
-    --muted: 286 43% 97%;
+    --secondary: 330 81% 60%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 261 41% 96%;
     --muted-foreground: 270 35% 50%;
-    --accent: 286 43% 97%;
+    --accent: 261 41% 96%;
     --accent-foreground: 270 62% 11%;
     --destructive: 0 100% 67%;
     --destructive-foreground: 0 0% 100%;
-    --border: 285 42% 89%;
-    --input: 285 42% 89%;
-    --ring: 281 95% 62%;
+    --border: 261 41% 93%;
+    --input: 261 41% 93%;
+    --ring: 271 91% 65%;
   }
 }
 
@@ -115,24 +115,24 @@
 @layer utilities {
   /* Gradientes oficiais CW */
   .gradient-primary {
-    background: linear-gradient(135deg, #A543FA 0%, #59327A 100%);
+    background: linear-gradient(135deg, #A855F7 0%, #EC4899 100%);
   }
   /* Hero gradient — institucional vibrante */
   .gradient-hot {
-    background: linear-gradient(135deg, #A543FA 0%, #C05AFD 40%, #FF5959 100%);
+    background: linear-gradient(135deg, #A855F7 0%, #C084FC 40%, #EC4899 100%);
   }
   .gradient-gold {
     background: linear-gradient(135deg, #FFB600 0%, #FF5959 100%);
   }
   .gradient-surface {
-    background: linear-gradient(180deg, #F8F4FA 0%, #F4EDF7 100%);
+    background: linear-gradient(180deg, #FBFAFD 0%, #F7F5FB 100%);
   }
   /* Sutil glow no hero */
   .gradient-glow {
-    background: radial-gradient(ellipse at top left, rgba(165, 67, 250, 0.18) 0%, transparent 65%);
+    background: radial-gradient(ellipse at top left, rgba(168, 85, 247, 0.14) 0%, transparent 65%);
   }
   .text-gradient-primary {
-    background: linear-gradient(135deg, #A543FA 0%, #FF5959 100%);
+    background: linear-gradient(135deg, #A855F7 0%, #EC4899 100%);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -144,15 +144,15 @@
     -webkit-text-fill-color: transparent;
   }
 
-  /* Cards — white surface, soft shadow */
+  /* Cards — white surface, soft shadow, mais respiro */
   .cw-card {
     @apply bg-cw-surface border border-cw-border rounded-2xl;
-    box-shadow: 0 4px 20px rgba(89, 50, 122, 0.06), 0 1px 3px rgba(89, 50, 122, 0.04);
+    box-shadow: 0 8px 28px rgba(76, 29, 149, 0.06), 0 2px 6px rgba(76, 29, 149, 0.04);
     transition: box-shadow 200ms ease, border-color 200ms ease;
   }
   .cw-card-hover:hover {
-    border-color: #A543FA;
-    box-shadow: 0 8px 32px rgba(165, 67, 250, 0.14);
+    border-color: #A855F7;
+    box-shadow: 0 12px 36px rgba(168, 85, 247, 0.14);
   }
   .cw-elevated {
     @apply bg-cw-elevated border border-cw-border rounded-xl;
@@ -160,7 +160,7 @@
 
   /* Skeleton shimmer — light palette */
   .cw-shimmer {
-    background: linear-gradient(90deg, #F4EDF7 0%, #E9DDF2 50%, #F4EDF7 100%);
+    background: linear-gradient(90deg, #F7F5FB 0%, #ECE7F5 50%, #F7F5FB 100%);
     background-size: 1000px 100%;
     animation: shimmer 2s linear infinite;
   }
@@ -168,7 +168,14 @@
   .scrollbar-cw::-webkit-scrollbar { width: 6px; height: 6px; }
   .scrollbar-cw::-webkit-scrollbar-track { background: transparent; }
   .scrollbar-cw::-webkit-scrollbar-thumb {
-    background: #D8B8F7; border-radius: 3px;
+    background: #D8B4F8; border-radius: 3px;
   }
-  .scrollbar-cw::-webkit-scrollbar-thumb:hover { background: #A543FA; }
+  .scrollbar-cw::-webkit-scrollbar-thumb:hover { background: #A855F7; }
+
+  /* Sidebar — glassmorphism escuro */
+  .sidebar-glass {
+    background: linear-gradient(180deg, rgba(24, 14, 32, 0.92) 0%, rgba(18, 10, 22, 0.96) 100%);
+    backdrop-filter: blur(20px) saturate(140%);
+    -webkit-backdrop-filter: blur(20px) saturate(140%);
+  }
 }

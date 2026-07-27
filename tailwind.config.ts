@@ -59,23 +59,24 @@ export default {
           ring: "hsl(var(--sidebar-ring))",
         },
         // CW brand palette — Cardápio Web (Light theme)
-        'cw-purple':       '#A543FA',
-        'cw-purple-dark':  '#59327A',
-        'cw-purple-light': '#A543FA',
+        'cw-purple':       '#A855F7',
+        'cw-purple-dark':  '#7C3AED',
+        'cw-purple-light': '#A855F7',
+        'cw-pink':         '#EC4899',
         'cw-red':          '#FF5959',
         'cw-yellow':       '#FFB600',
         // Light main area
-        'cw-bg':           '#F4EDF7',   // Magnolia — page background
+        'cw-bg':           '#F7F5FB',   // page background
         'cw-surface':      '#FFFFFF',   // card surface
-        'cw-elevated':     '#FAF7FC',   // inner panels / task rows
-        'cw-border':       '#E9DDF2',   // light border
+        'cw-elevated':     '#FAF9FD',   // inner panels / task rows
+        'cw-border':       '#ECE7F5',   // light border
         'cw-text':         '#1A0A2E',   // near-black
         'cw-muted':        '#7B5EA7',   // muted body text
         // Sidebar stays dark — uses sidebar-* CSS vars, not these tokens
-        'cw-sidebar':      '#20092F',
+        'cw-sidebar':      '#120A16',
         // Aliases legados
-        'cw-orange':       '#A543FA',
-        'cw-orange-hover': '#8B2FE0',
+        'cw-orange':       '#A855F7',
+        'cw-orange-hover': '#9333EA',
       },
       borderRadius: {
         lg: "var(--radius)",
