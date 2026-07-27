@@ -4,18 +4,30 @@
  *  ESTRUTURA_REPRESENTANTES em `@/data/playbookReps` — só a apresentação
  *  visual foi reforçada: sub-navegação fixa por âncora, ícone e cartão de
  *  destaque por seção, para facilitar a leitura de um conteúdo denso. */
+import { useEffect, useState } from 'react';
 import type { LucideIcon } from 'lucide-react';
 import { UserCheck, Workflow, Wallet, Layers, MessagesSquare, Check } from 'lucide-react';
+import { cn } from '@/lib/utils';
 import { ESTRUTURA_REPRESENTANTES } from '@/data/playbookReps';
 
 const e = ESTRUTURA_REPRESENTANTES;
 
-const SECOES: { id: string; label: string; icon: LucideIcon }[] = [
-  { id: 'perfil', label: 'Perfil Ideal', icon: UserCheck },
-  { id: 'funcionamento', label: 'Funcionamento', icon: Workflow },
-  { id: 'financeiro', label: 'Modelo Financeiro', icon: Wallet },
-  { id: 'niveis', label: 'Níveis', icon: Layers },
-  { id: 'objecoes', label: 'Objeções', icon: MessagesSquare },
+type Cor = 'purple' | 'blue' | 'green' | 'orange' | 'red';
+
+const CORES: Record<Cor, { bg: string; text: string }> = {
+  purple: { bg: 'bg-cw-purple/15', text: 'text-cw-purple' },
+  blue:   { bg: 'bg-blue-100',     text: 'text-blue-600' },
+  green:  { bg: 'bg-emerald-100',  text: 'text-emerald-600' },
+  orange: { bg: 'bg-orange-100',   text: 'text-orange-600' },
+  red:    { bg: 'bg-red-100',      text: 'text-red-600' },
+};
+
+const SECOES: { id: string; label: string; icon: LucideIcon; cor: Cor }[] = [
+  { id: 'perfil', label: 'Perfil Ideal', icon: UserCheck, cor: 'purple' },
+  { id: 'funcionamento', label: 'Funcionamento', icon: Workflow, cor: 'blue' },
+  { id: 'financeiro', label: 'Modelo Financeiro', icon: Wallet, cor: 'green' },
+  { id: 'niveis', label: 'Níveis', icon: Layers, cor: 'orange' },
+  { id: 'objecoes', label: 'Objeções', icon: MessagesSquare, cor: 'red' },
 ];
 
 function SectionHeading({ icon: Icon, titulo }: { icon: LucideIcon; titulo: string }) {
@@ -30,18 +42,50 @@ function SectionHeading({ icon: Icon, titulo }: { icon: LucideIcon; titulo: stri
 }
 
 export default function Estrutura() {
+  const [ativo, setAtivo] = useState(SECOES[0].id);
+
+  useEffect(() => {
+    const secoes = SECOES.map((s) => document.getElementById(s.id)).filter((el): el is HTMLElement => !!el);
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visivel = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top)[0];
+        if (visivel) setAtivo(visivel.target.id);
+      },
+      { rootMargin: '-96px 0px -70% 0px', threshold: 0 },
+    );
+    secoes.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <div className="pb-10">
-      <nav className="sticky top-0 z-10 mt-6 md:mt-8 bg-cw-bg/95 backdrop-blur border-y border-cw-border px-6 md:px-8 py-2 flex items-center gap-1 overflow-x-auto scrollbar-cw">
+      <nav className="sticky top-0 z-10 bg-cw-bg/95 backdrop-blur border-b border-cw-border px-6 md:px-8 py-3 flex items-center gap-2 overflow-x-auto scrollbar-cw">
         {SECOES.map((s) => {
           const Icon = s.icon;
+          const isAtivo = ativo === s.id;
+          const cor = CORES[s.cor];
           return (
             <a
               key={s.id}
               href={`#${s.id}`}
-              className="shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold text-cw-muted hover:text-cw-purple-light hover:bg-cw-purple/10 transition-colors"
+              className={cn(
+                'relative shrink-0 inline-flex items-center gap-2 rounded-full transition-all duration-200',
+                isAtivo
+                  ? 'gradient-primary pl-2 pr-4 py-1.5 shadow-[0_4px_16px_rgba(124,0,63,0.25)]'
+                  : 'pl-2 pr-3.5 py-1.5 bg-cw-surface border border-cw-border hover:border-cw-purple/40',
+              )}
             >
-              <Icon className="h-3.5 w-3.5" /> {s.label}
+              <span className={cn(
+                'flex items-center justify-center rounded-full h-6 w-6 shrink-0 transition-colors',
+                isAtivo ? 'bg-white/25' : cor.bg,
+              )}>
+                <Icon className={cn('h-3.5 w-3.5', isAtivo ? 'text-white' : cor.text)} />
+              </span>
+              <span className={cn('text-xs font-bold whitespace-nowrap', isAtivo ? 'text-white' : 'text-cw-text/80')}>
+                {s.label}
+              </span>
             </a>
           );
         })}
