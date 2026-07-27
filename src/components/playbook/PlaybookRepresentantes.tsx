@@ -307,10 +307,6 @@ export default function PlaybookRepresentantes() {
 
   return (
     <div className="p-8">
-      <div className="mb-6">
-        <h1 className="text-2xl font-black text-cw-text">Playbook de Representantes</h1>
-        <p className="text-sm text-cw-muted mt-1">Conteúdo exclusivo para o time de Representantes da Cardápio Web.</p>
-      </div>
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
         <div className="relative mb-2">
           <div ref={scrollRef} className="overflow-x-auto scrollbar-cw pb-1">
