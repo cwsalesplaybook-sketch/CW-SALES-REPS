@@ -56,13 +56,6 @@ const CORES = {
 export default function Meta() {
   return (
     <div className="p-6 md:p-8 space-y-6">
-      <div>
-        <h1 className="text-2xl font-black text-cw-text">Meta do Mês</h1>
-        <p className="text-sm text-cw-muted mt-0.5">
-          Estrutura de indicadores do canal de representantes. A integração com dados em tempo real ainda será configurada — por ora, os valores aparecem como "Em breve".
-        </p>
-      </div>
-
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
         {CATEGORIAS.map((cat) => {
           const cor = CORES[cat.cor];

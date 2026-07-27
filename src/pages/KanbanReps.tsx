@@ -75,14 +75,6 @@ export default function KanbanReps() {
 
   return (
     <div className="flex flex-col p-8" style={{ minHeight: '100%' }}>
-      {/* Header */}
-      <div className="mb-6 flex-shrink-0">
-        <h1 className="text-2xl font-black text-cw-text">Kanban de Representantes</h1>
-        <p className="text-sm text-cw-muted mt-0.5">
-          Gerencie o funil de captacao de novos representantes.
-        </p>
-      </div>
-
       {/* Stats row */}
       <div className="flex gap-3 mb-6 flex-shrink-0 flex-wrap">
         {STAGES.map(s => {

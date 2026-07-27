@@ -50,13 +50,6 @@ export default function Materiais() {
   return (
     <div className="p-6 md:p-8 space-y-8">
       <div>
-        <h1 className="text-2xl font-black text-cw-text">Materiais</h1>
-        <p className="text-sm text-cw-muted mt-0.5">
-          Leitura recomendada e materiais internos de apoio para o time de Representantes.
-        </p>
-      </div>
-
-      <div>
         <SectionLabel icon={BookOpen} titulo="Leitura recomendada — Canalize PRM" />
         <div className="grid md:grid-cols-2 gap-4">
           {ARTIGOS.map((a) => (

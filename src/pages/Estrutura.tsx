@@ -32,14 +32,7 @@ function SectionHeading({ icon: Icon, titulo }: { icon: LucideIcon; titulo: stri
 export default function Estrutura() {
   return (
     <div className="pb-10">
-      <div className="p-6 md:p-8 pb-0">
-        <h1 className="text-2xl font-black text-cw-text">Estrutura</h1>
-        <p className="text-sm text-cw-muted mt-0.5">
-          Perfil ideal, funcionamento do programa, modelo financeiro, níveis e principais objeções do canal de Representantes.
-        </p>
-      </div>
-
-      <nav className="sticky top-0 z-10 mt-5 bg-cw-bg/95 backdrop-blur border-y border-cw-border px-6 md:px-8 py-2 flex items-center gap-1 overflow-x-auto scrollbar-cw">
+      <nav className="sticky top-0 z-10 mt-6 md:mt-8 bg-cw-bg/95 backdrop-blur border-y border-cw-border px-6 md:px-8 py-2 flex items-center gap-1 overflow-x-auto scrollbar-cw">
         {SECOES.map((s) => {
           const Icon = s.icon;
           return (

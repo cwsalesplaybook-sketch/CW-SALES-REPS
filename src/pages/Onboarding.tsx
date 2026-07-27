@@ -201,13 +201,6 @@ export default function Onboarding() {
 
   return (
     <div className="p-8 space-y-6">
-      <div>
-        <h1 className="text-2xl font-black text-cw-text">Onboarding de Partner Success Manager (PSM)</h1>
-        <p className="text-sm text-cw-muted mt-0.5">
-          É o seu processo de entrada e adaptação aqui na empresa. Ele foi pensado para te ajudar a entender como tudo funciona: desde a cultura e os valores da empresa, até as ferramentas, rotinas e o seu papel no time.
-        </p>
-      </div>
-
       <div className="inline-flex bg-cw-surface border border-cw-border rounded-xl p-1 flex-wrap gap-1">
         {SUBTABS.map(({ id, label, icon: Icon }) => (
           <button

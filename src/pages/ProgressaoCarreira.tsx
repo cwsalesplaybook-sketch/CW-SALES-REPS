@@ -173,12 +173,6 @@ export default function ProgressaoCarreira() {
 
   return (
     <div className="p-6 md:p-8 space-y-5">
-      <div>
-        <h1 className="text-2xl font-black text-cw-text">Progressão de Carreira</h1>
-        <p className="text-sm text-cw-muted mt-0.5">
-          Evolução de senioridade e comissionamento dentro do canal de Representantes.
-        </p>
-      </div>
       <TrilhaNiveis selecionado={selecionado} onSelecionar={setSelecionado} />
       <EvolucaoOte />
       <TabelaComissoes selecionado={selecionado} onSelecionar={setSelecionado} />

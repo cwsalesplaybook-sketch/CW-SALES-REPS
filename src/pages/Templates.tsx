@@ -135,13 +135,6 @@ export default function Templates() {
 
   return (
     <div className="p-6 md:p-8 space-y-6">
-      <div>
-        <h1 className="text-2xl font-black text-cw-text">Templates</h1>
-        <p className="text-sm text-cw-muted mt-0.5">
-          Mensagens prontas para copiar e colar — prospecção, follow-up e confirmação de apresentação.
-        </p>
-      </div>
-
       <div className="flex flex-wrap items-center gap-2">
         {(['Todas', ...CATEGORIAS] as const).map((c) => (
           <button

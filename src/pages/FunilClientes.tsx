@@ -18,13 +18,6 @@ export default function FunilClientes() {
 
   return (
     <div className="p-6 md:p-8 space-y-6">
-      <div>
-        <h1 className="text-2xl font-black text-cw-text">Funil de Clientes e Acompanhamento</h1>
-        <p className="text-sm text-cw-muted mt-0.5">
-          Etapas do funil de clientes trazidos por representantes e do funil de acompanhamento (ativação) do representante.
-        </p>
-      </div>
-
       <div className="inline-flex items-center gap-1 rounded-2xl border border-cw-border bg-cw-surface p-1">
         {SUBSECOES.map((s) => {
           const Icon = s.icon;
