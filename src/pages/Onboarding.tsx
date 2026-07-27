@@ -125,7 +125,7 @@ function ChecklistTab() {
 
 function Reuniao11Tab() {
   return (
-    <div className="space-y-4 max-w-2xl">
+    <div className="space-y-4">
       <div className="cw-card p-5">
         <h3 className="text-lg font-bold text-cw-text mb-2">1ª Reunião de 1:1</h3>
         <p className="text-sm text-cw-muted leading-relaxed">
@@ -151,7 +151,7 @@ function Reuniao11Tab() {
 
 function AvaliacaoTab() {
   return (
-    <div className="space-y-4 max-w-3xl">
+    <div className="space-y-4">
       <div className="cw-card p-5">
         <h3 className="text-lg font-bold text-cw-text mb-2">Avaliação da Apresentação de Onboarding</h3>
         <p className="text-sm text-cw-muted leading-relaxed">

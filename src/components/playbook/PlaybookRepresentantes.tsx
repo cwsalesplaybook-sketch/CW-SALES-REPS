@@ -139,7 +139,7 @@ function Cargos() {
 
 function Icp() {
   return (
-    <div className="space-y-4 max-w-3xl">
+    <div className="space-y-4">
       <SectionCard>
         <div className="flex items-center gap-2 mb-3">
           <Target className="h-5 w-5 text-cw-purple-light" />
@@ -192,7 +192,7 @@ function Hacks() {
           Técnicas e scripts práticos para lidar com situações específicas durante indicação e negociação.
         </p>
       </SectionCard>
-      <div className="space-y-4 max-w-3xl">
+      <div className="space-y-4">
         {HACKS.map((hack, i) => (
           <div key={i} className="cw-card cw-card-hover p-5 border-l-4 border-l-cw-yellow/70">
             <div className="flex items-center gap-2 mb-3">

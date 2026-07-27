@@ -67,7 +67,7 @@ export function PlaybookSpin() {
           O SPIN Selling é uma metodologia de vendas criada por Neil Rackham nos anos 1980, que foca utilizar boas perguntas para estruturar uma venda, baseadas em quatro pilares: Situação, Problema, Implicação, Necessidade.
         </p>
       </SectionCard>
-      <div className="space-y-2 max-w-3xl">
+      <div className="space-y-2">
         {SPIN_REP.map((f) => <SpinFuncionalidadeCard key={f.nome} nome={f.nome} itens={f.itens} />)}
       </div>
     </div>
@@ -89,7 +89,7 @@ export function PlaybookAida() {
           Na prospecção o AIDA é muito poderoso, pois permite que o lead progrida na jornada de compra dentro de uma ligação. Nessa documentação é possível encontrar a forma correta de aplicar uma Cold Call aplicando esse modelo.
         </p>
       </SectionCard>
-      <div className="space-y-4 max-w-3xl">
+      <div className="space-y-4">
         {AIDA_REP.map((etapa) => (
           <div key={etapa.letra + etapa.nome} className="cw-card p-5">
             <div className="flex items-center gap-3 mb-4">

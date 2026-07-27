@@ -25,7 +25,7 @@ function TemplatePendenteNota() {
 
 export function PlaybookJornadaRepresentante() {
   return (
-    <div className="space-y-4 max-w-3xl">
+    <div className="space-y-4">
       <SectionCard>
         <div className="flex items-center gap-2 mb-3">
           <Milestone className="h-5 w-5 text-cw-purple-light" />
@@ -87,7 +87,7 @@ function MensagemCard({ etapa, texto }: { etapa: string; texto: string }) {
 
 export function PlaybookMensagemConfirmacao() {
   return (
-    <div className="space-y-4 max-w-2xl">
+    <div className="space-y-4">
       <SectionCard>
         <div className="flex items-center gap-2 mb-2">
           <MessageCircleMore className="h-5 w-5 text-green-600" />
@@ -107,7 +107,7 @@ export function PlaybookMensagemConfirmacao() {
 export function PlaybookPassagemBastao() {
   const [checked, setChecked] = useState<Record<number, boolean>>({});
   return (
-    <div className="space-y-4 max-w-2xl">
+    <div className="space-y-4">
       <SectionCard>
         <div className="flex items-center gap-2 mb-2">
           <Shuffle className="h-5 w-5 text-orange-500" />

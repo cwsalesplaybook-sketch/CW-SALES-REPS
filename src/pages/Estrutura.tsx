@@ -47,7 +47,7 @@ export default function Estrutura() {
         })}
       </nav>
 
-      <div className="p-6 md:p-8 space-y-10 max-w-4xl">
+      <div className="p-6 md:p-8 space-y-10">
         {/* Perfil Ideal */}
         <section id="perfil" className="scroll-mt-16">
           <SectionHeading icon={UserCheck} titulo="Perfil Ideal de Representante (IPP)" />

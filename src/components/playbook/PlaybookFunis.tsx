@@ -9,7 +9,7 @@ function SectionCard({ children, className }: { children: React.ReactNode; class
 
 function FunilEtapas({ etapas }: { etapas: FunilEtapa[] }) {
   return (
-    <ol className="space-y-3 border-l-2 border-cw-border ml-4 pl-5 max-w-3xl">
+    <ol className="space-y-3 border-l-2 border-cw-border ml-4 pl-5">
       {etapas.map((e, i) => (
         <li key={e.etapa + i} className="relative">
           <span className="absolute -left-[27px] top-0.5 h-3 w-3 rounded-full gradient-primary border-2 border-white" />
