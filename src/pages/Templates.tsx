@@ -100,7 +100,7 @@ function TemplateCard({ template, favorito, onToggleFavorito }: {
           <Star className={`h-4 w-4 ${favorito ? 'fill-amber-400' : ''}`} />
         </button>
       </div>
-      <div className="bg-[#dcf8c6] dark:bg-[#0b3d1f] rounded-2xl rounded-tl-sm px-4 py-3 flex-1">
+      <div className="bg-cw-elevated border border-cw-border rounded-xl px-4 py-3 flex-1">
         <p className="text-[13px] text-cw-text/90 leading-relaxed whitespace-pre-line">{template.texto}</p>
       </div>
       <button
