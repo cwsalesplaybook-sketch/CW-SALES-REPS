@@ -49,15 +49,19 @@ function CadastroClienteCard() {
 
 function FunilEtapas({ etapas }: { etapas: FunilEtapa[] }) {
   return (
-    <ol className="space-y-3 border-l-2 border-cw-border ml-4 pl-5">
+    <div className="space-y-3">
       {etapas.map((e, i) => (
-        <li key={e.etapa + i} className="relative">
-          <span className="absolute -left-[27px] top-0.5 h-3 w-3 rounded-full gradient-primary border-2 border-white" />
-          <p className="text-sm font-bold text-cw-text mb-0.5">{e.etapa}</p>
-          <p className="text-xs text-cw-muted leading-relaxed whitespace-pre-line">{e.desc}</p>
-        </li>
+        <div key={e.etapa + i} className="cw-card cw-card-hover p-5 flex items-start gap-3.5">
+          <span className="h-7 w-7 rounded-full gradient-primary flex items-center justify-center text-white text-xs font-black shrink-0">
+            {i + 1}
+          </span>
+          <div className="min-w-0">
+            <p className="text-sm font-bold text-cw-text mb-1">{e.etapa}</p>
+            <p className="text-xs text-cw-muted leading-relaxed whitespace-pre-line">{e.desc}</p>
+          </div>
+        </div>
       ))}
-    </ol>
+    </div>
   );
 }
 
