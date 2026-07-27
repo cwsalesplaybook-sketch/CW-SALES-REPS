@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import {
   BookOpen, BarChart2, Target, HelpCircle, LogOut, ClipboardCheck, KanbanSquare,
-  Milestone, MessageSquareText, MessageCircleQuestion, Library, Building2,
+  Milestone, MessageSquareText, MessageCircleQuestion, Library,
   Filter, Users, LineChart, DollarSign, Swords, ChevronRight,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -26,7 +26,6 @@ const COMERCIAL_ITEMS = [
 const PLAYBOOK_REFERENCIA_ITEMS = [
   { to: '/templates',      label: 'Templates',          Icon: MessageSquareText },
   { to: '/materiais',      label: 'Materiais',          Icon: Library },
-  { to: '/estrutura',      label: 'Estrutura',          Icon: Building2 },
   { to: '/planos-modulos', label: 'Planos e Módulos',    Icon: DollarSign },
   { to: '/funil-prospeccao', label: 'Funil de Prospecção', Icon: Filter },
   { to: '/progressao-carreira', label: 'Progressão de Carreira', Icon: LineChart },

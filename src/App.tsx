@@ -15,7 +15,6 @@ import JornadaRepresentante from '@/pages/JornadaRepresentante';
 import Templates from '@/pages/Templates';
 import FaqPage from '@/pages/FaqPage';
 import Materiais from '@/pages/Materiais';
-import Estrutura from '@/pages/Estrutura';
 import FunilProspeccao from '@/pages/FunilProspeccao';
 import FunilClientes from '@/pages/FunilClientes';
 import ProgressaoCarreira from '@/pages/ProgressaoCarreira';
@@ -40,7 +39,7 @@ function AppLayout() {
           <Route path="/templates" element={<Templates />} />
           <Route path="/faq"       element={<FaqPage />} />
           <Route path="/materiais" element={<Materiais />} />
-          <Route path="/estrutura" element={<Estrutura />} />
+          <Route path="/estrutura" element={<Navigate to="/jornada-representante" replace />} />
           <Route path="/funil-prospeccao" element={<FunilProspeccao />} />
           <Route path="/funil-clientes"   element={<FunilClientes />} />
           <Route path="/progressao-carreira" element={<ProgressaoCarreira />} />
