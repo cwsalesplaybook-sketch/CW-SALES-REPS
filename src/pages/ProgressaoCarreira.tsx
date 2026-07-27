@@ -28,7 +28,7 @@ function TrilhaNiveis({ selecionado, onSelecionar }: { selecionado: string; onSe
         </div>
       </div>
       <p className="text-xs text-cw-muted mb-4">Clique em qualquer nível para ver os critérios completos.</p>
-      <div className="flex items-center gap-1 overflow-x-auto scrollbar-cw pb-2">
+      <div className="flex items-center gap-1 overflow-x-auto scrollbar-cw pb-2 pt-5">
         {NIVEIS_CARREIRA.map((n, i) => {
           const style = TIER_STYLE[n.tier];
           const ativo = n.nivel === selecionado;
