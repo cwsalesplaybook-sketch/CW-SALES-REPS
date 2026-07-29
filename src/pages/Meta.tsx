@@ -77,7 +77,7 @@ function ProgressRing({ pct: valor }: { pct: number }) {
         />
       </svg>
       <div className="absolute inset-0 flex items-center justify-center">
-        <span className="text-2xl font-semibold text-cw-text">{valor.toFixed(0)}%</span>
+        <span className="text-3xl font-bold text-cw-text">{valor.toFixed(0)}%</span>
       </div>
     </div>
   );
@@ -86,12 +86,12 @@ function ProgressRing({ pct: valor }: { pct: number }) {
 function MiniStat({ icon: Icon, label, value }: { icon: LucideIcon; label: string; value: string }) {
   return (
     <div className="rounded-2xl border border-cw-border bg-cw-elevated px-4 py-3.5 flex items-center gap-3">
-      <div className="h-9 w-9 rounded-xl bg-white border border-cw-border flex items-center justify-center shrink-0">
-        <Icon className="h-4 w-4 text-cw-purple" />
+      <div className="h-10 w-10 rounded-xl bg-white border border-cw-border flex items-center justify-center shrink-0">
+        <Icon className="h-[18px] w-[18px] text-cw-purple" />
       </div>
       <div className="min-w-0">
-        <p className="text-[11px] font-medium text-cw-muted mb-0.5 truncate">{label}</p>
-        <p className="text-sm font-semibold text-cw-text truncate">{value}</p>
+        <p className="text-xs font-medium text-cw-muted mb-0.5 truncate">{label}</p>
+        <p className="text-base font-bold text-cw-text truncate">{value}</p>
       </div>
     </div>
   );
@@ -133,11 +133,11 @@ export default function Meta() {
           </span>
         </div>
 
-        <div className="relative z-10 grid grid-cols-1 lg:grid-cols-[auto_1fr_auto] gap-8 lg:gap-12 items-center lg:pr-[340px]">
+        <div className="relative z-10 grid grid-cols-1 lg:grid-cols-[auto_1fr_auto] gap-8 lg:gap-12 items-center lg:pr-[420px]">
           <ProgressRing pct={progressoGeral} />
 
           <div>
-            <p className="text-5xl font-bold text-cw-purple leading-none">{progressoGeral.toFixed(0)}%</p>
+            <p className="text-6xl font-bold text-cw-purple leading-none">{progressoGeral.toFixed(0)}%</p>
             <p className="text-sm font-medium text-cw-text mt-2.5">da meta geral do ciclo</p>
             <p className="text-sm text-cw-muted mt-1">Foco total para atingirmos nossa meta.</p>
           </div>
@@ -154,7 +154,7 @@ export default function Meta() {
           src="/onca-metas.png"
           alt=""
           aria-hidden
-          className="hidden lg:block absolute right-0 bottom-0 h-[75%] max-h-[170px] w-auto object-contain pointer-events-none select-none"
+          className="hidden lg:block absolute right-0 bottom-0 h-[95%] max-h-[220px] w-auto object-contain pointer-events-none select-none"
         />
       </div>
 
@@ -207,7 +207,7 @@ export default function Meta() {
                       </div>
                     </div>
 
-                    <span className="hidden sm:block text-sm font-bold text-cw-purple shrink-0 tabular-nums w-11 text-right">
+                    <span className="hidden sm:block text-xl font-bold text-cw-purple shrink-0 tabular-nums w-16 text-right">
                       {p.toFixed(0)}%
                     </span>
 
@@ -235,10 +235,10 @@ export default function Meta() {
                     ) : (
                       <div className="flex items-center gap-3 shrink-0 justify-between sm:justify-end">
                         <div className="text-right">
-                          <p className="text-sm font-semibold text-cw-text leading-none">
-                            {atual}<span className="text-cw-muted font-normal"> / {kr.meta}</span>
+                          <p className="text-lg font-bold text-cw-text leading-none">
+                            {atual}<span className="text-cw-muted font-medium"> / {kr.meta}</span>
                           </p>
-                          <p className="text-[11px] text-cw-muted mt-1">{kr.unidade}</p>
+                          <p className="text-xs text-cw-muted mt-1">{kr.unidade}</p>
                         </div>
                         <button
                           onClick={() => { setEditando(kr.codigo); setDraft(String(atual)); }}
