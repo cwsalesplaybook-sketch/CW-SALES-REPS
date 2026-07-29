@@ -3,7 +3,8 @@
  *  salvo no localStorage do navegador — não depende de login nem de backend,
  *  então funciona offline e não é compartilhado com outros usuários do app. */
 import { useEffect, useState } from 'react';
-import { Target, Pencil, Check, X } from 'lucide-react';
+import { Target, Check, X, Calendar, ChevronDown, Layers, CheckCircle2, Clock, BarChart2 } from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface KR {
@@ -82,11 +83,16 @@ function ProgressRing({ pct: valor }: { pct: number }) {
   );
 }
 
-function MiniStat({ label, value }: { label: string; value: string }) {
+function MiniStat({ icon: Icon, label, value }: { icon: LucideIcon; label: string; value: string }) {
   return (
-    <div className="rounded-2xl border border-cw-border bg-cw-elevated px-4 py-3.5">
-      <p className="text-[11px] font-medium text-cw-muted mb-1">{label}</p>
-      <p className="text-sm font-semibold text-cw-text truncate">{value}</p>
+    <div className="rounded-2xl border border-cw-border bg-cw-elevated px-4 py-3.5 flex items-center gap-3">
+      <div className="h-9 w-9 rounded-xl bg-white border border-cw-border flex items-center justify-center shrink-0">
+        <Icon className="h-4 w-4 text-cw-purple" />
+      </div>
+      <div className="min-w-0">
+        <p className="text-[11px] font-medium text-cw-muted mb-0.5 truncate">{label}</p>
+        <p className="text-sm font-semibold text-cw-text truncate">{value}</p>
+      </div>
     </div>
   );
 }
@@ -120,8 +126,10 @@ export default function Meta() {
       <div className="relative overflow-hidden rounded-[20px] border border-cw-border bg-white shadow-[0_1px_2px_rgba(26,10,46,0.04)] p-8 lg:p-10">
         <div className="relative z-10 flex items-center justify-between mb-8">
           <h2 className="text-sm font-semibold text-cw-text">Meta Geral</h2>
-          <span className="text-xs font-medium text-cw-muted bg-cw-elevated border border-cw-border rounded-full px-3.5 py-1.5">
+          <span className="inline-flex items-center gap-2 text-xs font-medium text-cw-text bg-white border border-cw-border rounded-full px-4 py-2 shadow-[0_1px_2px_rgba(26,10,46,0.04)]">
+            <Calendar className="h-3.5 w-3.5 text-cw-purple" />
             Ciclo atual
+            <ChevronDown className="h-3.5 w-3.5 text-cw-muted" />
           </span>
         </div>
 
@@ -135,10 +143,10 @@ export default function Meta() {
           </div>
 
           <div className="grid grid-cols-2 gap-3 lg:gap-4 lg:min-w-[300px]">
-            <MiniStat label="Objetivos" value={String(OKRS.length)} />
-            <MiniStat label="KRs no ciclo" value={String(todosKRs.length)} />
-            <MiniStat label="KRs concluídos" value={`${concluidos} / ${todosKRs.length}`} />
-            <MiniStat label="Última atualização" value={formatarData(estado.atualizadoEm)} />
+            <MiniStat icon={Target} label="Objetivos" value={String(OKRS.length)} />
+            <MiniStat icon={Layers} label="KRs no ciclo" value={String(todosKRs.length)} />
+            <MiniStat icon={CheckCircle2} label="KRs concluídos" value={`${concluidos} / ${todosKRs.length}`} />
+            <MiniStat icon={Clock} label="Última atualização" value={formatarData(estado.atualizadoEm)} />
           </div>
         </div>
 
@@ -199,6 +207,10 @@ export default function Meta() {
                       </div>
                     </div>
 
+                    <span className="hidden sm:block text-sm font-bold text-cw-purple shrink-0 tabular-nums w-11 text-right">
+                      {p.toFixed(0)}%
+                    </span>
+
                     {emEdicao ? (
                       <div className="flex items-center gap-1.5 shrink-0">
                         <input
@@ -233,7 +245,7 @@ export default function Meta() {
                           title="Atualizar progresso"
                           className="h-8 w-8 rounded-[14px] border border-cw-border bg-white text-cw-muted hover:text-cw-purple hover:border-cw-purple/30 flex items-center justify-center transition-colors shrink-0"
                         >
-                          <Pencil className="h-3.5 w-3.5" />
+                          <BarChart2 className="h-3.5 w-3.5" />
                         </button>
                       </div>
                     )}
