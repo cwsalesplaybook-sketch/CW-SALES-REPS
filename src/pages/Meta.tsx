@@ -115,7 +115,7 @@ export default function Meta() {
   const concluidos = todosKRs.filter((k) => (estado.valores[k.codigo] ?? 0) >= k.meta).length;
 
   return (
-    <div className="p-8 lg:p-10 space-y-8 max-w-[1400px]">
+    <div className="p-8 lg:p-10 space-y-8 w-full">
       {/* Resumo executivo */}
       <div className="rounded-[20px] border border-cw-border bg-white shadow-[0_1px_2px_rgba(26,10,46,0.04)] p-8 lg:p-10">
         <div className="flex items-center justify-between mb-8">
