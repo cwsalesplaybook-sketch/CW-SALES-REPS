@@ -146,7 +146,7 @@ export default function Meta() {
           src="/onca-metas.png"
           alt=""
           aria-hidden
-          className="hidden lg:block absolute right-0 top-1/2 -translate-y-1/2 h-[75%] max-h-[170px] w-auto object-contain pointer-events-none select-none"
+          className="hidden lg:block absolute right-0 bottom-0 h-[75%] max-h-[170px] w-auto object-contain pointer-events-none select-none"
         />
       </div>
 
