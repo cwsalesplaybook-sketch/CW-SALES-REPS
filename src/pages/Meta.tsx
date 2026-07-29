@@ -117,15 +117,15 @@ export default function Meta() {
   return (
     <div className="p-8 lg:p-10 space-y-8 w-full">
       {/* Resumo executivo */}
-      <div className="rounded-[20px] border border-cw-border bg-white shadow-[0_1px_2px_rgba(26,10,46,0.04)] p-8 lg:p-10">
-        <div className="flex items-center justify-between mb-8">
+      <div className="relative overflow-hidden rounded-[20px] border border-cw-border bg-white shadow-[0_1px_2px_rgba(26,10,46,0.04)] p-8 lg:p-10">
+        <div className="relative z-10 flex items-center justify-between mb-8">
           <h2 className="text-sm font-semibold text-cw-text">Meta Geral</h2>
           <span className="text-xs font-medium text-cw-muted bg-cw-elevated border border-cw-border rounded-full px-3.5 py-1.5">
             Ciclo atual
           </span>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-[auto_1fr_auto] gap-8 lg:gap-12 items-center">
+        <div className="relative z-10 grid grid-cols-1 lg:grid-cols-[auto_1fr_auto] gap-8 lg:gap-12 items-center lg:pr-[340px]">
           <ProgressRing pct={progressoGeral} />
 
           <div>
@@ -141,6 +141,13 @@ export default function Meta() {
             <MiniStat label="Última atualização" value={formatarData(estado.atualizadoEm)} />
           </div>
         </div>
+
+        <img
+          src="/onca-metas.png"
+          alt=""
+          aria-hidden
+          className="hidden lg:block absolute right-0 top-1/2 -translate-y-1/2 h-[75%] max-h-[170px] w-auto object-contain pointer-events-none select-none"
+        />
       </div>
 
       {/* Objetivos */}
