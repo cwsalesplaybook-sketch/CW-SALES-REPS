@@ -156,7 +156,7 @@ export default function Meta() {
                   <Target className="h-5 w-5 text-cw-purple" />
                 </div>
                 <div className="min-w-0">
-                  <span className="inline-block text-[11px] font-semibold text-cw-purple bg-cw-purple/10 rounded-full px-2.5 py-1 mb-2">
+                  <span className="inline-block text-[11px] font-semibold text-cw-purple bg-cw-purple/10 rounded-full px-2.5 py-1 mb-1">
                     {obj.tag}
                   </span>
                   <h3 className="text-base font-semibold text-cw-text leading-snug">{obj.titulo}</h3>
