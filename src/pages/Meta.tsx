@@ -248,14 +248,14 @@ export default function Meta() {
   const concluidos = todosKRs.filter((k) => (estado.valores[k.codigo] ?? 0) >= k.meta).length;
 
   return (
-    <div className="p-8 lg:p-10 space-y-8 w-full">
+    <div className="p-8 lg:p-10 space-y-6 w-full">
       {editandoOKRs && (
         <EditorOKRs okrs={okrs} onSave={salvarEstrutura} onClose={() => setEditandoOKRs(false)} />
       )}
 
       {/* Resumo executivo */}
-      <div className="relative overflow-hidden rounded-[20px] border border-cw-border bg-white shadow-[0_1px_2px_rgba(26,10,46,0.04)] p-8 lg:p-10">
-        <div className="relative z-10 flex items-center justify-between mb-8">
+      <div className="relative overflow-hidden rounded-[20px] border border-cw-border bg-white shadow-[0_1px_2px_rgba(26,10,46,0.04)] p-6 lg:p-8">
+        <div className="relative z-10 flex items-center justify-between mb-5">
           <div className="flex items-center gap-2">
             <h2 className="text-sm font-semibold text-cw-text">Meta Geral</h2>
             <button
@@ -274,26 +274,28 @@ export default function Meta() {
         </div>
 
         <div className="relative z-10 flex flex-nowrap items-center gap-8 overflow-hidden">
-          <ProgressRing pct={progressoGeral} />
+          <div className="flex items-center gap-6 shrink-0">
+            <ProgressRing pct={progressoGeral} />
 
-          <div className="max-w-[230px] shrink-0">
-            <p className="text-6xl font-bold text-cw-purple leading-none">{progressoGeral.toFixed(0)}%</p>
-            <p className="text-sm font-medium text-cw-text mt-2.5">da meta geral do ciclo</p>
-            <p className="text-sm text-cw-muted mt-1 whitespace-nowrap">Foco total para atingirmos nossa meta.</p>
-          </div>
+            <div className="max-w-[230px] shrink-0">
+              <p className="text-6xl font-bold text-cw-purple leading-none">{progressoGeral.toFixed(0)}%</p>
+              <p className="text-sm font-medium text-cw-text mt-2.5">da meta geral do ciclo</p>
+              <p className="text-sm text-cw-muted mt-1 whitespace-nowrap">Foco total para atingirmos nossa meta.</p>
+            </div>
 
-          <div className="grid grid-cols-2 gap-2.5 shrink-0">
-            <MiniStat icon={Target} label="Objetivos" value={String(okrs.length)} />
-            <MiniStat icon={Layers} label="KRs no ciclo" value={String(todosKRs.length)} />
-            <MiniStat icon={CheckCircle2} label="KRs concluídos" value={`${concluidos} / ${todosKRs.length}`} />
-            <MiniStat icon={Clock} label="Última atualização" value={formatarData(estado.atualizadoEm)} />
+            <div className="grid grid-cols-2 gap-2 shrink-0">
+              <MiniStat icon={Target} label="Objetivos" value={String(okrs.length)} />
+              <MiniStat icon={Layers} label="KRs no ciclo" value={String(todosKRs.length)} />
+              <MiniStat icon={CheckCircle2} label="KRs concluídos" value={`${concluidos} / ${todosKRs.length}`} />
+              <MiniStat icon={Clock} label="Última atualização" value={formatarData(estado.atualizadoEm)} />
+            </div>
           </div>
 
           <img
             src="/onca-metas.png"
             alt=""
             aria-hidden
-            className="hidden lg:block ml-auto shrink-0 h-[200px] w-auto object-contain pointer-events-none select-none"
+            className="hidden lg:block shrink-0 h-[200px] w-auto object-contain pointer-events-none select-none"
           />
         </div>
       </div>
@@ -303,21 +305,16 @@ export default function Meta() {
         {okrs.map((obj, objIdx) => (
           <div
             key={objIdx}
-            className="rounded-[20px] border border-cw-border bg-white shadow-[0_1px_2px_rgba(26,10,46,0.04)] p-8 hover:shadow-[0_4px_16px_rgba(26,10,46,0.06)] transition-shadow duration-200"
+            className="rounded-[20px] border border-cw-border bg-white shadow-[0_1px_2px_rgba(26,10,46,0.04)] p-6 hover:shadow-[0_4px_16px_rgba(26,10,46,0.06)] transition-shadow duration-200"
           >
-            <div className="flex items-start justify-between gap-4 mb-6">
-              <div className="flex items-start gap-3.5 min-w-0">
-                <div className="h-10 w-10 rounded-2xl bg-cw-purple/10 flex items-center justify-center shrink-0">
-                  <Target className="h-5 w-5 text-cw-purple" />
-                </div>
-                <div className="min-w-0">
-                  <span className="inline-block text-[11px] font-semibold text-cw-purple bg-cw-purple/10 rounded-full px-2.5 py-1 mb-1">
-                    {obj.tag}
-                  </span>
-                  <h3 className="text-base font-semibold text-cw-text leading-snug">{obj.titulo}</h3>
-                </div>
+            <div className="flex items-start justify-between gap-4 mb-4">
+              <div className="min-w-0">
+                <span className="inline-block text-[11px] font-semibold text-cw-purple bg-cw-purple/10 rounded-full px-2.5 py-1 mb-1">
+                  {obj.tag}
+                </span>
+                <h3 className="text-base font-semibold text-cw-text leading-snug">{obj.titulo}</h3>
               </div>
-              <span className="shrink-0 text-xs font-medium text-cw-muted bg-cw-elevated border border-cw-border rounded-full px-3.5 py-1.5">
+              <span className="shrink-0 text-xs font-medium text-cw-muted bg-cw-elevated border border-cw-border rounded-full px-4 py-2">
                 {obj.krs.length} métricas
               </span>
             </div>
@@ -331,14 +328,14 @@ export default function Meta() {
                 return (
                   <div
                     key={`${objIdx}-${krIdx}`}
-                    className="flex flex-col sm:flex-row sm:items-center gap-4 py-5 px-2 rounded-2xl hover:bg-cw-elevated/60 transition-colors duration-150"
+                    className="flex flex-col sm:flex-row sm:items-center gap-3 py-3.5 px-2 rounded-2xl hover:bg-cw-elevated/60 transition-colors duration-150"
                   >
                     <span className="shrink-0 self-start sm:self-center text-[11px] font-semibold text-cw-purple bg-cw-purple/10 rounded-full px-2.5 py-1">
                       KR {kr.codigo}
                     </span>
 
-                    <div className="flex-1 min-w-0">
-                      <p className="text-sm text-cw-text leading-snug mb-2.5">{kr.descricao}</p>
+                    <div className="flex-1 min-w-0 sm:pr-6">
+                      <p className="text-sm text-cw-text leading-snug mb-2">{kr.descricao}</p>
                       <div className="h-1.5 w-full bg-cw-border/70 rounded-full overflow-hidden">
                         <div
                           className={cn('h-full rounded-full transition-all duration-700 ease-out', batida ? 'bg-green-500' : 'bg-cw-purple')}
@@ -346,10 +343,6 @@ export default function Meta() {
                         />
                       </div>
                     </div>
-
-                    <span className="hidden sm:block text-xl font-bold text-cw-purple shrink-0 tabular-nums w-16 text-right">
-                      {p.toFixed(0)}%
-                    </span>
 
                     {emEdicao ? (
                       <div className="flex items-center gap-1.5 shrink-0">
@@ -374,6 +367,9 @@ export default function Meta() {
                       </div>
                     ) : (
                       <div className="flex items-center gap-3 shrink-0 justify-between sm:justify-end">
+                        <span className="text-xl font-bold text-cw-purple shrink-0 tabular-nums w-14 text-right">
+                          {p.toFixed(0)}%
+                        </span>
                         <div className="text-right">
                           <p className="text-lg font-bold text-cw-text leading-none">
                             {atual}<span className="text-cw-muted font-medium"> / {kr.meta}</span>
