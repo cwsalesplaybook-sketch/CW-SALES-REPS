@@ -273,13 +273,13 @@ export default function Meta() {
           </span>
         </div>
 
-        <div className="relative z-10 flex flex-nowrap items-center gap-6 lg:gap-8 lg:pr-[380px]">
+        <div className="relative z-10 flex flex-nowrap items-center gap-8 overflow-hidden">
           <ProgressRing pct={progressoGeral} />
 
-          <div className="max-w-[200px] shrink-0">
+          <div className="max-w-[230px] shrink-0">
             <p className="text-6xl font-bold text-cw-purple leading-none">{progressoGeral.toFixed(0)}%</p>
             <p className="text-sm font-medium text-cw-text mt-2.5">da meta geral do ciclo</p>
-            <p className="text-sm text-cw-muted mt-1">Foco total para atingirmos nossa meta.</p>
+            <p className="text-sm text-cw-muted mt-1 whitespace-nowrap">Foco total para atingirmos nossa meta.</p>
           </div>
 
           <div className="grid grid-cols-2 gap-2.5 shrink-0">
@@ -288,14 +288,14 @@ export default function Meta() {
             <MiniStat icon={CheckCircle2} label="KRs concluídos" value={`${concluidos} / ${todosKRs.length}`} />
             <MiniStat icon={Clock} label="Última atualização" value={formatarData(estado.atualizadoEm)} />
           </div>
-        </div>
 
-        <img
-          src="/onca-metas.png"
-          alt=""
-          aria-hidden
-          className="hidden lg:block absolute right-0 bottom-0 h-[90%] max-h-[195px] w-auto object-contain pointer-events-none select-none"
-        />
+          <img
+            src="/onca-metas.png"
+            alt=""
+            aria-hidden
+            className="hidden lg:block ml-auto shrink-0 h-[200px] w-auto object-contain pointer-events-none select-none"
+          />
+        </div>
       </div>
 
       {/* Objetivos */}
